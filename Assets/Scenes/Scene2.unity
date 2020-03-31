@@ -410,8 +410,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 761ac1aa311dfe84fbb42c0db345047f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  passControllerMode: 1
-  teams: []
 --- !u!114 &501175585
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -548,8 +546,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 761ac1aa311dfe84fbb42c0db345047f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  passControllerMode: 1
-  teams: []
 --- !u!4 &923812496
 Transform:
   m_ObjectHideFlags: 0
