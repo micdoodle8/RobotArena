@@ -17,11 +17,14 @@ public class Fader : MonoBehaviour
     public delegate void FadeCompleteCallback(int param);
     private FadeCompleteCallback callback;
     private int callbackParam;
+    [Range(0.0F, 1.0F)]
+    public float startAlpha = 0.0F;
 
     // Start is called before the first frame update
     void Start()
     {
         renderer = gameObject.GetComponent<MeshRenderer>();
+        renderer.material.color = new Color(0.0F, 0.0F, 0.0F, startAlpha);
     }
 
     // Update is called once per frame
@@ -51,6 +54,7 @@ public class Fader : MonoBehaviour
     }
 
     public void FadeToBlack(float time, FadeCompleteCallback callback, int param) {
+        Debug.Log("FadeToBlack");
         renderer.enabled = true;
         status = FadeStatus.TO_BLACK;
         progress = time;
@@ -60,6 +64,7 @@ public class Fader : MonoBehaviour
     }
     
     public void FadeBackIn(float time, FadeCompleteCallback callback, int param) {
+        Debug.Log("FadeBackIn");
         status = FadeStatus.TO_CLEAR;
         progress = time;
         totalTime = time;

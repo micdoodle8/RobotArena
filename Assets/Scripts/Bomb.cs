@@ -24,7 +24,7 @@ public class Bomb : MonoBehaviour
                 if (lastHit.GetComponent<Deformable>() != null) {
                     lastHit.GetComponent<Deformable>().AddDeformation(transform.position, 3.0F, 3.0F);
                     Destroy(gameObject, 0.1F);
-                    Instantiate(destroyedBombPrefab, transform.position, transform.rotation);
+                    Instantiate(destroyedBombPrefab, transform.position, transform.rotation, GameObject.Find("Scene").transform);
                 }
             }
         }

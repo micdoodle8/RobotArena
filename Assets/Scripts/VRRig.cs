@@ -6,11 +6,20 @@ using UnityEngine;
 public class VRMap {
     public Transform vrTarget;
     public Transform rigTarget;
+    public Transform maxDistSource;
+    public float maxDist;
     public Vector3 trackingPositionOffset;
     public Vector3 trackingRotationOffset;
 
     public void Map() {
-        rigTarget.position = vrTarget.TransformPoint(trackingPositionOffset);
+        Vector3 target = vrTarget.TransformPoint(trackingPositionOffset);
+        if (maxDistSource != null) {
+            Vector3 diff = target - maxDistSource.position;
+            if (diff.magnitude > maxDist) {
+                target = maxDistSource.position + diff.normalized * maxDist;
+            }
+        }
+        rigTarget.position = target;
         rigTarget.rotation = vrTarget.rotation * Quaternion.Euler(trackingRotationOffset);
     }
 }

@@ -77,11 +77,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e3f4c2469b47664a84dd91163b90390, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentMode: 0
+  currentMode: 1
   teamPrefab: {fileID: 8707878234383167980, guid: 9fbc33428768a3b4284322758d980c21,
     type: 3}
   theTeam: {fileID: 0}
-  hookedPlayerPrefab: {fileID: 6666063296658515530, guid: 654ca9f6a904eef4ba99279db8483536,
+  hookedPlayerPrefab: {fileID: 1642472185589151458, guid: d05832ea15d66784484f71949af3224c,
     type: 3}
   bombPrefab: {fileID: 1003415036088326438, guid: a300a9ea9bb09ed46bb12761da87217a,
     type: 3}

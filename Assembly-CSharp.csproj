@@ -444,10 +444,12 @@
      <Compile Include="Assets\Scripts\ConnectedPlayerManager.cs" />
      <Compile Include="Assets\Scripts\CustomNetworkManagerHUD.cs" />
      <Compile Include="Assets\Scripts\Deformable.cs" />
+     <Compile Include="Assets\Scripts\EventHooks.cs" />
      <Compile Include="Assets\Scripts\Fader.cs" />
      <Compile Include="Assets\Scripts\GenerateMesh.cs" />
      <Compile Include="Assets\Scripts\HideOnStart.cs" />
      <Compile Include="Assets\Scripts\HookSwing.cs" />
+     <Compile Include="Assets\Scripts\MainMenuHandler.cs" />
      <Compile Include="Assets\Scripts\MyNetworkManager.cs" />
      <Compile Include="Assets\Scripts\Team.cs" />
      <Compile Include="Assets\Scripts\VRFootIK.cs" />

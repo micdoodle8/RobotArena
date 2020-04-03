@@ -31,17 +31,21 @@ public class GenerateMesh : MonoBehaviour
         List<Vector3> verts = new List<Vector3>();
         List<Vector3> norms = new List<Vector3>();
 
+        float yVal;
         for (int i = 0, y = 0; y <= ySize; ++y) {
             for (int x = 0; x <= xSize; ++x, ++i) {
 
                 Color c = image.GetPixel((int)((x / (float)xSize) * (image.width - 6)) + 3, (int)((y /  (float)ySize) * (image.height - 6)) + 3);
-
-                verts.Add(new Vector3(x * scale, c.r * 3.0F, y * scale));
+                yVal = c.r * 5.0F;
+                if (yVal > 0.3F) {
+                    yVal = 0.3F + yVal * 0.3F;
+                }
+                verts.Add(new Vector3(x * scale + xSize * scale * -0.5F, yVal, y * scale + ySize * scale * -0.5F));
                 norms.Add(new Vector3(0, 1, 0));
             }
         }
 
-        transform.position = new Vector3(xSize * scale * -0.5F, 0.0F, ySize * scale * -0.5F);
+        // transform.position = new Vector3(xSize * scale * -0.5F * transform.parent.localScale.x, 0.0F, ySize * scale * -0.5F * transform.parent.localScale.z);
 
         int[] tris = new int[xSize * ySize * 6];
         for (int ti = 0, vi = 0, y = 0; y < ySize; ++y, ++vi) {

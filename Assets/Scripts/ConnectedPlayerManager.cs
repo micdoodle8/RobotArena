@@ -12,7 +12,8 @@ public enum PlayerMode {
 
 public class ConnectedPlayerManager : NetworkBehaviour
 {
-    public PlayerMode currentMode = PlayerMode.NONE;
+    private GameObject scene;
+    public PlayerMode currentMode = PlayerMode.PLACE_ROBOT;
     private GameObject camera;
 
     public GameObject teamPrefab;
@@ -29,7 +30,24 @@ public class ConnectedPlayerManager : NetworkBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        camera = GameObject.Find("OVRCameraRig");
+        camera = GameObject.Find("Leap Rig");
+        scene = GameObject.Find("Scene");
+        if (hasAuthority) {
+            CmdSpawnTeam();
+            if (isServer) {
+                BeginPlaceMode();
+            }
+        }
+    }
+
+    private void BeginPlaceMode() {
+        float scale = 2.0F;
+        camera.transform.position = theTeam.transform.position + theTeam.transform.rotation * new Vector3(0.0F, 0.0F, -3.0F) * scale + new Vector3(0.0F, 6.0F, 0.0F) * scale;
+        camera.transform.rotation = theTeam.transform.rotation;
+        GameObject.Find("FadeScreen").GetComponent<Fader>().FadeBackIn(1.0F, FadeCallback, 0);
+    }
+
+    void Awake() {
     }
 
     // Update is called once per frame
@@ -55,9 +73,7 @@ public class ConnectedPlayerManager : NetworkBehaviour
             case 0:
                 break;
             case 1:
-                camera.transform.position = theTeam.transform.position + theTeam.transform.rotation * new Vector3(0.0F, 0.0F, -3.0F) + new Vector3(0.0F, 6.0F, 0.0F);
-                camera.transform.rotation = theTeam.transform.rotation;
-                GameObject.Find("FadeScreen").GetComponent<Fader>().FadeBackIn(1.0F, FadeCallback, 0);
+                BeginPlaceMode();
                 if (isServer) {
                     // theTeam.GetComponent<Team>().SpawnRobots(connectionToClient);
                 }
@@ -75,7 +91,14 @@ public class ConnectedPlayerManager : NetworkBehaviour
         }
     }
 
+    public void SpawnRobot() {
+        if (hasAuthority) {
+            CmdSpawnRobot();
+        }
+    }
+
     public void ChangeMode(PlayerMode mode) {
+        Debug.Log(currentMode + " " + mode);
         if (currentMode != mode) {
             if (mode == PlayerMode.PLACE_ROBOT) {
                 GameObject.Find("FadeScreen").GetComponent<Fader>().FadeToBlack(1.0F, FadeCallback, 1);
@@ -89,14 +112,14 @@ public class ConnectedPlayerManager : NetworkBehaviour
     void CmdSpawnRobot() {
         Debug.Log("ConnectedPlayerManager::SpawnRobot -- Spawning robot ");
         if (hookedPlayer != null) {
-            GameObject robot = Instantiate(robotPrefab, hookedPlayer.transform.position - new Vector3(0.0F, 4.83F, 0.0F), theTeam.transform.rotation);
+            GameObject robot = Instantiate(robotPrefab, hookedPlayer.transform.position - new Vector3(0.0F, 4.83F, 0.0F) * scene.transform.localScale.y, theTeam.transform.rotation, scene.transform);
             robots.Add(robot);
             numRobots++;
             robot.GetComponent<VRPlayerController>().teamContainer = theTeam;
             NetworkServer.SpawnWithClientAuthority(robot, connectionToClient);
             RpcSetControlState(robot, false);
             Destroy(hookedPlayer);
-            if (numRobots < 3) {
+            if (numRobots < 1) {
                 CmdSpawnHook();
             }
         }
@@ -115,13 +138,13 @@ public class ConnectedPlayerManager : NetworkBehaviour
 
     [Command]
     void CmdSpawnHook() {
-        hookedPlayer = Instantiate(hookedPlayerPrefab, theTeam.transform.position + new Vector3(0.0F, 5.3F, 0.0F), theTeam.transform.rotation);
+        hookedPlayer = Instantiate(hookedPlayerPrefab, theTeam.transform.position + new Vector3(0.0F, 5.3F, 0.0F) * scene.transform.localScale.y, theTeam.transform.rotation, scene.transform);
         NetworkServer.SpawnWithClientAuthority(hookedPlayer, connectionToClient);
     }
 
     [Command]
     void CmdSpawnBomb() {
-        GameObject bomb = Instantiate(bombPrefab, new Vector3(0.0F, 10.0F, 0.0F), Quaternion.identity);
+        GameObject bomb = Instantiate(bombPrefab, new Vector3(0.0F, 10.0F, 0.0F) * scene.transform.localScale.y, Quaternion.identity, scene.transform);
         NetworkServer.Spawn(bomb);
     }
 
@@ -131,7 +154,7 @@ public class ConnectedPlayerManager : NetworkBehaviour
         GameObject[] spawnPoints = GameObject.FindGameObjectsWithTag("Spawn");
         if (spawnPoints.Length > 0) {
             Transform spawnPoint = spawnPoints[0].transform;
-            theTeam = Instantiate(teamPrefab, spawnPoint.position, spawnPoint.rotation);
+            theTeam = Instantiate(teamPrefab, spawnPoint.position, spawnPoint.rotation, scene.transform);
             NetworkServer.SpawnWithClientAuthority(theTeam, connectionToClient);
             // ChangeMode(PlayerMode.PLACE_ROBOT);
             if (isServer) {
@@ -144,9 +167,11 @@ public class ConnectedPlayerManager : NetworkBehaviour
     [ClientRpc]
     private void RpcOnTeamCreate(GameObject createdTeam) {
         if (hasAuthority) {
-            ChangeMode(PlayerMode.PLACE_ROBOT);
-            CmdSpawnHook();
+            // ChangeMode(PlayerMode.PLACE_ROBOT);
+            Debug.Log("Fading back");
             theTeam = createdTeam;
+            BeginPlaceMode();
+            CmdSpawnHook();
         }
     }
 

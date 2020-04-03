@@ -15,7 +15,7 @@ public class AnimController : MonoBehaviour
     void Start()
     {
         animator = GetComponent<Animator>();
-        if (gameObject.tag.Equals("Player")) {
+        if (gameObject.transform.parent.gameObject.tag.Equals("Player")) {
             SetNotHanging();
         }
         //vrRig = GetComponent<VRRig>();

@@ -219,6 +219,7 @@ namespace Leap.Unity {
     private void setupRiggedFingers() {
       RiggedFinger[] fingerModelList = GetComponentsInChildren<RiggedFinger>();
       for (int i = 0; i < 5; i++) {
+        Debug.Log(i);
         int fingersIndex = fingerModelList[i].fingerType.indexOf();
         fingers[fingersIndex] = fingerModelList[i];
         fingerModelList[i].SetupRiggedFinger(useMetaCarpals);
@@ -279,26 +280,26 @@ namespace Leap.Unity {
       return zeroed;
     }
 
-    // /**Stores a snapshot of original joint positions */
-    // [ContextMenu("StoreJointsStartPose")]
-    // public void StoreJointsStartPose() {
-    //   foreach (Transform t in palm.parent.GetComponentsInChildren<Transform>()) {
-    //     jointList.Add(t);
-    //     localRotations.Add(t.localRotation);
-    //     localPositions.Add(t.localPosition);
-    //   }
-    // }
+    /**Stores a snapshot of original joint positions */
+    [ContextMenu("StoreJointsStartPose")]
+    public void StoreJointsStartPose() {
+      foreach (Transform t in palm.parent.GetComponentsInChildren<Transform>()) {
+        jointList.Add(t);
+        localRotations.Add(t.localRotation);
+        localPositions.Add(t.localPosition);
+      }
+    }
 
-    // /**Restores original joint positions, particularly after model has been placed in Leap's editor pose */
-    // [ContextMenu("RestoreJointsStartPose")]
-    // public void RestoreJointsStartPose() {
-    //   //Debug.Log("RestoreJointsStartPose()");
-    //   for (int i = 0; i < jointList.Count; i++) {
-    //     Transform jointTrans = jointList[i];
-    //     jointTrans.localRotation = localRotations[i];
-    //     jointTrans.localPosition = localPositions[i];
-    //   }
-    // }
+    /**Restores original joint positions, particularly after model has been placed in Leap's editor pose */
+    [ContextMenu("RestoreJointsStartPose")]
+    public void RestoreJointsStartPose() {
+      //Debug.Log("RestoreJointsStartPose()");
+      for (int i = 0; i < jointList.Count; i++) {
+        Transform jointTrans = jointList[i];
+        jointTrans.localRotation = localRotations[i];
+        jointTrans.localPosition = localPositions[i];
+      }
+    }
 
     private void updateDeformPositionsInFingers() {
       var riggedFingers = GetComponentsInChildren<RiggedFinger>();
@@ -335,24 +336,24 @@ namespace Leap.Unity {
       return Quaternion.LookRotation(forward, up);
     }
 
-    // [Tooltip("When true, hands will be put into a Leap editor pose near the LeapServiceProvider's transform.  When False, the hands will be returned to their Start Pose if it has been saved.")]
-    // [SerializeField]
-    // private bool setEditorLeapPose = true;
+    [Tooltip("When true, hands will be put into a Leap editor pose near the LeapServiceProvider's transform.  When False, the hands will be returned to their Start Pose if it has been saved.")]
+    [SerializeField]
+    private bool setEditorLeapPose = true;
     
-    // public bool SetEditorLeapPose {
-    //   get { return setEditorLeapPose; }
-    //   set {
-    //     if (value == false) {
-    //       RestoreJointsStartPose();
-    //     }
-    //     setEditorLeapPose = value;
-    //   }
-    // }
+    public bool SetEditorLeapPose {
+      get { return setEditorLeapPose; }
+      set {
+        if (value == false) {
+          RestoreJointsStartPose();
+        }
+        setEditorLeapPose = value;
+      }
+    }
 
-    // [Tooltip("When True, hands will be put into a Leap editor pose near the LeapServiceProvider's transform.  When False, the hands will be returned to their Start Pose if it has been saved.")]
-    // [SerializeField]
-    // [HideInInspector]
-    // private bool deformPositionsState = false;
+    [Tooltip("When True, hands will be put into a Leap editor pose near the LeapServiceProvider's transform.  When False, the hands will be returned to their Start Pose if it has been saved.")]
+    [SerializeField]
+    [HideInInspector]
+    private bool deformPositionsState = false;
 
   }
 

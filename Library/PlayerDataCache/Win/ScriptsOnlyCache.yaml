@@ -6,21 +6,33 @@ ScriptsOnlyBuild:
     - ConnectedPlayerManager
     - CustomNetworkManagerHUD
     - Deformable
+    - EventHooks
     - Fader
-    - GameManager
     - GenerateMesh
     - HideOnStart
     - HookSwing
+    - Leap.Unity.Comment
+    - Leap.Unity.HandEnableDisable
+    - Leap.Unity.HandModelManager
+    - Leap.Unity.Interaction.DefaultXRNodeTrackingProvider
+    - Leap.Unity.Interaction.InteractionBehaviour
+    - Leap.Unity.Interaction.InteractionButton
+    - Leap.Unity.Interaction.InteractionHand
+    - Leap.Unity.Interaction.InteractionManager
+    - Leap.Unity.Interaction.InteractionXRController
+    - Leap.Unity.LeapHandsAutoRig
+    - Leap.Unity.LeapXRServiceProvider
+    - Leap.Unity.RiggedFinger
+    - Leap.Unity.RiggedHand
+    - Leap.Unity.XRHeightOffset
+    - MainMenuHandler
     - MyNetworkManager
-    - OVRCameraRig
-    - OVRManager
     - Team
     - VRFootIK
     - VRPlayerController
     - VRRig
     - VRTK.VRTK_Logger
     Unity.Animation.Rigging.dll:
-    - UnityEngine.Animations.Rigging.BoneRenderer
     - UnityEngine.Animations.Rigging.MultiParentConstraint
     - UnityEngine.Animations.Rigging.Rig
     - UnityEngine.Animations.Rigging.RigBuilder
@@ -37,13 +49,19 @@ ScriptsOnlyBuild:
     - UnityEditor.TestTools.TestRunner.Api.CallbacksHolder
     - UnityEditor.TestTools.TestRunner.TestListCacheData
     - UnityEditor.TestTools.TestRunner.TestRun.TestJobDataHolder
+    UnityEngine.UI.dll:
+    - UnityEngine.EventSystems.EventSystem
+    - UnityEngine.EventSystems.StandaloneInputModule
+    - UnityEngine.UI.CanvasScaler
+    - UnityEngine.UI.GraphicRaycaster
+    - UnityEngine.UI.Text
     com.unity.multiplayer-hlapi.Runtime.dll:
     - UnityEngine.Networking.NetworkCallbacks
     - UnityEngine.Networking.NetworkIdentity
     - UnityEngine.Networking.NetworkManagerHUD
     - UnityEngine.Networking.NetworkTransform
   sceneClasses:
-    Assets/Scene2.unity:
+    Assets/Scenes/MainMenu.unity:
     - Class: 1
       Script: {instanceID: 0}
     - Class: 4
@@ -66,6 +84,101 @@ ScriptsOnlyBuild:
       Script: {instanceID: 0}
     - Class: 65
       Script: {instanceID: 0}
+    - Class: 81
+      Script: {instanceID: 0}
+    - Class: 90
+      Script: {instanceID: 0}
+    - Class: 95
+      Script: {instanceID: 0}
+    - Class: 104
+      Script: {instanceID: 0}
+    - Class: 108
+      Script: {instanceID: 0}
+    - Class: 109
+      Script: {instanceID: 0}
+    - Class: 114
+      Script: {instanceID: 11294}
+    - Class: 114
+      Script: {instanceID: 11504}
+    - Class: 114
+      Script: {instanceID: 11734}
+    - Class: 114
+      Script: {instanceID: 12042}
+    - Class: 114
+      Script: {instanceID: 12180}
+    - Class: 114
+      Script: {instanceID: 12630}
+    - Class: 114
+      Script: {instanceID: 12756}
+    - Class: 114
+      Script: {instanceID: 13206}
+    - Class: 114
+      Script: {instanceID: 13342}
+    - Class: 114
+      Script: {instanceID: 13370}
+    - Class: 114
+      Script: {instanceID: 13648}
+    - Class: 114
+      Script: {instanceID: 13902}
+    - Class: 114
+      Script: {instanceID: 13986}
+    - Class: 114
+      Script: {instanceID: 14110}
+    - Class: 114
+      Script: {instanceID: 14118}
+    - Class: 114
+      Script: {instanceID: 14798}
+    - Class: 114
+      Script: {instanceID: 15030}
+    - Class: 114
+      Script: {instanceID: 15058}
+    - Class: 114
+      Script: {instanceID: 15224}
+    - Class: 114
+      Script: {instanceID: 15614}
+    - Class: 115
+      Script: {instanceID: 0}
+    - Class: 128
+      Script: {instanceID: 0}
+    - Class: 135
+      Script: {instanceID: 0}
+    - Class: 136
+      Script: {instanceID: 0}
+    - Class: 137
+      Script: {instanceID: 0}
+    - Class: 157
+      Script: {instanceID: 0}
+    - Class: 196
+      Script: {instanceID: 0}
+    - Class: 222
+      Script: {instanceID: 0}
+    - Class: 223
+      Script: {instanceID: 0}
+    - Class: 224
+      Script: {instanceID: 0}
+    Assets/Scenes/Scene2.unity:
+    - Class: 1
+      Script: {instanceID: 0}
+    - Class: 4
+      Script: {instanceID: 0}
+    - Class: 20
+      Script: {instanceID: 0}
+    - Class: 21
+      Script: {instanceID: 0}
+    - Class: 23
+      Script: {instanceID: 0}
+    - Class: 28
+      Script: {instanceID: 0}
+    - Class: 33
+      Script: {instanceID: 0}
+    - Class: 43
+      Script: {instanceID: 0}
+    - Class: 48
+      Script: {instanceID: 0}
+    - Class: 54
+      Script: {instanceID: 0}
+    - Class: 64
+      Script: {instanceID: 0}
     - Class: 74
       Script: {instanceID: 0}
     - Class: 81
@@ -84,58 +197,78 @@ ScriptsOnlyBuild:
       Script: {instanceID: 0}
     - Class: 108
       Script: {instanceID: 0}
-    - Class: 109
-      Script: {instanceID: 0}
     - Class: 114
-      Script: {instanceID: 11342}
+      Script: {instanceID: 11256}
     - Class: 114
-      Script: {instanceID: 11352}
+      Script: {instanceID: 11340}
     - Class: 114
-      Script: {instanceID: 11494}
+      Script: {instanceID: 11398}
     - Class: 114
-      Script: {instanceID: 11584}
+      Script: {instanceID: 11504}
     - Class: 114
-      Script: {instanceID: 11626}
+      Script: {instanceID: 11596}
     - Class: 114
-      Script: {instanceID: 11738}
+      Script: {instanceID: 11752}
     - Class: 114
-      Script: {instanceID: 11768}
+      Script: {instanceID: 11890}
     - Class: 114
-      Script: {instanceID: 11964}
+      Script: {instanceID: 11932}
     - Class: 114
-      Script: {instanceID: 12000}
+      Script: {instanceID: 12042}
     - Class: 114
-      Script: {instanceID: 12016}
+      Script: {instanceID: 12178}
     - Class: 114
-      Script: {instanceID: 12062}
+      Script: {instanceID: 12180}
     - Class: 114
-      Script: {instanceID: 12270}
+      Script: {instanceID: 12218}
     - Class: 114
-      Script: {instanceID: 12656}
+      Script: {instanceID: 12238}
     - Class: 114
-      Script: {instanceID: 12938}
+      Script: {instanceID: 12294}
     - Class: 114
-      Script: {instanceID: 13242}
+      Script: {instanceID: 12548}
     - Class: 114
-      Script: {instanceID: 13392}
+      Script: {instanceID: 12630}
     - Class: 114
-      Script: {instanceID: 13628}
+      Script: {instanceID: 13040}
     - Class: 114
-      Script: {instanceID: 13668}
+      Script: {instanceID: 13206}
     - Class: 114
-      Script: {instanceID: 13742}
+      Script: {instanceID: 13342}
     - Class: 114
-      Script: {instanceID: 13858}
+      Script: {instanceID: 13370}
     - Class: 114
-      Script: {instanceID: 13862}
+      Script: {instanceID: 13412}
     - Class: 114
-      Script: {instanceID: 13974}
+      Script: {instanceID: 13648}
     - Class: 114
-      Script: {instanceID: 14268}
+      Script: {instanceID: 13794}
     - Class: 114
-      Script: {instanceID: 14430}
+      Script: {instanceID: 13902}
     - Class: 114
-      Script: {instanceID: 14602}
+      Script: {instanceID: 13986}
+    - Class: 114
+      Script: {instanceID: 14110}
+    - Class: 114
+      Script: {instanceID: 14270}
+    - Class: 114
+      Script: {instanceID: 14420}
+    - Class: 114
+      Script: {instanceID: 14556}
+    - Class: 114
+      Script: {instanceID: 14704}
+    - Class: 114
+      Script: {instanceID: 15030}
+    - Class: 114
+      Script: {instanceID: 15068}
+    - Class: 114
+      Script: {instanceID: 15224}
+    - Class: 114
+      Script: {instanceID: 15268}
+    - Class: 114
+      Script: {instanceID: 15482}
+    - Class: 114
+      Script: {instanceID: 19832}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 135
@@ -153,6 +286,12 @@ ScriptsOnlyBuild:
     - Class: 199
       Script: {instanceID: 0}
   scriptHashData:
+  - hash:
+      serializedVersion: 2
+      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: EventHooks
   - hash:
       serializedVersion: 2
       Hash: 27fb4366520d54a89b0a509371bcf6cb
@@ -203,6 +342,12 @@ ScriptsOnlyBuild:
     className: PanelMenuUIGrid
   - hash:
       serializedVersion: 2
+      Hash: 2236ba0ea006da3060d76dfa5bd54763
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: Leap.Unity.Interaction
+    className: InteractionBehaviour
+  - hash:
+      serializedVersion: 2
       Hash: aa9b10011f4c9cad242c482fa2eeb065
     assemblyName: Assembly-CSharp.dll
     namespaceName: VRTK.Examples.Tests
@@ -245,6 +390,12 @@ ScriptsOnlyBuild:
     className: OVRCameraRig
   - hash:
       serializedVersion: 2
+      Hash: 83dad5d3b311cc37500c9a51e45acefd
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: Leap.Unity
+    className: ConnectionMonitor
+  - hash:
+      serializedVersion: 2
       Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
     assemblyName: Assembly-CSharp.dll
     namespaceName: VRTK
@@ -255,6 +406,12 @@ ScriptsOnlyBuild:
     assemblyName: Assembly-CSharp.dll
     namespaceName: VRTK.UnityEventHelper
     className: VRTK_InteractObjectHighlighter_UnityEvents
+  - hash:
+      serializedVersion: 2
+      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: IgnoreColliderForInteraction
   - hash:
       serializedVersion: 2
       Hash: d0d292693a1a531afe3ed8bf74412e35
@@ -279,6 +436,12 @@ ScriptsOnlyBuild:
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: OVRGazePointer
+  - hash:
+      serializedVersion: 2
+      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: Leap.Unity
+    className: HandEnableDisable
   - hash:
       serializedVersion: 2
       Hash: 55eb197fbec0277a093b584be9b30145
@@ -317,10 +480,22 @@ ScriptsOnlyBuild:
     className: VRTK_InteractUse
   - hash:
       serializedVersion: 2
+      Hash: 60ccc40e497f1e4098bcfe124066e0f8
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: Leap.Unity.Animation
+    className: TransformTweenBehaviour
+  - hash:
+      serializedVersion: 2
       Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
     assemblyName: Assembly-CSharp.dll
     namespaceName: VRTK
     className: SDK_SteamVRSystem
+  - hash:
+      serializedVersion: 2
+      Hash: 44ce80fdc493a14644ce602a248aa3e7
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: Leap.Unity
+    className: SkeletalFinger
   - hash:
       serializedVersion: 2
       Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
@@ -371,10 +546,22 @@ ScriptsOnlyBuild:
     className: HookSwing
   - hash:
       serializedVersion: 2
+      Hash: 58219ebcd660f31e59b098c329a2e162
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: Leap.Unity.Interaction.Tests
+    className: TestInteractionStateColor
+  - hash:
+      serializedVersion: 2
       Hash: f1ce079704f5dae60dbfc5afaf6cc699
     assemblyName: Assembly-CSharp.dll
     namespaceName: VRTK
     className: VRTK_HeadsetCollisionFade
+  - hash:
+      serializedVersion: 2
+      Hash: 477e0cfb9c0ba2eae691de22252b435e
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: Leap.Unity
+    className: PinchDetector
   - hash:
       serializedVersion: 2
       Hash: e963bd99eef174ea300f591e38dfa8f6
@@ -447,6 +634,12 @@ ScriptsOnlyBuild:
     assemblyName: Unity.Animation.Rigging.dll
     namespaceName: UnityEngine.Animations.Rigging
     className: MultiRotationConstraint
+  - hash:
+      serializedVersion: 2
+      Hash: e86a95e85abe628bbaf9fcf84f853b8d
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: Leap.Unity
+    className: Detector
   - hash:
       serializedVersion: 2
       Hash: 72712369a7c681ad84fc255a5ec0b333
@@ -545,6 +738,12 @@ ScriptsOnlyBuild:
     className: VRTK_SDKManager
   - hash:
       serializedVersion: 2
+      Hash: 251156373073d64cb91fe2f22c7046ea
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: Leap.Unity.Examples
+    className: SimpleFacingCameraCallbacks
+  - hash:
+      serializedVersion: 2
       Hash: d414e52c15bf6d71e00beda3bf535f01
     assemblyName: Assembly-CSharp.dll
     namespaceName: VRTK.UnityEventHelper
@@ -555,6 +754,18 @@ ScriptsOnlyBuild:
     assemblyName: Unity.TextMeshPro.dll
     namespaceName: TMPro
     className: TMP_InputField
+  - hash:
+      serializedVersion: 2
+      Hash: e84a78bde27df4b3d1f9d38023fb8ffd
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: Leap.Unity.Splines
+    className: BSpline
+  - hash:
+      serializedVersion: 2
+      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: Leap.Unity.Examples
+    className: Spaceship
   - hash:
       serializedVersion: 2
       Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
@@ -581,7 +792,13 @@ ScriptsOnlyBuild:
     className: UICircle
   - hash:
       serializedVersion: 2
-      Hash: c9042ef00ae55ea66ed0b322ffdd5c10
+      Hash: 547620ccf77e541783fcec48c395c4c4
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: Leap.Unity.GraphicalRenderer
+    className: LeapTextGraphic
+  - hash:
+      serializedVersion: 2
+      Hash: 8faa3fabf11d6436fd1fb266df02cfe4
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: VRPlayerController
@@ -599,10 +816,22 @@ ScriptsOnlyBuild:
     className: GridLayoutGroup
   - hash:
       serializedVersion: 2
+      Hash: 80f8a50496b357c5d1bb9149cc72d487
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: Leap.Unity.Attachments
+    className: AttachmentHandEnableDisable
+  - hash:
+      serializedVersion: 2
       Hash: 849ed1cc34faf38cd0f35aff9ecf2367
     assemblyName: Assembly-CSharp.dll
     namespaceName: VRTK.Examples
     className: Sword
+  - hash:
+      serializedVersion: 2
+      Hash: 8dd05eb4ca2d821ca9042135b315c5e6
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: Leap.Unity.Examples
+    className: ProjectionPostProcessProvider
   - hash:
       serializedVersion: 2
       Hash: 9684b730c1ca8a3c2e3fa1652f09faa1
@@ -653,6 +882,12 @@ ScriptsOnlyBuild:
     className: VRTK_RadialMenuController
   - hash:
       serializedVersion: 2
+      Hash: b71b79797463de4258bff324210e15e3
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: Leap.Unity
+    className: RiggedHand
+  - hash:
+      serializedVersion: 2
       Hash: 8aa3d6ccbcb54ee8db6c1229854adaaa
     assemblyName: UnityEngine.UI.dll
     namespaceName: UnityEngine.UI
@@ -665,10 +900,22 @@ ScriptsOnlyBuild:
     className: SignalAsset
   - hash:
       serializedVersion: 2
+      Hash: c86ebff5bfbb53d32cf41f3540c65659
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: Leap.Unity.Geometry
+    className: GeometryTest_SegmentRectIntersection
+  - hash:
+      serializedVersion: 2
       Hash: 9acfbe638d04302df8035caa26f81eae
     assemblyName: Assembly-CSharp.dll
     namespaceName: VRTK.Examples.Archery
     className: Follow
+  - hash:
+      serializedVersion: 2
+      Hash: ffd17cc0ff6f33c61e14cd8788169a43
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: Leap.Unity.RuntimeGizmos
+    className: RuntimeGizmoManager
   - hash:
       serializedVersion: 2
       Hash: 4f03875303977b0819d112d67f667f11
@@ -683,16 +930,34 @@ ScriptsOnlyBuild:
     className: VRTK_InteractControllerAppearance
   - hash:
       serializedVersion: 2
+      Hash: 50f3fef4671fa91c1eadbe8d26e891df
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: Leap.Unity.GraphicalRenderer
+    className: LeapMeshGraphic
+  - hash:
+      serializedVersion: 2
       Hash: e99b59d3d87620206fef3b90f41ae69c
     assemblyName: Assembly-CSharp.dll
     namespaceName: VRTK
     className: VRTK_TransformFollow
   - hash:
       serializedVersion: 2
+      Hash: c45d28c38bedd2dfd3b969dfff86601c
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: Leap.Unity.Examples
+    className: SwapGraspExample
+  - hash:
+      serializedVersion: 2
       Hash: f4aa71874fa6842165ecfe50e340afef
     assemblyName: Assembly-CSharp.dll
     namespaceName: VRTK.UnityEventHelper
     className: VRTK_HeadsetControllerAware_UnityEvents
+  - hash:
+      serializedVersion: 2
+      Hash: 60e889dc340c429817741e2e41dd5d06
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: Leap.Unity.Interaction.Examples
+    className: HideInteractionHandWhenControllerMoving
   - hash:
       serializedVersion: 2
       Hash: 0dbc3be398b4869a5c8d0d8481ee402c
@@ -725,6 +990,18 @@ ScriptsOnlyBuild:
     className: SDK_UnityHeadset
   - hash:
       serializedVersion: 2
+      Hash: 91ff9b9f44aa38a4d590f4cc05a24650
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: Leap.Unity
+    className: LeapTestProvider
+  - hash:
+      serializedVersion: 2
+      Hash: 8bb99954ad60ced3debe38a0801108b2
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: Leap.Unity.Examples
+    className: RenderWireSphere
+  - hash:
+      serializedVersion: 2
       Hash: 90a6e3c14cedc6f75c8c4c90dbc4dd3a
     assemblyName: Assembly-CSharp.dll
     namespaceName: VRTK.UnityEventHelper
@@ -755,10 +1032,22 @@ ScriptsOnlyBuild:
     className: Controller_Menu
   - hash:
       serializedVersion: 2
+      Hash: af674031a8db313b88d59a4998db6370
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: Leap.Unity.Space
+    className: LeapSphericalSpace
+  - hash:
+      serializedVersion: 2
       Hash: da0de81030503805a80b1253ae6530f1
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: VRFootIK
+  - hash:
+      serializedVersion: 2
+      Hash: 3716737545ca8ac569ceeeb4a99030ec
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: Leap.Unity.Interaction
+    className: InteractionXRController
   - hash:
       serializedVersion: 2
       Hash: 4c535cd2d1518505902f96d9b156cb1a
@@ -789,6 +1078,12 @@ ScriptsOnlyBuild:
     assemblyName: Assembly-CSharp.dll
     namespaceName: VRTK
     className: VRTK_PlayerObject
+  - hash:
+      serializedVersion: 2
+      Hash: 58eb4088510cb672ff3779f6df00eeef
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: Leap.Unity.Examples
+    className: SimpleRendererUtil
   - hash:
       serializedVersion: 2
       Hash: 6afc47b88c342c4580c583e24f50bead
@@ -857,6 +1152,12 @@ ScriptsOnlyBuild:
     className: AspectRatioFitter
   - hash:
       serializedVersion: 2
+      Hash: 701364e618d21730b48cee138ff167f8
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: ExampleArrayController
+  - hash:
+      serializedVersion: 2
       Hash: b9456ba332110dfdade418a3dedc8d76
     assemblyName: Assembly-CSharp.dll
     namespaceName: VRTK
@@ -867,6 +1168,12 @@ ScriptsOnlyBuild:
     assemblyName: Assembly-CSharp.dll
     namespaceName: VRTK.Examples
     className: UI_Keyboard
+  - hash:
+      serializedVersion: 2
+      Hash: ef3d783c450f8f398d41b6d0331a7961
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: Leap.Unity.Examples
+    className: TransformHandle
   - hash:
       serializedVersion: 2
       Hash: 5ae3084f11cce4001680c05deed3fe9d
@@ -911,10 +1218,28 @@ ScriptsOnlyBuild:
     className: TMP_SubMeshUI
   - hash:
       serializedVersion: 2
+      Hash: 2a9cf45e023dbdb7c563bf2a26dbeb0b
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: Leap.Unity
+    className: PalmDirectionDetector
+  - hash:
+      serializedVersion: 2
       Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
     assemblyName: Assembly-CSharp.dll
     namespaceName: VRTK
     className: VRTK_ScreenFade
+  - hash:
+      serializedVersion: 2
+      Hash: f02ebb804313c7ce1962e91e519b5b09
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: Leap.Unity.Examples
+    className: WorkstationBehaviourExample
+  - hash:
+      serializedVersion: 2
+      Hash: e453970a63590caf60d2f60ec737375a
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: Leap.Unity.Examples
+    className: SimpleMatchAnchorScaleAndState
   - hash:
       serializedVersion: 2
       Hash: fef6830ed12cb3b5561e4851ec569f37
@@ -937,6 +1262,12 @@ ScriptsOnlyBuild:
       serializedVersion: 2
       Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
     assemblyName: Assembly-CSharp.dll
+    namespaceName: Leap.Unity.Examples
+    className: SimpleTransformUtil
+  - hash:
+      serializedVersion: 2
+      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
+    assemblyName: Assembly-CSharp.dll
     namespaceName: VRTK.Examples.PanelMenu
     className: PanelMenuDemoSphere
   - hash:
@@ -945,6 +1276,12 @@ ScriptsOnlyBuild:
     assemblyName: Assembly-CSharp.dll
     namespaceName: VRTK.Examples
     className: PanelMenuSaucerGrid
+  - hash:
+      serializedVersion: 2
+      Hash: 706a128d2a5bfffe6108aed7fa12fa10
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: CycleHandPairs
   - hash:
       serializedVersion: 2
       Hash: 63e76a414b33483c4e8f6fa0573ec153
@@ -995,6 +1332,12 @@ ScriptsOnlyBuild:
     className: ConnectedPlayerManager
   - hash:
       serializedVersion: 2
+      Hash: f029318299c5a94aae63e9bb13edd224
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: Leap.Unity
+    className: ProximityDetector
+  - hash:
+      serializedVersion: 2
       Hash: 07d3ae139060c3c464cbb775f8b9ee37
     assemblyName: Assembly-CSharp.dll
     namespaceName: VRTK
@@ -1019,6 +1362,12 @@ ScriptsOnlyBuild:
     className: VRTK_InteractGrab
   - hash:
       serializedVersion: 2
+      Hash: 04c29bbd0a0a20e355ef6ef9e76db036
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: Leap.Unity
+    className: FrameRateControls
+  - hash:
+      serializedVersion: 2
       Hash: 0a3cfadd66a365399ab94e244e65bc90
     assemblyName: Assembly-CSharp.dll
     namespaceName: VRTK
@@ -1031,10 +1380,40 @@ ScriptsOnlyBuild:
     className: VRTK_ControllerInteract_ListenerExample
   - hash:
       serializedVersion: 2
+      Hash: ef2d258b91b4858380885df844ee6bb6
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: Leap.Unity.Interaction
+    className: InteractionManager
+  - hash:
+      serializedVersion: 2
+      Hash: eed7a53daffed1e86a518051b94b8d48
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: Leap.Unity.Interaction
+    className: AnchorGroup
+  - hash:
+      serializedVersion: 2
+      Hash: 5d11caf7a846c5171bec34be1d7c7e3f
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: Leap.Unity.GraphicalRenderer
+    className: LeapPanelOutlineGraphic
+  - hash:
+      serializedVersion: 2
+      Hash: 82827952c5cb10d652bddcbc54600238
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: Leap.Unity.Attachments
+    className: AttachmentPointBehaviour
+  - hash:
+      serializedVersion: 2
       Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
     assemblyName: Assembly-CSharp.dll
     namespaceName: VRTK
     className: SDK_SimBoundaries
+  - hash:
+      serializedVersion: 2
+      Hash: 0006465f5bc4bcfacb58dbf627a687a0
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: Leap.Unity.GraphicalRenderer
+    className: LeapPanelGraphic
   - hash:
       serializedVersion: 2
       Hash: 5dd838637aa48900ba911229ec3bfd86
@@ -1053,6 +1432,12 @@ ScriptsOnlyBuild:
     assemblyName: Assembly-CSharp.dll
     namespaceName: VRTK.Examples
     className: SnapDropZoneToggle
+  - hash:
+      serializedVersion: 2
+      Hash: 536e213326c281e546e33e6ac8e2b37a
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: Leap.Unity.Examples
+    className: SimpleAnchorFeedback
   - hash:
       serializedVersion: 2
       Hash: 8f6aecb1120676ee23a898ec09bf4e80
@@ -1121,6 +1506,12 @@ ScriptsOnlyBuild:
     className: SDK_SimController
   - hash:
       serializedVersion: 2
+      Hash: 0dc384d9e42d5f1b22169cab94a56928
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: Leap.Unity
+    className: LeapImageRetriever
+  - hash:
+      serializedVersion: 2
       Hash: 9be975ed84da36efd7c22fd0f38877e6
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
@@ -1151,6 +1542,12 @@ ScriptsOnlyBuild:
     className: VRTK_RotateTransformGrabAttach_UnityEvents
   - hash:
       serializedVersion: 2
+      Hash: 969ab237fdc28a0878d1875d7da58b1f
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: Leap.Unity.Interaction
+    className: InteractionToggle
+  - hash:
+      serializedVersion: 2
       Hash: 6ed0a296f1f1c9a2b22c6f8e635be7c9
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
@@ -1167,6 +1564,12 @@ ScriptsOnlyBuild:
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: OVRPlatformMenu
+  - hash:
+      serializedVersion: 2
+      Hash: 8fba886433398412d87a4cc52b5a3e72
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: Leap.Unity.Examples
+    className: LinearReferenceSpawner
   - hash:
       serializedVersion: 2
       Hash: c893711e8d5f87691b43bb17a6ab2266
@@ -1235,6 +1638,12 @@ ScriptsOnlyBuild:
     className: VRTK_CollisionTracker
   - hash:
       serializedVersion: 2
+      Hash: 8434aaf820fcdbefb642fdf8f8eac8f4
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: Leap.Unity.Attachments
+    className: AttachmentHands
+  - hash:
+      serializedVersion: 2
       Hash: 4d0bec33788c91c1e3d3c90c8f49d5db
     assemblyName: Unity.Animation.Rigging.dll
     namespaceName: UnityEngine.Animations.Rigging
@@ -1247,10 +1656,34 @@ ScriptsOnlyBuild:
     className: AutoRotation
   - hash:
       serializedVersion: 2
+      Hash: 440049e800edd26bb09131703a0c21a8
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: Leap.Unity
+    className: FpsLabel
+  - hash:
+      serializedVersion: 2
       Hash: e7c470fc53072faef9059fb81c573abb
     assemblyName: Assembly-CSharp.dll
     namespaceName: VRTK
     className: SDK_UnityCameraRig
+  - hash:
+      serializedVersion: 2
+      Hash: aa73beaac03cc87923a1a0eaef4666ff
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: Leap.Unity.Space
+    className: LeapSpaceAnchor
+  - hash:
+      serializedVersion: 2
+      Hash: bedfb308e1eabbf9055083d4576e740f
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: Leap.Unity.Examples
+    className: InertiaPostProcessProvider
+  - hash:
+      serializedVersion: 2
+      Hash: 8cc47841535304dc8ef4edd14fd1a677
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: Leap.Unity.Interaction
+    className: AnchorScoreTest
   - hash:
       serializedVersion: 2
       Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
@@ -1283,10 +1716,22 @@ ScriptsOnlyBuild:
     className: TMP_Asset
   - hash:
       serializedVersion: 2
+      Hash: 02896bd92bb5fcbb908fd99858fc8931
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: Leap.Unity
+    className: EnableDepthBuffer
+  - hash:
+      serializedVersion: 2
       Hash: b5c71bed93f1af3836a6dde2e11f3b07
     assemblyName: Assembly-CSharp.dll
     namespaceName: VRTK.UnityEventHelper
     className: VRTK_ObjectAutoGrab_UnityEvents
+  - hash:
+      serializedVersion: 2
+      Hash: b7d1817979b42aa3b599ba010575506b
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: Leap.Unity
+    className: RiggedFinger
   - hash:
       serializedVersion: 2
       Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
@@ -1321,6 +1766,12 @@ ScriptsOnlyBuild:
       serializedVersion: 2
       Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
     assemblyName: Assembly-CSharp.dll
+    namespaceName: Leap.Unity.Examples
+    className: IgnoreCollisionsInChildren
+  - hash:
+      serializedVersion: 2
+      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
+    assemblyName: Assembly-CSharp.dll
     namespaceName: VRTK.Examples
     className: Sphere_Spawner
   - hash:
@@ -1343,6 +1794,12 @@ ScriptsOnlyBuild:
     className: VRTK_CurveGenerator
   - hash:
       serializedVersion: 2
+      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: Leap.Unity
+    className: HandDrop
+  - hash:
+      serializedVersion: 2
       Hash: 58cacc8ebad62d79403eb65dba53e48f
     assemblyName: Assembly-CSharp.dll
     namespaceName: VRTK
@@ -1353,6 +1810,12 @@ ScriptsOnlyBuild:
     assemblyName: Assembly-CSharp.dll
     namespaceName: VRTK
     className: VRTK_ConsoleViewer
+  - hash:
+      serializedVersion: 2
+      Hash: 78e914a2ecc19d60c0dbd4ee4e7b7470
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: Leap.Unity
+    className: RigidHand
   - hash:
       serializedVersion: 2
       Hash: fe6861b3aa11fee285fbc78ddf45bb59
@@ -1403,6 +1866,12 @@ ScriptsOnlyBuild:
     className: OVRResetOrientation
   - hash:
       serializedVersion: 2
+      Hash: 70f57ec57566c10f00ab6aee98f43180
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: Leap.Unity.Interaction
+    className: InteractionHand
+  - hash:
+      serializedVersion: 2
       Hash: 4f210988ae6c9d3dc042fd0f49a9468b
     assemblyName: Assembly-CSharp.dll
     namespaceName: VRTK.UnityEventHelper
@@ -1413,6 +1882,12 @@ ScriptsOnlyBuild:
     assemblyName: Assembly-CSharp.dll
     namespaceName: VRTK
     className: VRTK_AdaptiveQuality
+  - hash:
+      serializedVersion: 2
+      Hash: 4d4b96d44df54d5ee0b82db437a4e854
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: Leap.Unity
+    className: LeapHandsAutoRig
   - hash:
       serializedVersion: 2
       Hash: 8b8a722cc45a273176f7956864e490ef
@@ -1445,7 +1920,13 @@ ScriptsOnlyBuild:
     className: VRTK_SnapDropZone
   - hash:
       serializedVersion: 2
-      Hash: f37b565bcb9a0a73c905a120ceab2ec8
+      Hash: fe432490fb064db97065e0fbbb806cd7
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: Leap.Unity.Animation.Examples
+    className: TransformPoseSpline
+  - hash:
+      serializedVersion: 2
+      Hash: feb36567b60a4e4cbdca827257d2e099
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: VRRig
@@ -1463,6 +1944,18 @@ ScriptsOnlyBuild:
     className: NetworkCallbacks
   - hash:
       serializedVersion: 2
+      Hash: 09d6de3e088391a7cdb0ae4d2cdcfb65
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: Leap.Unity
+    className: KeyEnableGameObjects
+  - hash:
+      serializedVersion: 2
+      Hash: 5d04fe30d4979959b2f1410a0ae8813f
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: Leap.Unity
+    className: LeapEyeDislocator
+  - hash:
+      serializedVersion: 2
       Hash: 22dc216204f0e65ce2161bd7b6ecf06b
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
@@ -1473,6 +1966,12 @@ ScriptsOnlyBuild:
     assemblyName: Assembly-CSharp.dll
     namespaceName: VRTK.Examples
     className: InteractableLamp
+  - hash:
+      serializedVersion: 2
+      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: Leap.Unity.Interaction
+    className: PhysicsCallbacks
   - hash:
       serializedVersion: 2
       Hash: 21e871d89bbce53c038fc75ad1b7c7f3
@@ -1497,6 +1996,12 @@ ScriptsOnlyBuild:
     assemblyName: Unity.TextMeshPro.dll
     namespaceName: TMPro
     className: TMP_SpriteAnimator
+  - hash:
+      serializedVersion: 2
+      Hash: 9bda1592f7e4f75edc7e6efd87cfd069
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: Leap.Unity.RuntimeGizmos
+    className: RuntimeColliderGizmos
   - hash:
       serializedVersion: 2
       Hash: b255c1f159a5a8a1c7c5859928317bea
@@ -1535,10 +2040,34 @@ ScriptsOnlyBuild:
     className: VRTK_SDKInputOverride
   - hash:
       serializedVersion: 2
+      Hash: 2ff050f12b11b2ae71882d956742902d
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: Leap.Unity.GraphicalRenderer
+    className: LeapBoxGraphic
+  - hash:
+      serializedVersion: 2
       Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
     assemblyName: UnityEngine.TestRunner.dll
     namespaceName: UnityEngine.TestTools.TestRunner.Callbacks
     className: RemoteTestResultSender
+  - hash:
+      serializedVersion: 2
+      Hash: 0d85f4fda1e0e70cd92c084d12f05cdc
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: Leap.Unity.Interaction.Examples
+    className: MovePoseExample
+  - hash:
+      serializedVersion: 2
+      Hash: 4fa0a199eb0fa26156843a40f7581ea9
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: Leap.Unity
+    className: DebugHand
+  - hash:
+      serializedVersion: 2
+      Hash: 89f01dab6712d819bb5c7b4e05cc96bd
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: Leap.Unity.Examples
+    className: AngularSpeedTextBehaviour
   - hash:
       serializedVersion: 2
       Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
@@ -1553,6 +2082,12 @@ ScriptsOnlyBuild:
     className: OVRMonoscopic
   - hash:
       serializedVersion: 2
+      Hash: 17e09f33c82ba1cb84ce318494d55089
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: Leap.Unity
+    className: FingerDirectionDetector
+  - hash:
+      serializedVersion: 2
       Hash: 2d7257ca1da94ce7ac2cbd2d8fbc615d
     assemblyName: Assembly-CSharp.dll
     namespaceName: VRTK
@@ -1563,6 +2098,12 @@ ScriptsOnlyBuild:
     assemblyName: Assembly-CSharp.dll
     namespaceName: VRTK.UnityEventHelper
     className: VRTK_UIDraggableItem_UnityEvents
+  - hash:
+      serializedVersion: 2
+      Hash: 2083c1f5a7aa33ac9529de30ce2a34b8
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: Leap.Unity
+    className: HandModelManager
   - hash:
       serializedVersion: 2
       Hash: e68a2326ee4d3200f81067f6b6e9fb1b
@@ -1581,6 +2122,12 @@ ScriptsOnlyBuild:
     assemblyName: Assembly-CSharp.dll
     namespaceName: VRTK
     className: SDK_FallbackController
+  - hash:
+      serializedVersion: 2
+      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: Leap.Unity.RuntimeGizmos
+    className: RuntimeGizmoToggle
   - hash:
       serializedVersion: 2
       Hash: 1f7b0c721efb0508ffca74be965cc006
@@ -1625,6 +2172,12 @@ ScriptsOnlyBuild:
     className: Button
   - hash:
       serializedVersion: 2
+      Hash: 7bac25265baff53dd6e2e57a104175c2
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: Leap.Unity.Examples
+    className: SimpleInteractionEmission
+  - hash:
+      serializedVersion: 2
       Hash: 9ebcc24ed1ba310b9e584458a4dfc43e
     assemblyName: Assembly-CSharp.dll
     namespaceName: VRTK
@@ -1641,6 +2194,12 @@ ScriptsOnlyBuild:
     assemblyName: Assembly-CSharp.dll
     namespaceName: VRTK.Examples.Archery
     className: ArrowSpawner
+  - hash:
+      serializedVersion: 2
+      Hash: ef3d783c450f8f398d41b6d0331a7961
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: Leap.Unity.Examples
+    className: TransformRotationHandle
   - hash:
       serializedVersion: 2
       Hash: d949440bce8ebd23a50ba0ed68445164
@@ -1685,6 +2244,12 @@ ScriptsOnlyBuild:
     className: SDK_SimHeadset
   - hash:
       serializedVersion: 2
+      Hash: 44ddd6fbe4ff89af43a988be92dd5456
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: SimpleInteractionGlow
+  - hash:
+      serializedVersion: 2
       Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
     assemblyName: Assembly-CSharp.dll
     namespaceName: VRTK
@@ -1721,6 +2286,18 @@ ScriptsOnlyBuild:
     className: VRTK_SpringJointGrabAttach
   - hash:
       serializedVersion: 2
+      Hash: 7aee04316cbd5b0a33c101c6c7c67c52
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: Leap.Unity
+    className: XRHeightOffset
+  - hash:
+      serializedVersion: 2
+      Hash: 41fcb072f6fe0bf238772ce0afde639c
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: Leap.Unity.Examples
+    className: AutopilotSystem
+  - hash:
+      serializedVersion: 2
       Hash: cc4274b586df3c02688bac01b88bd16c
     assemblyName: Assembly-CSharp.dll
     namespaceName: VRTK
@@ -1733,10 +2310,22 @@ ScriptsOnlyBuild:
     className: VerticalLayoutGroup
   - hash:
       serializedVersion: 2
+      Hash: 59acdec886bcdeba9fa5b13e63e38dda
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: Leap.Unity.Interaction
+    className: Anchor
+  - hash:
+      serializedVersion: 2
       Hash: d52e9a05e9183a079eb3e3cb7938f75d
     assemblyName: Assembly-CSharp.dll
     namespaceName: VRTK
     className: VRTK_SnapRotateObjectControlAction
+  - hash:
+      serializedVersion: 2
+      Hash: 9a18fefa1f895e28ab6e3bbfadc38218
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: Leap.Unity
+    className: CapsuleHand
   - hash:
       serializedVersion: 2
       Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
@@ -1751,10 +2340,16 @@ ScriptsOnlyBuild:
     className: TwistCorrection
   - hash:
       serializedVersion: 2
-      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
+      Hash: 0b073caeceb4909f64b82c124e3656dd
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: Fader
+  - hash:
+      serializedVersion: 2
+      Hash: 2174f218f4bf400cfca124ebac7c7054
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: Leap.Unity.GraphicalRenderer
+    className: LeapGraphicRenderer
   - hash:
       serializedVersion: 2
       Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
@@ -1781,6 +2376,12 @@ ScriptsOnlyBuild:
     className: VRTK_UIPointer
   - hash:
       serializedVersion: 2
+      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: Leap.Unity.Examples
+    className: SimpleScaleUtil
+  - hash:
+      serializedVersion: 2
       Hash: 5eafd4ba0d143cc8778ffebf09abe163
     assemblyName: Assembly-CSharp.dll
     namespaceName: VRTK.UnityEventHelper
@@ -1803,6 +2404,18 @@ ScriptsOnlyBuild:
     assemblyName: Assembly-CSharp.dll
     namespaceName: VRTK.Examples.PanelMenu
     className: PanelMenuDemoFlyingSaucer
+  - hash:
+      serializedVersion: 2
+      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: Leap.Unity.Interaction
+    className: DefaultXRNodeTrackingProvider
+  - hash:
+      serializedVersion: 2
+      Hash: 0929e52b4e97357dcd6c010c24403b6b
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: Leap.Unity.Interaction
+    className: InteractionButton
   - hash:
       serializedVersion: 2
       Hash: bae5235830852ca9e7e5952184956503
@@ -1845,6 +2458,18 @@ ScriptsOnlyBuild:
     assemblyName: Assembly-CSharp.dll
     namespaceName: VRTK
     className: VRTK_PolicyList
+  - hash:
+      serializedVersion: 2
+      Hash: 8200491ef4f9a5e8bdc987f4ffd91749
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: Leap.Unity.GraphicalRenderer
+    className: LeapSpriteGraphic
+  - hash:
+      serializedVersion: 2
+      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: Leap.Unity.Animation.Internal
+    className: TweenRunner
   - hash:
       serializedVersion: 2
       Hash: 5ad4aa237d47ac2bab17bacb672edf7a
@@ -1937,10 +2562,10 @@ ScriptsOnlyBuild:
     className: WindowsMR_Camera
   - hash:
       serializedVersion: 2
-      Hash: 8994a2ed390ddf53fd1b08d42d072187
+      Hash: a95799c9bcbf0c960856f20f0139fda4
     assemblyName: Assembly-CSharp.dll
-    namespaceName: 
-    className: GameManager
+    namespaceName: Leap.Unity.Interaction
+    className: ContactBoneParent
   - hash:
       serializedVersion: 2
       Hash: fb9e80516093002ff1025fe6d5b8f35d
@@ -2003,6 +2628,12 @@ ScriptsOnlyBuild:
     className: VRTK_PlayAreaCursor
   - hash:
       serializedVersion: 2
+      Hash: dcf6e74abf9f541b63b92bee9ab62a49
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: Leap.Unity
+    className: LeapServiceProvider
+  - hash:
+      serializedVersion: 2
       Hash: e197d0b748f0fe21846663bdb6454914
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
@@ -2057,6 +2688,12 @@ ScriptsOnlyBuild:
     className: VRTKExample_BezierPointerDefaults
   - hash:
       serializedVersion: 2
+      Hash: 6e18c6edd86e27ef3f30cb1b71282adf
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: CenterTransformOnCam
+  - hash:
+      serializedVersion: 2
       Hash: b25a2a41f0971cf81faad97536082b05
     assemblyName: Assembly-CSharp.dll
     namespaceName: VRTK
@@ -2075,16 +2712,34 @@ ScriptsOnlyBuild:
     className: VRTK_PlayerClimb_UnityEvents
   - hash:
       serializedVersion: 2
+      Hash: 1864734525dd896d43f6493b3d1e7fe3
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: Leap.Unity.Interaction
+    className: InteractionSlider
+  - hash:
+      serializedVersion: 2
       Hash: 1aa3c1056d70edf15fdd22dc9270d47e
     assemblyName: Unity.Animation.Rigging.dll
     namespaceName: UnityEngine.Animations.Rigging
     className: MultiReferentialConstraint
   - hash:
       serializedVersion: 2
+      Hash: 134b8ae782302975c5559378af0fdb98
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: Leap.Unity.Examples
+    className: LinearSpeedTextBehaviour
+  - hash:
+      serializedVersion: 2
       Hash: f85613073ccb9f28227169fd4771554c
     assemblyName: Assembly-CSharp.dll
     namespaceName: VRTK
     className: VRTK_ObjectTooltip
+  - hash:
+      serializedVersion: 2
+      Hash: 9733ffe48eb1d1eb4b45f55b96f85ba6
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: Leap.Unity.Examples
+    className: TransformTranslationHandle
   - hash:
       serializedVersion: 2
       Hash: 059c625504141ee9b12a681866d0f499
@@ -2133,6 +2788,24 @@ ScriptsOnlyBuild:
     assemblyName: Assembly-CSharp.dll
     namespaceName: VRTK.Examples
     className: VRTKExample_OptionTilePointerSelector
+  - hash:
+      serializedVersion: 2
+      Hash: 3941e5e2e2a3a9798f4f296d0c79e909
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: Leap.Unity.Interaction
+    className: ContactBone
+  - hash:
+      serializedVersion: 2
+      Hash: af674031a8db313b88d59a4998db6370
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: Leap.Unity.Space
+    className: LeapCylindricalSpace
+  - hash:
+      serializedVersion: 2
+      Hash: 6bec9ca884c100fa2bc14b84d0f4f804
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: Leap.Unity
+    className: DisconnectionNotice
   - hash:
       serializedVersion: 2
       Hash: b92f0d1a8862c0ac6e54bb1a91a20444
@@ -2279,10 +2952,22 @@ ScriptsOnlyBuild:
     className: VRTK_RigidbodyFollow
   - hash:
       serializedVersion: 2
+      Hash: cc7f33cfeea39cc7fd9e06ad68263150
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: Leap.Unity.Examples
+    className: WorkstationPoseTest
+  - hash:
+      serializedVersion: 2
       Hash: 621a63b18c9a5841cb1d42889d8c9cf7
     assemblyName: Assembly-CSharp.dll
     namespaceName: VRTK.Examples
     className: Remote_Beam_Controller
+  - hash:
+      serializedVersion: 2
+      Hash: 54e2ce3989ec345bbf6c7589f78e1616
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: Leap.Unity
+    className: PolyHand
   - hash:
       serializedVersion: 2
       Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
@@ -2345,6 +3030,18 @@ ScriptsOnlyBuild:
     className: VRTK_ObjectControl_UnityEvents
   - hash:
       serializedVersion: 2
+      Hash: a38fb367899f6b2963bf7f1c6074a24d
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: Leap.Unity
+    className: MinimalHand
+  - hash:
+      serializedVersion: 2
+      Hash: 6c081c46e59d89aa6e2b50b5caaf7b93
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: Leap.Unity
+    className: ExtendedFingerDetector
+  - hash:
+      serializedVersion: 2
       Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
     assemblyName: Assembly-CSharp.dll
     namespaceName: VRTK.Examples
@@ -2363,6 +3060,12 @@ ScriptsOnlyBuild:
     className: OVRGrabber
   - hash:
       serializedVersion: 2
+      Hash: f377af1ab8f6e80ca97d7871feda549b
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: Leap.Unity
+    className: Comment
+  - hash:
+      serializedVersion: 2
       Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
     assemblyName: Assembly-CSharp.dll
     namespaceName: VRTK
@@ -2379,6 +3082,12 @@ ScriptsOnlyBuild:
     assemblyName: Assembly-CSharp.dll
     namespaceName: VRTK
     className: VRTK_Door
+  - hash:
+      serializedVersion: 2
+      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: MainMenuHandler
   - hash:
       serializedVersion: 2
       Hash: 2c4572fa431b42a7f86f548f77e64e47
@@ -2403,6 +3112,18 @@ ScriptsOnlyBuild:
     assemblyName: Unity.Timeline.dll
     namespaceName: UnityEngine.Timeline
     className: MarkerTrack
+  - hash:
+      serializedVersion: 2
+      Hash: 54e2ce3989ec345bbf6c7589f78e1616
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: Leap.Unity
+    className: SkeletalHand
+  - hash:
+      serializedVersion: 2
+      Hash: 4cfcc3e789c5a564ba1afbcf8bd21bf0
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: Leap.Unity
+    className: RigidFinger
   - hash:
       serializedVersion: 2
       Hash: 6299314f9d644babe3216b11c57cee85
@@ -2453,6 +3174,12 @@ ScriptsOnlyBuild:
     className: TMP_StyleSheet
   - hash:
       serializedVersion: 2
+      Hash: 9aaf3b74885f48f2e0acb6f867858dad
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: Leap.Unity.Attachments
+    className: AttachmentHand
+  - hash:
+      serializedVersion: 2
       Hash: e75e58ab373cc0817a1fdddc5e276a4a
     assemblyName: Assembly-CSharp.dll
     namespaceName: VRTK.UnityEventHelper
@@ -2469,6 +3196,12 @@ ScriptsOnlyBuild:
     assemblyName: Assembly-CSharp.dll
     namespaceName: VRTK
     className: VRTK_InteractObjectHighlighter
+  - hash:
+      serializedVersion: 2
+      Hash: 2e1c47ed851d6e1f5c937689620e81c6
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: Leap.Unity
+    className: LeapXRServiceProvider
   - hash:
       serializedVersion: 2
       Hash: e6ae40841db498b6e673877ac45ad208
@@ -2561,6 +3294,12 @@ ScriptsOnlyBuild:
     className: ToggleGameObject
   - hash:
       serializedVersion: 2
+      Hash: 4d77cd8e97188da6309f9e44da29db19
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: Leap.Unity
+    className: DetectorLogicGate
+  - hash:
+      serializedVersion: 2
       Hash: b2048c07f872bbae3b249b89b676bd14
     assemblyName: Assembly-CSharp.dll
     namespaceName: VRTK
@@ -2595,6 +3334,12 @@ ScriptsOnlyBuild:
     assemblyName: Assembly-CSharp.dll
     namespaceName: VRTK.Examples
     className: GunShoot
+  - hash:
+      serializedVersion: 2
+      Hash: d8132a455fbf771c181dc45710f1a6ec
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: Leap.Unity.Examples
+    className: TransformTool
   - hash:
       serializedVersion: 2
       Hash: e299761d18622d5282f9864a0c4617f2
@@ -2639,6 +3384,12 @@ ScriptsOnlyBuild:
     className: VRTK_SDKManager_UnityEvents
   - hash:
       serializedVersion: 2
+      Hash: 92185ad440354717459ed995dd53225d
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: Leap.Unity
+    className: KeyEnableBehaviors
+  - hash:
+      serializedVersion: 2
       Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
     assemblyName: UnityEngine.TestRunner.dll
     namespaceName: UnityEngine.TestRunner.Utils
@@ -2661,6 +3412,24 @@ ScriptsOnlyBuild:
     assemblyName: UnityEngine.UI.dll
     namespaceName: UnityEngine.UI
     className: Dropdown
+  - hash:
+      serializedVersion: 2
+      Hash: b27b7b0dde0ef4370ed6cd4d4ea371c8
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: Leap.Unity.Interaction
+    className: AnchorableBehaviour
+  - hash:
+      serializedVersion: 2
+      Hash: f7768d7b70c4993149784fc464b48186
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: Leap.Unity.Splines
+    className: TransformCatmullRomSpline
+  - hash:
+      serializedVersion: 2
+      Hash: 64f009ec941ae3b087491b71c5431e75
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: Leap.Unity
+    className: StationaryTestLeapProvider
   - hash:
       serializedVersion: 2
       Hash: 2f6b53e8311307301c4bb3499e01af05
@@ -2771,11 +3540,18 @@ ScriptsOnlyBuild:
     className: ToggleGroup
   - hash:
       serializedVersion: 2
+      Hash: ef2d4e9d59492b22f52c0343c2417144
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: Leap.Unity
+    className: PolyFinger
+  - hash:
+      serializedVersion: 2
       Hash: c3d3430df9e3ea95e3e3d587961390fb
     assemblyName: Unity.Timeline.dll
     namespaceName: UnityEngine.Timeline
     className: PlayableTrack
   platform: 5
   scenePathNames:
-  - Assets/Scene2.unity
-  playerPath: E:/Proj/Build/Proj.exe
+  - Assets/Scenes/MainMenu.unity
+  - Assets/Scenes/Scene2.unity
+  playerPath: C:/Users/Mitch/Desktop/Proj/Build/Proj.exe
