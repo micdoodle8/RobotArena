@@ -56,8 +56,12 @@ namespace Leap.Unity.Interaction {
       Vector3 lerpedVelocity = Vector3.Lerp(intObj.rigidbody.velocity, targetVelocity, followStrength);
       Vector3 lerpedAngularVelocity = Vector3.Lerp(intObj.rigidbody.angularVelocity, targetAngularVelocity, followStrength);
 
-      intObj.rigidbody.velocity = lerpedVelocity;
-      intObj.rigidbody.angularVelocity = lerpedAngularVelocity;
+      if (!float.IsNaN(lerpedVelocity.x)) {
+        intObj.rigidbody.velocity = lerpedVelocity;
+      }
+      if (!float.IsNaN(lerpedAngularVelocity.x)) {
+        intObj.rigidbody.angularVelocity = lerpedAngularVelocity;
+      }
 
       _lastSolvedCoMPosition = solvedCenterOfMass;
 

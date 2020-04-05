@@ -24,17 +24,17 @@ public class EventHooks : MonoBehaviour
         }
     }
 
-    public void OnGraspStart(InteractionController controller) {
+    public  void OnGraspStart(bool left) {
         Object[] connectedPlayers = GameObject.FindObjectsOfType(typeof(ConnectedPlayerManager));
         foreach (Object o in connectedPlayers) {
-            ((ConnectedPlayerManager) o).StartMoveRobot(controller.isLeft ? 0 : 1);
+            ((ConnectedPlayerManager) o).StartMoveRobot(gameObject);
         }
     }
 
-    public void OnGraspEnd(InteractionController controller) {
+    public void OnGraspEnd(bool left) {
         Object[] connectedPlayers = GameObject.FindObjectsOfType(typeof(ConnectedPlayerManager));
         foreach (Object o in connectedPlayers) {
-            ((ConnectedPlayerManager) o).FinishMoveRobot(controller.isLeft ? 0 : 1);
+            ((ConnectedPlayerManager) o).FinishMoveRobot(gameObject);
         }
     }
 
@@ -56,6 +56,20 @@ public class EventHooks : MonoBehaviour
         Object[] connectedPlayers = GameObject.FindObjectsOfType(typeof(ConnectedPlayerManager));
         foreach (Object o in connectedPlayers) {
             ((ConnectedPlayerManager) o).StartPass();
+        }
+    }
+
+    public void OnActButtonPressed(int button) {
+        Object[] connectedPlayers = GameObject.FindObjectsOfType(typeof(ConnectedPlayerManager));
+        foreach (Object o in connectedPlayers) {
+            ((ConnectedPlayerManager) o).DoAction(button);
+        }
+    }
+
+    public void OnSelectPlayerButtonPressed() {
+        Object[] connectedPlayers = GameObject.FindObjectsOfType(typeof(ConnectedPlayerManager));
+        foreach (Object o in connectedPlayers) {
+            ((ConnectedPlayerManager) o).OnPlayerActChose(gameObject.transform.parent.parent.gameObject);
         }
     }
 }

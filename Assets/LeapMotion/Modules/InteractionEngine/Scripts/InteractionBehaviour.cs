@@ -1244,6 +1244,7 @@ namespace Leap.Unity.Interaction {
     }
 
     public void BeginGrasp(List<InteractionController> controllers) {
+
       _justGrasped = true;
 
       // End suspension by ending the grasp on the suspending hand,
@@ -1265,7 +1266,6 @@ namespace Leap.Unity.Interaction {
           graspedPoseHandler.AddController(controller);
         }
 
-        Debug.Log(controller);
         // Fire interaction callback.
         OnPerControllerGraspBegin(controller);
       }

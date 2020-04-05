@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 1568001221392182606}
   - component: {fileID: 1568001221392182607}
   - component: {fileID: -4426582049317282827}
+  - component: {fileID: -2863730283703986117}
   m_Layer: 0
   m_Name: ConnectedPlayer
   m_TagString: Untagged
@@ -89,3 +90,17 @@ MonoBehaviour:
     type: 3}
   hookPrefab: {fileID: 3876414020208618515, guid: 2fddc59ad58570f4dba7c3f9de985854,
     type: 3}
+  moveCylinderPrefab: {fileID: 1978150484648198113, guid: 7799b927ddaaeb448ab60a90f1ec331f,
+    type: 3}
+--- !u!114 &-2863730283703986117
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1568001221392182604}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4992cf81781fbc748992137ff664dd59, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

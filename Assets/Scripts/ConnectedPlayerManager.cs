@@ -30,10 +30,15 @@ public class ConnectedPlayerManager : NetworkBehaviour
     public GameObject hookPrefab;
     private GameObject[] hooks = new GameObject[2];
     private GameObject[] closestPlayers = new GameObject[2];
+    private GameObject grabbedPlayer = null;
+    public GameObject moveCylinderPrefab;
+    private GameObject spawnedCylinder;
     private List<GameObject> robots = new List<GameObject>();
     [SyncVar]
     private int numRobots = 0;
     private GameObject palmGui;
+    private GameObject actingPlayer = null;
+    private ActingHandler actingHandler;
 
     // Start is called before the first frame update
     void Start()
@@ -41,6 +46,7 @@ public class ConnectedPlayerManager : NetworkBehaviour
         camera = GameObject.Find("Leap Rig");
         scene = GameObject.Find("Scene");
         palmGui = GameObject.Find("PalmGui");
+        actingHandler = GetComponent<ActingHandler>();
         if (hasAuthority) {
             CmdSpawnTeam();
             if (isServer) {
@@ -72,14 +78,22 @@ public class ConnectedPlayerManager : NetworkBehaviour
                 }
             }
             if (currentMode == PlayerMode.CHOOSING_MOVE) {
-                GameObject[] closestPlrs = getClosestPlayers();
+                closestPlayers = getClosestPlayers();
                 float offsetY = 5.0F;
-                for (int i = 0; i < 2; ++i) {
-                    if (closestPlrs[i] != null) {
+                int numToUpdate = 2;
+                if (closestPlayers[0] == closestPlayers[1] && closestPlayers[0] != null) {
+                    numToUpdate = 1;
+                    if (hooks[1] != null) {
+                        Destroy(hooks[1]);
+                        hooks[1] = null;
+                    }
+                }
+                for (int i = 0; i < numToUpdate; ++i) {
+                    if (closestPlayers[i] != null) {
                         if (hooks[i] == null) {
-                            hooks[i] = Instantiate(hookPrefab, closestPlrs[i].transform.position + new Vector3(0.0F, offsetY, 0.0F), Quaternion.identity);
+                            hooks[i] = Instantiate(hookPrefab, closestPlayers[i].transform.position + new Vector3(0.0F, offsetY, 0.0F), Quaternion.identity);
                         } else {
-                            hooks[i].transform.position = closestPlrs[i].transform.position + new Vector3(0.0F, offsetY, 0.0F);
+                            hooks[i].transform.position = closestPlayers[i].transform.position + new Vector3(0.0F, offsetY, 0.0F);
                         }
                     } else {
                         if (hooks[i] != null) {
@@ -87,6 +101,20 @@ public class ConnectedPlayerManager : NetworkBehaviour
                             hooks[i] = null;
                         }
                     }
+                }
+            } else if (currentMode == PlayerMode.MOVING) {
+                if (grabbedPlayer != null) {
+                    GameObject hook = hooks[0] != null ? hooks[0] : hooks[1];
+                    Vector3 diff = hook.transform.position - spawnedCylinder.transform.position;
+                    diff.y = 0.0F;
+                    Vector3 target;
+                    if (diff.magnitude >= 3.5F) {
+                        target = spawnedCylinder.transform.position + diff.normalized * 3.5F;
+                    } else {
+                        target = hook.transform.position;
+                    }
+                    target.y = grabbedPlayer.transform.position.y;
+                    grabbedPlayer.transform.position = target;
                 }
             }
         }
@@ -105,14 +133,14 @@ public class ConnectedPlayerManager : NetworkBehaviour
                 break;
             case 2:
                 GameObject.FindObjectOfType<HandSwitcher>().SwitchHands();
-                GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
-                foreach (GameObject player in players) {
-                    if (player.GetComponent<VRPlayerController>().teamContainer == theTeam) {
-                        player.GetComponent<VRPlayerController>().SetPlayerControlled();
-                        break;
-                    }
-                }
+                actingPlayer.GetComponent<VRPlayerController>().SetPlayerControlled();
                 GameObject.Find("FadeScreen").GetComponent<Fader>().FadeBackIn(1.0F, FadeCallback, 0);
+
+                GameObject.Find("PalmPivot").GetComponent<FacingCamera>().Disable(false);
+                PalmGuiEnableDisable[] palmGuis = Resources.FindObjectsOfTypeAll<PalmGuiEnableDisable>();
+                foreach (PalmGuiEnableDisable gui in palmGuis) {
+                    gui.gameObject.SetActive(gui.gameObject.name.Equals("PalmGuiAct"));
+                }
                 break;
         }
     }
@@ -135,13 +163,38 @@ public class ConnectedPlayerManager : NetworkBehaviour
                         Destroy(hooks[i]);
                     }
                 }
+            } else if (currentMode == PlayerMode.CHOOSING_ACT) {
+                GameObject[] objects = GameObject.FindGameObjectsWithTag("Player");
+                foreach (GameObject obj in objects) {
+                    VRPlayerController controller = obj.GetComponent<VRPlayerController>();
+                    if (controller != null) {
+                        if (controller.teamContainer == theTeam) { // On same team
+                            controller.transform.Find("PlayerButton").GetChild(0).gameObject.SetActive(false);
+                        }
+                    }
+                }
             }
 
             if (mode == PlayerMode.PLACE_ROBOT) {
                 GameObject.Find("FadeScreen").GetComponent<Fader>().FadeToBlack(1.0F, FadeCallback, 1);
             } else if (mode == PlayerMode.OBSERVING) {
                 GameObject.Find("PalmPivot").GetComponent<FacingCamera>().Disable(false);
-                // GameObject.Find("FadeScreen").GetComponent<Fader>().FadeToBlack(1.0F, FadeCallback, 2);
+                PalmGuiEnableDisable[] palmGuis = Resources.FindObjectsOfTypeAll<PalmGuiEnableDisable>();
+                foreach (PalmGuiEnableDisable gui in palmGuis) {
+                    gui.gameObject.SetActive(gui.gameObject.name.Equals("PalmGui"));
+                }
+            } else if (mode == PlayerMode.ACTING) {
+                GameObject.Find("FadeScreen").GetComponent<Fader>().FadeToBlack(1.0F, FadeCallback, 2);
+            } else if (mode == PlayerMode.CHOOSING_ACT) {
+                GameObject[] objects = GameObject.FindGameObjectsWithTag("Player");
+                foreach (GameObject obj in objects) {
+                    VRPlayerController controller = obj.GetComponent<VRPlayerController>();
+                    if (controller != null) {
+                        if (controller.teamContainer == theTeam) { // On same team
+                            controller.transform.Find("PlayerButton").GetChild(0).gameObject.SetActive(true);
+                        }
+                    }
+                }
             }
             currentMode = mode;
         }
@@ -185,7 +238,8 @@ public class ConnectedPlayerManager : NetworkBehaviour
 
     [Command]
     void CmdSpawnBomb() {
-        GameObject bomb = Instantiate(bombPrefab, new Vector3(0.0F, 10.0F, 0.0F) * scene.transform.localScale.y, Quaternion.identity, scene.transform);
+        GameObject bomb = Instantiate(bombPrefab, actingPlayer.transform.position + new Vector3(0.0F, 1.0F, 0.0F), Quaternion.identity, scene.transform);
+        bomb.GetComponent<Rigidbody>().velocity = (actingPlayer.transform.forward + Vector3.up) * 25.0F;
         NetworkServer.Spawn(bomb);
     }
 
@@ -242,29 +296,63 @@ public class ConnectedPlayerManager : NetworkBehaviour
     public void StartPass() {
     }
 
-    public void StartMoveRobot(int hand) {
-        Debug.Log("Start " + hand);
-        if (currentMode != PlayerMode.MOVING) {
-            ChangeMode(PlayerMode.MOVING);
+    public void OnPlayerActChose(GameObject robot) {
+        if (hasAuthority) {
+            ChangeMode(PlayerMode.ACTING);
+            Debug.Log(robot);
+            actingPlayer = robot;
         }
-        if (this.closestPlayers[0] == null) {
-            this.closestPlayers[0] = getClosestPlayers()[0];
-        }
-        if (this.closestPlayers[1] == null) {
-            this.closestPlayers[1] = getClosestPlayers()[1];
-        }
-        for (int i = 0; i < 2; ++i) {
-            if (hooks[i] != null && this.closestPlayers[i] != null) {
-                
-            }
-        }
-        // this.closestPlayer.transform.position = hook.transform.position - new Vector3(0.0F, 4.83F, 0.0F);
-        // hook.transform.position = new Vector3(this.closestPlayer.transform.position.x, hook.transform.position.y, this.closestPlayer.transform.position.z);
     }
 
-    public void FinishMoveRobot(int hand) {
-        Debug.Log("Finish " + hand);
-        // this.closestPlayer = null;
+    public void StartMoveRobot(GameObject theHook) {
+        Debug.Log(theHook);
+        ChangeMode(PlayerMode.MOVING);
+        for (int i = 0; i < 2; ++i) {
+            if (hooks[i] != theHook && hooks[i] != null) {
+                Debug.Log("Destr " +hooks[i]);
+                Destroy(hooks[i]);
+            } else if (hooks[i] == theHook) {
+                Debug.Log("Keep 2 " +hooks[i] + closestPlayers[i] + " " + closestPlayers[0] + " " + closestPlayers[1]);
+                grabbedPlayer = closestPlayers[i];
+            }
+        }
+        spawnedCylinder = Instantiate(moveCylinderPrefab, grabbedPlayer.transform.position, Quaternion.identity);
+    }
+
+    public void FinishMoveRobot(GameObject theHook) {
+        ChangeMode(PlayerMode.OBSERVING);
+        grabbedPlayer = null;
+        for (int i = 0; i < 2; ++i) {
+            hooks[i] = null;
+            closestPlayers[i] = null;
+        }
+        Destroy(spawnedCylinder);
+    }
+
+    public void DoAction(int actionNum) {
+        if (hasAuthority) {
+            switch (actionNum) {
+                case 1:
+                    CmdSpawnBomb();
+                    break;
+                case 2:
+                    break;
+                case 3:
+                    break;
+                case 4:
+                    break;
+                case 5:
+                    break;
+                case 6:
+                    break;
+                case 7:
+                    break;
+                case 8:
+                    break;
+                case 9:
+                    break;
+            }
+        }
     }
 
     private GameObject[] getClosestPlayers() {
@@ -274,7 +362,7 @@ public class ConnectedPlayerManager : NetworkBehaviour
         float distRight = 100.0F;
         GameObject[] objects = GameObject.FindGameObjectsWithTag("Player");
         GameObject palmObjLeft = GameObject.Find("ForwardTransformPalmLeft");
-        GameObject palmObjRight = GameObject.Find("ForwardTransformPalmLeft");
+        GameObject palmObjRight = GameObject.Find("ForwardTransformPalmRight");
         foreach (GameObject obj in objects) {
             VRPlayerController controller = obj.GetComponent<VRPlayerController>();
             if (controller != null) {

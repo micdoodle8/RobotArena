@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 2667467108051009016}
   - component: {fileID: 6810649919895975124}
   - component: {fileID: 3043263326717140485}
+  - component: {fileID: -8221584327051049299}
   - component: {fileID: 6258425914041351342}
   - component: {fileID: 900161701961125737}
   m_Layer: 0
@@ -67,8 +68,10 @@ MonoBehaviour:
   _ignoreHoverMode: 0
   _isIgnoringAllHoverState: 0
   _ignorePrimaryHover: 0
-  _ignoreContact: 0
+  _ignoreContact: 1
   _ignoreGrasping: 0
+  _ignoreGraspingLeft: 1
+  _ignoreGraspingRight: 0
   _contactForceMode: 0
   _allowMultiGrasp: 0
   _moveObjectWhenGrasped: 1
@@ -87,11 +90,10 @@ MonoBehaviour:
           m_Calls:
           - m_Target: {fileID: 6258425914041351342}
             m_MethodName: OnGraspStart
-            m_Mode: 2
+            m_Mode: 6
             m_Arguments:
               m_ObjectArgument: {fileID: 0}
-              m_ObjectArgumentAssemblyTypeName: Leap.Unity.Interaction.InteractionController,
-                Assembly-CSharp
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
               m_IntArgument: 0
               m_FloatArgument: 0
               m_StringArgument: 
@@ -103,15 +105,76 @@ MonoBehaviour:
           m_Calls:
           - m_Target: {fileID: 6258425914041351342}
             m_MethodName: OnGraspEnd
-            m_Mode: 2
+            m_Mode: 6
             m_Arguments:
               m_ObjectArgument: {fileID: 0}
-              m_ObjectArgumentAssemblyTypeName: Leap.Unity.Interaction.InteractionController,
-                Assembly-CSharp
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
               m_IntArgument: 0
               m_FloatArgument: 0
               m_StringArgument: 
               m_BoolArgument: 0
+            m_CallState: 2
+--- !u!114 &-8221584327051049299
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3876414020208618515}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f10fa40360571247a7ca806d6859557, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _manager: {fileID: 0}
+  _ignoreHoverMode: 0
+  _isIgnoringAllHoverState: 0
+  _ignorePrimaryHover: 0
+  _ignoreContact: 1
+  _ignoreGrasping: 0
+  _ignoreGraspingLeft: 0
+  _ignoreGraspingRight: 1
+  _contactForceMode: 0
+  _allowMultiGrasp: 0
+  _moveObjectWhenGrasped: 1
+  graspedMovementType: 0
+  _overrideInteractionLayer: 0
+  _interactionLayer:
+    layerIndex: 0
+  _overrideNoContactLayer: 0
+  _noContactLayer:
+    layerIndex: 0
+  _eventTable:
+    _entries:
+    - enumValue: 150
+      callback:
+        m_PersistentCalls:
+          m_Calls:
+          - m_Target: {fileID: 6258425914041351342}
+            m_MethodName: OnGraspStart
+            m_Mode: 6
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 1
+            m_CallState: 2
+    - enumValue: 152
+      callback:
+        m_PersistentCalls:
+          m_Calls:
+          - m_Target: {fileID: 6258425914041351342}
+            m_MethodName: OnGraspEnd
+            m_Mode: 6
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 1
             m_CallState: 2
 --- !u!114 &6258425914041351342
 MonoBehaviour:
