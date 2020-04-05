@@ -1978,7 +1978,6 @@ namespace Leap.Unity.Interaction {
     /// </summary>
     bool IInternalInteractionController.CheckGraspBegin(out IInteractionBehaviour newlyGraspedObject) {
       newlyGraspedObject = null;
-        Debug.Log("CheckGraspBegin attempt");
 
       // Check grasping against interaction state.
       if (_graspedObject != null) {

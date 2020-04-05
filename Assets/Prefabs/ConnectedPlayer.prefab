@@ -87,3 +87,5 @@ MonoBehaviour:
     type: 3}
   robotPrefab: {fileID: 2285290637728986209, guid: ecc188fd61937a8489fa0a1ad953e418,
     type: 3}
+  hookPrefab: {fileID: 3876414020208618515, guid: 2fddc59ad58570f4dba7c3f9de985854,
+    type: 3}

@@ -45,6 +45,8 @@
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
   <ItemGroup>
+     <Compile Include="Assets\FacingCamera.cs" />
+     <Compile Include="Assets\HandSwitcher.cs" />
      <Compile Include="Assets\LeapMotion\Core\Examples\Example Assets\InertiaPostProcessProvider.cs" />
      <Compile Include="Assets\LeapMotion\Core\Examples\Example Assets\ProjectionPostProcessProvider.cs" />
      <Compile Include="Assets\LeapMotion\Core\Plugins\LeapCSharp\Arm.cs" />

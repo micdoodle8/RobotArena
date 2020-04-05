@@ -1265,6 +1265,7 @@ namespace Leap.Unity.Interaction {
           graspedPoseHandler.AddController(controller);
         }
 
+        Debug.Log(controller);
         // Fire interaction callback.
         OnPerControllerGraspBegin(controller);
       }
