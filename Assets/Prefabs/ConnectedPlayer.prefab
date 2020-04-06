@@ -90,6 +90,8 @@ MonoBehaviour:
     type: 3}
   hookPrefab: {fileID: 3876414020208618515, guid: 2fddc59ad58570f4dba7c3f9de985854,
     type: 3}
+  rocketPrefab: {fileID: 5252342173498063220, guid: 2fbffc9d9edcfcc49b9d1f218b3ca4bb,
+    type: 3}
   moveCylinderPrefab: {fileID: 1978150484648198113, guid: 7799b927ddaaeb448ab60a90f1ec331f,
     type: 3}
 --- !u!114 &-2863730283703986117

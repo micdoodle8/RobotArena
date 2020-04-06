@@ -45,7 +45,9 @@
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
   <ItemGroup>
+     <Compile Include="Assets\ButtonColourUpdater.cs" />
      <Compile Include="Assets\FacingCamera.cs" />
+     <Compile Include="Assets\GameManager.cs" />
      <Compile Include="Assets\HandSwitcher.cs" />
      <Compile Include="Assets\LeapMotion\Core\Examples\Example Assets\InertiaPostProcessProvider.cs" />
      <Compile Include="Assets\LeapMotion\Core\Examples\Example Assets\ProjectionPostProcessProvider.cs" />
@@ -442,6 +444,7 @@
      <Compile Include="Assets\Oculus\VR\Scripts\Util\OVRTrackedRemote.cs" />
      <Compile Include="Assets\Oculus\VR\Scripts\Util\OVRWaitCursor.cs" />
      <Compile Include="Assets\PalmGuiEnableDisable.cs" />
+     <Compile Include="Assets\RocketScript.cs" />
      <Compile Include="Assets\Scripts\ActingHandler.cs" />
      <Compile Include="Assets\Scripts\AnimController.cs" />
      <Compile Include="Assets\Scripts\Bomb.cs" />

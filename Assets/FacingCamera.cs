@@ -12,7 +12,7 @@ public class FacingCamera : MonoBehaviour
     private bool lastFacing;
     public UnityEvent OnBeginFacingCamera;
     public UnityEvent OnEndFacingCamera;
-    private bool isForcedOff = true;
+    public bool isForcedOff = true;
 
     // Start is called before the first frame update
     void Start()

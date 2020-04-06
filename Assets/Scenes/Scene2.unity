@@ -681,6 +681,74 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 168205733}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &176582902 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1404367628755344, guid: 2276723046d707c4f94d431ceb80ab92,
+    type: 3}
+  m_PrefabInstance: {fileID: 664725454}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &176582903
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 176582902}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4a2f4600b166e234aac804ca65c32d80, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &176582904
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 176582902}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e98e641d160144e87a3d33fcdb893a02, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  OnActivate:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 176582903}
+        m_MethodName: FingerExtended
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 1
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  OnDeactivate:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 176582903}
+        m_MethodName: FingerWithdrawn
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 1
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  Period: 0.1
+  HandModel: {fileID: 664725455}
+  Thumb: 2
+  Index: 0
+  Middle: 2
+  Ring: 2
+  Pinky: 2
+  MinimumExtendedCount: 1
+  MaximumExtendedCount: 5
+  ShowGizmos: 1
 --- !u!1 &192318987
 GameObject:
   m_ObjectHideFlags: 0
@@ -693,6 +761,7 @@ GameObject:
   - component: {fileID: 192318991}
   - component: {fileID: 192318990}
   - component: {fileID: 192318989}
+  - component: {fileID: 192318992}
   m_Layer: 0
   m_Name: Button1 (5)
   m_TagString: Untagged
@@ -760,7 +829,7 @@ MonoBehaviour:
   _controlEnabled: 1
   startingPositionMode: 0
   minMaxHeight: {x: 0, y: 0.02}
-  restingHeight: 0.5
+  restingHeight: 1
   _springForce: 0.1
   _OnPress:
     m_PersistentCalls:
@@ -795,6 +864,25 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 2
+--- !u!114 &192318992
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 192318987}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 52c6f34ae5c58cd49ad4badcba5001ad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  defaultColor: {r: 0.1, g: 0.1, b: 0.1, a: 1}
+  suspendedColor: {r: 1, g: 0, b: 0, a: 1}
+  hoverColor: {r: 0.7, g: 0.7, b: 0.7, a: 1}
+  primaryHoverColor: {r: 0.8, g: 0.8, b: 0.8, a: 1}
+  usePrimaryHover: 1
+  useHover: 0
+  pressedColor: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1 &214457269
 GameObject:
   m_ObjectHideFlags: 0
@@ -806,7 +894,6 @@ GameObject:
   - component: {fileID: 214457270}
   - component: {fileID: 214457273}
   - component: {fileID: 214457272}
-  - component: {fileID: 214457271}
   m_Layer: 0
   m_Name: Cube
   m_TagString: Untagged
@@ -828,19 +915,6 @@ Transform:
   m_Father: {fileID: 151361587}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &214457271
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 214457269}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!23 &214457272
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -1950,7 +2024,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   xSize: 256
   ySize: 256
-  scale: 0.2
+  scale: 0.15
   image: {fileID: 2800000, guid: 77c108eb5f2edc040ad8f4a35362e4b4, type: 3}
 --- !u!23 &500851769
 MeshRenderer:
@@ -2118,6 +2192,7 @@ MonoBehaviour:
   - {fileID: 8707878234383167980, guid: 9fbc33428768a3b4284322758d980c21, type: 3}
   - {fileID: 1003415036088326438, guid: a300a9ea9bb09ed46bb12761da87217a, type: 3}
   - {fileID: 1642472185589151458, guid: d05832ea15d66784484f71949af3224c, type: 3}
+  - {fileID: 5252342173498063220, guid: 2fbffc9d9edcfcc49b9d1f218b3ca4bb, type: 3}
   m_CustomConfig: 0
   m_MaxConnections: 4
   m_ConnectionConfig:
@@ -3148,6 +3223,7 @@ GameObject:
   - component: {fileID: 605314373}
   - component: {fileID: 605314372}
   - component: {fileID: 605314371}
+  - component: {fileID: 605314374}
   m_Layer: 0
   m_Name: Button1 (1)
   m_TagString: Untagged
@@ -3215,7 +3291,7 @@ MonoBehaviour:
   _controlEnabled: 1
   startingPositionMode: 0
   minMaxHeight: {x: 0, y: 0.02}
-  restingHeight: 0.5
+  restingHeight: 1
   _springForce: 0.1
   _OnPress:
     m_PersistentCalls:
@@ -3250,6 +3326,25 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 2
+--- !u!114 &605314374
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 605314369}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 52c6f34ae5c58cd49ad4badcba5001ad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  defaultColor: {r: 0.1, g: 0.1, b: 0.1, a: 1}
+  suspendedColor: {r: 1, g: 0, b: 0, a: 1}
+  hoverColor: {r: 0.7, g: 0.7, b: 0.7, a: 1}
+  primaryHoverColor: {r: 0.8, g: 0.8, b: 0.8, a: 1}
+  usePrimaryHover: 1
+  useHover: 0
+  pressedColor: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1 &612957510
 GameObject:
   m_ObjectHideFlags: 0
@@ -3821,7 +3916,7 @@ MonoBehaviour:
     type: 3}
   m_PrefabInstance: {fileID: 664725454}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 176582902}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9e0ed5922e911b343b8400997c95409c, type: 3}
@@ -4184,6 +4279,7 @@ GameObject:
   - component: {fileID: 747840486}
   - component: {fileID: 747840485}
   - component: {fileID: 747840484}
+  - component: {fileID: 747840487}
   m_Layer: 0
   m_Name: Button1 (6)
   m_TagString: Untagged
@@ -4251,7 +4347,7 @@ MonoBehaviour:
   _controlEnabled: 1
   startingPositionMode: 0
   minMaxHeight: {x: 0, y: 0.02}
-  restingHeight: 0.5
+  restingHeight: 1
   _springForce: 0.1
   _OnPress:
     m_PersistentCalls:
@@ -4286,6 +4382,25 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 2
+--- !u!114 &747840487
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 747840482}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 52c6f34ae5c58cd49ad4badcba5001ad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  defaultColor: {r: 0.1, g: 0.1, b: 0.1, a: 1}
+  suspendedColor: {r: 1, g: 0, b: 0, a: 1}
+  hoverColor: {r: 0.7, g: 0.7, b: 0.7, a: 1}
+  primaryHoverColor: {r: 0.8, g: 0.8, b: 0.8, a: 1}
+  usePrimaryHover: 1
+  useHover: 0
+  pressedColor: {r: 1, g: 1, b: 1, a: 1}
 --- !u!4 &770349486 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -927520340929923691, guid: 7bd105050bc89174d8ad9e70d8a9d0c8,
@@ -4394,7 +4509,7 @@ MeshCollider:
   m_GameObject: {fileID: 854111186}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Convex: 0
   m_CookingOptions: 30
@@ -4712,9 +4827,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 923812494}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 761ac1aa311dfe84fbb42c0db345047f, type: 3}
+  m_Script: {fileID: 11500000, guid: 6b6f7c1ba68ca2f4690e4811f94eb1d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  leapRig: {fileID: 1193063254784184}
 --- !u!4 &923812496
 Transform:
   m_ObjectHideFlags: 0
@@ -4920,6 +5036,7 @@ GameObject:
   - component: {fileID: 995628101}
   - component: {fileID: 995628100}
   - component: {fileID: 995628099}
+  - component: {fileID: 995628102}
   m_Layer: 0
   m_Name: Button1
   m_TagString: Untagged
@@ -5022,6 +5139,25 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 2
+--- !u!114 &995628102
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 995628097}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 52c6f34ae5c58cd49ad4badcba5001ad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  defaultColor: {r: 0.1, g: 0.1, b: 0.1, a: 1}
+  suspendedColor: {r: 1, g: 0, b: 0, a: 1}
+  hoverColor: {r: 0.7, g: 0.7, b: 0.7, a: 1}
+  primaryHoverColor: {r: 0.8, g: 0.8, b: 0.8, a: 1}
+  usePrimaryHover: 1
+  useHover: 0
+  pressedColor: {r: 1, g: 1, b: 1, a: 1}
 --- !u!114 &1027563551
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5941,6 +6077,7 @@ GameObject:
   - component: {fileID: 1236666180}
   - component: {fileID: 1236666179}
   - component: {fileID: 1236666178}
+  - component: {fileID: 1236666181}
   m_Layer: 0
   m_Name: Button1 (2)
   m_TagString: Untagged
@@ -6043,6 +6180,25 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 2
+--- !u!114 &1236666181
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1236666176}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 52c6f34ae5c58cd49ad4badcba5001ad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  defaultColor: {r: 0.1, g: 0.1, b: 0.1, a: 1}
+  suspendedColor: {r: 1, g: 0, b: 0, a: 1}
+  hoverColor: {r: 0.7, g: 0.7, b: 0.7, a: 1}
+  primaryHoverColor: {r: 0.8, g: 0.8, b: 0.8, a: 1}
+  usePrimaryHover: 1
+  useHover: 0
+  pressedColor: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1 &1282211331 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -927199367670048503, guid: 7bd105050bc89174d8ad9e70d8a9d0c8,
@@ -6315,6 +6471,7 @@ GameObject:
   - component: {fileID: 1355951325}
   - component: {fileID: 1355951324}
   - component: {fileID: 1355951323}
+  - component: {fileID: 1355951326}
   m_Layer: 0
   m_Name: Button1 (4)
   m_TagString: Untagged
@@ -6382,7 +6539,7 @@ MonoBehaviour:
   _controlEnabled: 1
   startingPositionMode: 0
   minMaxHeight: {x: 0, y: 0.02}
-  restingHeight: 0.5
+  restingHeight: 1
   _springForce: 0.1
   _OnPress:
     m_PersistentCalls:
@@ -6417,6 +6574,25 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 2
+--- !u!114 &1355951326
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1355951321}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 52c6f34ae5c58cd49ad4badcba5001ad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  defaultColor: {r: 0.1, g: 0.1, b: 0.1, a: 1}
+  suspendedColor: {r: 1, g: 0, b: 0, a: 1}
+  hoverColor: {r: 0.7, g: 0.7, b: 0.7, a: 1}
+  primaryHoverColor: {r: 0.8, g: 0.8, b: 0.8, a: 1}
+  usePrimaryHover: 1
+  useHover: 0
+  pressedColor: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1 &1380808444
 GameObject:
   m_ObjectHideFlags: 0
@@ -6559,6 +6735,7 @@ GameObject:
   - component: {fileID: 1401528008}
   - component: {fileID: 1401528007}
   - component: {fileID: 1401528006}
+  - component: {fileID: 1401528009}
   m_Layer: 0
   m_Name: Button1 (3)
   m_TagString: Untagged
@@ -6626,7 +6803,7 @@ MonoBehaviour:
   _controlEnabled: 1
   startingPositionMode: 0
   minMaxHeight: {x: 0, y: 0.02}
-  restingHeight: 0.5
+  restingHeight: 1
   _springForce: 0.1
   _OnPress:
     m_PersistentCalls:
@@ -6661,6 +6838,25 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 2
+--- !u!114 &1401528009
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1401528004}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 52c6f34ae5c58cd49ad4badcba5001ad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  defaultColor: {r: 0.1, g: 0.1, b: 0.1, a: 1}
+  suspendedColor: {r: 1, g: 0, b: 0, a: 1}
+  hoverColor: {r: 0.7, g: 0.7, b: 0.7, a: 1}
+  primaryHoverColor: {r: 0.8, g: 0.8, b: 0.8, a: 1}
+  usePrimaryHover: 1
+  useHover: 0
+  pressedColor: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1 &1421606024
 GameObject:
   m_ObjectHideFlags: 0
@@ -6973,6 +7169,7 @@ GameObject:
   - component: {fileID: 1466526156}
   - component: {fileID: 1466526155}
   - component: {fileID: 1466526154}
+  - component: {fileID: 1466526157}
   m_Layer: 0
   m_Name: Button1 (7)
   m_TagString: Untagged
@@ -7040,7 +7237,7 @@ MonoBehaviour:
   _controlEnabled: 1
   startingPositionMode: 0
   minMaxHeight: {x: 0, y: 0.02}
-  restingHeight: 0.5
+  restingHeight: 1
   _springForce: 0.1
   _OnPress:
     m_PersistentCalls:
@@ -7075,6 +7272,25 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 2
+--- !u!114 &1466526157
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1466526152}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 52c6f34ae5c58cd49ad4badcba5001ad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  defaultColor: {r: 0.1, g: 0.1, b: 0.1, a: 1}
+  suspendedColor: {r: 1, g: 0, b: 0, a: 1}
+  hoverColor: {r: 0.7, g: 0.7, b: 0.7, a: 1}
+  primaryHoverColor: {r: 0.8, g: 0.8, b: 0.8, a: 1}
+  usePrimaryHover: 1
+  useHover: 0
+  pressedColor: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1 &1469109682
 GameObject:
   m_ObjectHideFlags: 0
@@ -7087,6 +7303,7 @@ GameObject:
   - component: {fileID: 1469109686}
   - component: {fileID: 1469109685}
   - component: {fileID: 1469109684}
+  - component: {fileID: 1469109687}
   m_Layer: 0
   m_Name: Button1 (1)
   m_TagString: Untagged
@@ -7189,6 +7406,25 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 2
+--- !u!114 &1469109687
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1469109682}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 52c6f34ae5c58cd49ad4badcba5001ad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  defaultColor: {r: 0.1, g: 0.1, b: 0.1, a: 1}
+  suspendedColor: {r: 1, g: 0, b: 0, a: 1}
+  hoverColor: {r: 0.7, g: 0.7, b: 0.7, a: 1}
+  primaryHoverColor: {r: 0.8, g: 0.8, b: 0.8, a: 1}
+  usePrimaryHover: 1
+  useHover: 0
+  pressedColor: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1 &1470417528 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -2370948109365354616, guid: 7bd105050bc89174d8ad9e70d8a9d0c8,
@@ -7307,6 +7543,7 @@ GameObject:
   - component: {fileID: 1481961028}
   - component: {fileID: 1481961027}
   - component: {fileID: 1481961026}
+  - component: {fileID: 1481961029}
   m_Layer: 0
   m_Name: Button1 (8)
   m_TagString: Untagged
@@ -7374,7 +7611,7 @@ MonoBehaviour:
   _controlEnabled: 1
   startingPositionMode: 0
   minMaxHeight: {x: 0, y: 0.02}
-  restingHeight: 0.5
+  restingHeight: 1
   _springForce: 0.1
   _OnPress:
     m_PersistentCalls:
@@ -7409,6 +7646,25 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 2
+--- !u!114 &1481961029
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1481961024}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 52c6f34ae5c58cd49ad4badcba5001ad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  defaultColor: {r: 0.1, g: 0.1, b: 0.1, a: 1}
+  suspendedColor: {r: 1, g: 0, b: 0, a: 1}
+  hoverColor: {r: 0.7, g: 0.7, b: 0.7, a: 1}
+  primaryHoverColor: {r: 0.8, g: 0.8, b: 0.8, a: 1}
+  usePrimaryHover: 1
+  useHover: 0
+  pressedColor: {r: 1, g: 1, b: 1, a: 1}
 --- !u!4 &1503053387 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3019434827382264486, guid: 1977805829ba07945bcbd1dfe1e8ff2a,
@@ -7697,6 +7953,7 @@ GameObject:
   - component: {fileID: 1584003844}
   - component: {fileID: 1584003843}
   - component: {fileID: 1584003842}
+  - component: {fileID: 1584003845}
   m_Layer: 0
   m_Name: Button1
   m_TagString: Untagged
@@ -7763,10 +8020,13 @@ MonoBehaviour:
     _entries: []
   _controlEnabled: 1
   startingPositionMode: 0
-  minMaxHeight: {x: 0, y: 0.02}
-  restingHeight: 0.5
-  _springForce: 0.1
+  minMaxHeight: {x: 0, y: 0.1}
+  restingHeight: 1
+  _springForce: 0.05
   _OnPress:
+    m_PersistentCalls:
+      m_Calls: []
+  _OnUnpress:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1584003842}
@@ -7780,9 +8040,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  _OnUnpress:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!54 &1584003844
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -7799,6 +8056,25 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 2
+--- !u!114 &1584003845
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1584003840}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 52c6f34ae5c58cd49ad4badcba5001ad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  defaultColor: {r: 0.1, g: 0.1, b: 0.1, a: 1}
+  suspendedColor: {r: 1, g: 0, b: 0, a: 1}
+  hoverColor: {r: 0.7, g: 0.7, b: 0.7, a: 1}
+  primaryHoverColor: {r: 0.8, g: 0.8, b: 0.8, a: 1}
+  usePrimaryHover: 1
+  useHover: 0
+  pressedColor: {r: 1, g: 1, b: 1, a: 1}
 --- !u!114 &1587974168
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8558,7 +8834,6 @@ GameObject:
   - component: {fileID: 1802211714}
   - component: {fileID: 1802211717}
   - component: {fileID: 1802211716}
-  - component: {fileID: 1802211715}
   m_Layer: 0
   m_Name: Cube
   m_TagString: Untagged
@@ -8580,19 +8855,6 @@ Transform:
   m_Father: {fileID: 1525855600}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &1802211715
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1802211713}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!23 &1802211716
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -9238,6 +9500,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  isForcedOff: 1
 --- !u!1 &1995332608
 GameObject:
   m_ObjectHideFlags: 0
@@ -9426,6 +9689,7 @@ GameObject:
   - component: {fileID: 2032662548}
   - component: {fileID: 2032662547}
   - component: {fileID: 2032662546}
+  - component: {fileID: 2032662549}
   m_Layer: 0
   m_Name: Button1 (2)
   m_TagString: Untagged
@@ -9492,10 +9756,13 @@ MonoBehaviour:
     _entries: []
   _controlEnabled: 1
   startingPositionMode: 0
-  minMaxHeight: {x: 0, y: 0.02}
-  restingHeight: 0.5
+  minMaxHeight: {x: 0, y: 0.03}
+  restingHeight: 1
   _springForce: 0.1
   _OnPress:
+    m_PersistentCalls:
+      m_Calls: []
+  _OnUnpress:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 2032662546}
@@ -9509,9 +9776,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  _OnUnpress:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!54 &2032662548
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -9528,6 +9792,25 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 2
+--- !u!114 &2032662549
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2032662544}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 52c6f34ae5c58cd49ad4badcba5001ad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  defaultColor: {r: 0.1, g: 0.1, b: 0.1, a: 1}
+  suspendedColor: {r: 1, g: 0, b: 0, a: 1}
+  hoverColor: {r: 0.7, g: 0.7, b: 0.7, a: 1}
+  primaryHoverColor: {r: 0.8, g: 0.8, b: 0.8, a: 1}
+  usePrimaryHover: 1
+  useHover: 0
+  pressedColor: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1001 &2037942372
 PrefabInstance:
   m_ObjectHideFlags: 0

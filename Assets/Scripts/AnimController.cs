@@ -15,8 +15,10 @@ public class AnimController : MonoBehaviour
     void Start()
     {
         animator = GetComponent<Animator>();
-        if (gameObject.transform.parent.gameObject.tag.Equals("Player")) {
-            SetNotHanging();
+        animator.keepAnimatorControllerStateOnDisable = true;
+            Debug.Log(gameObject.transform.parent.gameObject.tag);
+        if (!gameObject.transform.parent.gameObject.tag.Equals("Player")) {
+            SetHanging();
         }
         //vrRig = GetComponent<VRRig>();
         //prevPos = vrRig.head.vrTarget.position;
@@ -39,7 +41,10 @@ public class AnimController : MonoBehaviour
     }
 
     public void SetNotHanging() {
-        Debug.Log("Not hanging " + animator);
         animator.SetBool("isHanging", false);
+    }
+
+    public void SetHanging() {
+        animator.SetBool("isHanging", true);
     }
 }

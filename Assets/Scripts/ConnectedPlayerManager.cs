@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
+using Leap.Unity;
+using Leap;
 
 public enum PlayerMode {
     NONE,
@@ -28,17 +30,21 @@ public class ConnectedPlayerManager : NetworkBehaviour
     public GameObject bombPrefab;
     public GameObject robotPrefab;
     public GameObject hookPrefab;
+    public GameObject rocketPrefab;
     private GameObject[] hooks = new GameObject[2];
     private GameObject[] closestPlayers = new GameObject[2];
     private GameObject grabbedPlayer = null;
     public GameObject moveCylinderPrefab;
     private GameObject spawnedCylinder;
+    private GameObject spawnedRocket;
+    private bool lastSpawnedRocketActive = false;
     private List<GameObject> robots = new List<GameObject>();
     [SyncVar]
     private int numRobots = 0;
     private GameObject palmGui;
     private GameObject actingPlayer = null;
     private ActingHandler actingHandler;
+    private bool indexFingerExtended = false;
 
     // Start is called before the first frame update
     void Start()
@@ -50,12 +56,12 @@ public class ConnectedPlayerManager : NetworkBehaviour
         if (hasAuthority) {
             CmdSpawnTeam();
             if (isServer) {
-                BeginPlaceMode();
+                MoveToObserverPosition();
             }
         }
     }
 
-    private void BeginPlaceMode() {
+    private void MoveToObserverPosition() {
         float scale = 2.0F;
         camera.transform.position = theTeam.transform.position + theTeam.transform.rotation * new Vector3(0.0F, 0.0F, -3.0F) * scale + new Vector3(0.0F, 6.0F, 0.0F) * scale;
         camera.transform.rotation = theTeam.transform.rotation;
@@ -74,7 +80,7 @@ public class ConnectedPlayerManager : NetworkBehaviour
             }
             if (Input.GetKeyDown(KeyCode.B)) {
                 if (isClient) {
-                    CmdSpawnBomb();
+                    CmdSpawnBomb(Camera.main.transform.forward);
                 }
             }
             if (currentMode == PlayerMode.CHOOSING_MOVE) {
@@ -116,8 +122,26 @@ public class ConnectedPlayerManager : NetworkBehaviour
                     target.y = grabbedPlayer.transform.position.y;
                     grabbedPlayer.transform.position = target;
                 }
+            } else if (currentMode == PlayerMode.ACTING) {
+                if (spawnedRocket != null) {
+                    GameObject handModels = GameObject.Find("Hand Models");
+                    for (int i = 0; i < handModels.transform.childCount; ++i) {
+                        GameObject hand = handModels.transform.GetChild(i).gameObject;
+                        if (hand.active) {
+                            RiggedHand rh = hand.GetComponent<RiggedHand>();
+                            if (rh != null && rh.Handedness == Chirality.Right) {
+                                Vector3 fingerDirection = rh.GetLeapHand().Fingers[1].Bone(Bone.BoneType.TYPE_DISTAL).Direction.ToVector3();
+                                spawnedRocket.GetComponent<RocketScript>().Steer(fingerDirection, indexFingerExtended);
+                                // Debug.Log(Camera.main.transform.InverseTransformDirection(fingerDirection));
+                            }
+                        }
+                    }
+                } else if (spawnedRocket == null && lastSpawnedRocketActive) {
+                    GameObject.Find("FadeScreen").GetComponent<Fader>().FadeToBlack(1.0F, FadeCallback, 4);
+                }
             }
         }
+        lastSpawnedRocketActive = this.spawnedRocket != null;
     }
 
     private void FadeCallback(int param) {
@@ -126,7 +150,7 @@ public class ConnectedPlayerManager : NetworkBehaviour
                 break;
             case 1:
                 GameObject.FindObjectOfType<HandSwitcher>().SwitchHands();
-                BeginPlaceMode();
+                MoveToObserverPosition();
                 if (isServer) {
                     // theTeam.GetComponent<Team>().SpawnRobots(connectionToClient);
                 }
@@ -142,6 +166,20 @@ public class ConnectedPlayerManager : NetworkBehaviour
                     gui.gameObject.SetActive(gui.gameObject.name.Equals("PalmGuiAct"));
                 }
                 break;
+            case 3:
+                actingPlayer.GetComponent<VRPlayerController>().SetPlayerNotControlled();
+                GameObject.Find("FadeScreen").GetComponent<Fader>().FadeBackIn(1.0F, FadeCallback, 0);
+                GameObject.Find("PalmPivot").GetComponent<FacingCamera>().Disable(true);
+                CmdSpawnRocket();
+                GameObject.FindObjectOfType<HandSwitcher>().SwitchHands();
+                camera.transform.position = actingPlayer.transform.position + new Vector3(0.0F, 16.0F, 0.0F);
+                camera.transform.rotation = theTeam.transform.rotation;
+                break;
+            case 4:
+                // GameObject.FindObjectOfType<HandSwitcher>().SwitchHands();
+                MoveToObserverPosition();
+                ChangeMode(PlayerMode.OBSERVING);
+                break;
         }
     }
 
@@ -151,7 +189,17 @@ public class ConnectedPlayerManager : NetworkBehaviour
         }
     }
 
+    [ClientRpc]
+    private void RpcChangedMode(PlayerMode mode) {
+        if (!isServer && hasAuthority) {
+            ChangeMode(mode);
+        }
+    } 
+
     public void ChangeMode(PlayerMode mode) {
+        if (isServer) {
+            RpcChangedMode(mode);
+        }
         if (currentMode != mode) {
             // currentMode is the 'old' mode we're switching from in this case
             // mode is the new mode
@@ -178,6 +226,7 @@ public class ConnectedPlayerManager : NetworkBehaviour
             if (mode == PlayerMode.PLACE_ROBOT) {
                 GameObject.Find("FadeScreen").GetComponent<Fader>().FadeToBlack(1.0F, FadeCallback, 1);
             } else if (mode == PlayerMode.OBSERVING) {
+                camera.transform.localScale = new Vector3(25.0F, 25.0F, 25.0F);
                 GameObject.Find("PalmPivot").GetComponent<FacingCamera>().Disable(false);
                 PalmGuiEnableDisable[] palmGuis = Resources.FindObjectsOfTypeAll<PalmGuiEnableDisable>();
                 foreach (PalmGuiEnableDisable gui in palmGuis) {
@@ -237,10 +286,28 @@ public class ConnectedPlayerManager : NetworkBehaviour
     }
 
     [Command]
-    void CmdSpawnBomb() {
-        GameObject bomb = Instantiate(bombPrefab, actingPlayer.transform.position + new Vector3(0.0F, 1.0F, 0.0F), Quaternion.identity, scene.transform);
-        bomb.GetComponent<Rigidbody>().velocity = (actingPlayer.transform.forward + Vector3.up) * 25.0F;
-        NetworkServer.Spawn(bomb);
+    void CmdSpawnBomb(Vector3 forward) {
+        GameObject bomb = Instantiate(bombPrefab, actingPlayer.transform.position + new Vector3(0.0F, 2.0F, 0.0F) + forward / 2.0F, Quaternion.identity, scene.transform);
+        // bomb.GetComponent<Rigidbody>().velocity = (actingPlayer.transform.forward + Vector3.up) * 25.0F;
+        NetworkServer.SpawnWithClientAuthority(bomb, connectionToClient);
+    }
+
+    [Command]
+    void CmdSpawnRocket() {
+        GameObject rocket = Instantiate(rocketPrefab, actingPlayer.transform.position + new Vector3(0.0F, 2.0F, 0.0F), theTeam.transform.rotation);
+        rocket.transform.Rotate(new Vector3(-45.0F, 0.0F, 0.0F), Space.Self);
+        // rocket.GetComponent<Rigidbody>().isKinematic = true;
+        // rocket.GetComponent<Rigidbody>().useGravity = false;
+        NetworkServer.SpawnWithClientAuthority(rocket, connectionToClient);
+        spawnedRocket = rocket;
+        RpcOnRocketSpawn(spawnedRocket);
+    }
+
+    [ClientRpc]
+    private void RpcOnRocketSpawn(GameObject rocket) {
+        if (hasAuthority) {
+            spawnedRocket = rocket;
+        }
     }
 
     [Command]
@@ -264,9 +331,14 @@ public class ConnectedPlayerManager : NetworkBehaviour
         if (hasAuthority) {
             // ChangeMode(PlayerMode.PLACE_ROBOT);
             theTeam = createdTeam;
-            BeginPlaceMode();
+            MoveToObserverPosition();
             CmdSpawnHook();
         }
+    }
+
+    [Command]
+    private void CmdSetActingPlayer(GameObject actingPlayer) {
+        this.actingPlayer = actingPlayer;
     }
 
     void OnGUI() {
@@ -294,6 +366,7 @@ public class ConnectedPlayerManager : NetworkBehaviour
     }
 
     public void StartPass() {
+        FinishTurn();
     }
 
     public void OnPlayerActChose(GameObject robot) {
@@ -301,6 +374,9 @@ public class ConnectedPlayerManager : NetworkBehaviour
             ChangeMode(PlayerMode.ACTING);
             Debug.Log(robot);
             actingPlayer = robot;
+            if (!isServer) {
+                CmdSetActingPlayer(actingPlayer);
+            }
         }
     }
 
@@ -327,15 +403,19 @@ public class ConnectedPlayerManager : NetworkBehaviour
             closestPlayers[i] = null;
         }
         Destroy(spawnedCylinder);
+        FinishTurn();
     }
 
     public void DoAction(int actionNum) {
         if (hasAuthority) {
+            Debug.Log("Doing Action " + actionNum);
             switch (actionNum) {
                 case 1:
-                    CmdSpawnBomb();
+                    Debug.LogError("sending cmd");
+                    CmdSpawnBomb(Camera.main.transform.forward);
                     break;
                 case 2:
+                    GameObject.Find("FadeScreen").GetComponent<Fader>().FadeToBlack(1.0F, FadeCallback, 3);
                     break;
                 case 3:
                     break;
@@ -353,6 +433,10 @@ public class ConnectedPlayerManager : NetworkBehaviour
                     break;
             }
         }
+    }
+
+    public void FingerExtended(bool state) {
+        indexFingerExtended = state;
     }
 
     private GameObject[] getClosestPlayers() {
@@ -381,5 +465,9 @@ public class ConnectedPlayerManager : NetworkBehaviour
             }
         }
         return new[] { closestPlayerLeft, closestPlayerRight };
+    }
+
+    public void FinishTurn() {
+
     }
 }

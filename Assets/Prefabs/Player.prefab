@@ -212,7 +212,7 @@ GameObject:
   - component: {fileID: 5519791271874533737}
   - component: {fileID: 2088450511766770818}
   m_Layer: 0
-  m_Name: Head Constriant
+  m_Name: Head Constraint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -386,7 +386,7 @@ GameObject:
   - component: {fileID: 1656826124426178786}
   - component: {fileID: 5974740638144852420}
   m_Layer: 0
-  m_Name: Head Constriant
+  m_Name: Head Constraint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

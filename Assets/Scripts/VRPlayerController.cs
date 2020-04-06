@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 using Leap.Unity;
+using UnityEngine.Animations;
 
 public class VRPlayerController : NetworkBehaviour
 {
@@ -20,6 +21,7 @@ public class VRPlayerController : NetworkBehaviour
     private GameObject scene;
     public GameObject withHands;
     public GameObject withoutHands;
+    public bool controlled = false;
 
     // Start is called before the first frame update
     void Start()
@@ -29,15 +31,17 @@ public class VRPlayerController : NetworkBehaviour
     }
 
     public void SetPlayerControlled() {
+        Debug.Log("Setting controlled");
 
+        controlled = true;
         GameObject[] otherPlayers = GameObject.FindGameObjectsWithTag("Player");
         foreach (GameObject p in otherPlayers) {
-            p.GetComponent<VRPlayerController>().SetPlayerNotControlled();
+            if (p != gameObject) {
+                p.GetComponent<VRPlayerController>().SetPlayerNotControlled();
+            }
         }
 
-        withHands.active = false;
-        withoutHands.active = true;
-        VRRig rigComp = GetComponentInChildren<VRRig>();
+        VRRig rigComp = withoutHands.GetComponent<VRRig>();
         vrTargetHead = GameObject.Find("Main Camera").transform;
         GameObject handModels = GameObject.Find("Hand Models");
         var fingers = Resources.FindObjectsOfTypeAll<RiggedFinger>();
@@ -59,18 +63,27 @@ public class VRPlayerController : NetworkBehaviour
         rigComp.leftHand.vrTarget = vrTargetLeftHand;
         rigComp.rightHand.vrTarget = vrTargetRightHand;
         hipsTransform = hipsTransformWithoutHands;
-        withHands.active = false;
-        withoutHands.active = true;
+        withHands.SetActive(false);
+        withHands.transform.FindChild("VR Constraints").FindChild("Head Constraint").gameObject.SetActive(false);
+        withoutHands.SetActive(true);
+        withoutHands.transform.FindChild("VR Constraints").FindChild("Head Constraint").gameObject.SetActive(true);
     }
 
     public void SetPlayerNotControlled() {
+        Debug.Log("Setting not controlled");
         VRRig rig = GetComponentInChildren<VRRig>();
         if (rig != null) {
             rig.enabled = false;
         }
         hipsTransform = hipsTransformWithHands;
-        withHands.active = true;
-        withoutHands.active = false;
+        withHands.SetActive(true);
+        Transform vrConstraint = withHands.transform.Find("VR Constraints");
+        Transform headConstraint = vrConstraint.Find("Head Constraint");
+        headConstraint.gameObject.SetActive(true);
+        withoutHands.SetActive(false);
+        withoutHands.transform.Find("VR Constraints").Find("Head Constraint").gameObject.SetActive(false);
+        controlled = false;
+        vrTargetHead = null;
     }
 
     private float yVel = 0.0F;
@@ -78,7 +91,7 @@ public class VRPlayerController : NetworkBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        if (withHands.active) { // If not controlled
+        if (!controlled) {
             RaycastHit hit;
             Ray ray = new Ray(hipsTransform.position, Vector3.down);
             if (Physics.Raycast(ray, out hit, legLength * scene.transform.localScale.y)) {

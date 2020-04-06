@@ -72,4 +72,29 @@ public class EventHooks : MonoBehaviour
             ((ConnectedPlayerManager) o).OnPlayerActChose(gameObject.transform.parent.parent.gameObject);
         }
     }
+
+    public void OnBombGrasped() {
+        gameObject.GetComponent<Rigidbody>().isKinematic = false;
+        gameObject.GetComponent<Rigidbody>().useGravity = true;
+    }
+
+    public void OnBombGraspEnd() {
+        gameObject.GetComponent<Rigidbody>().isKinematic = false;
+        gameObject.GetComponent<Rigidbody>().useGravity = true;
+        gameObject.GetComponent<Rigidbody>().velocity *= 5.0F;
+    }
+
+    public void FingerExtended(int finger) {
+        Object[] connectedPlayers = GameObject.FindObjectsOfType(typeof(ConnectedPlayerManager));
+        foreach (Object o in connectedPlayers) {
+            ((ConnectedPlayerManager) o).FingerExtended(true);
+        }
+    }
+
+    public void FingerWithdrawn(int finger) {
+        Object[] connectedPlayers = GameObject.FindObjectsOfType(typeof(ConnectedPlayerManager));
+        foreach (Object o in connectedPlayers) {
+            ((ConnectedPlayerManager) o).FingerExtended(false);
+        }
+    }
 }
