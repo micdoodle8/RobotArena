@@ -9,6 +9,8 @@ public class RocketScript : MonoBehaviour
     public GameObject destroyedRocketPrefab;
     private Vector3 steerDir;
     private bool fingerExtended;
+    [Range(0.0F, 1.0F)]
+    public float lerpRate = 0.1F;
 
     void Start() {
         rigidbody = GetComponent<Rigidbody>();
@@ -20,11 +22,12 @@ public class RocketScript : MonoBehaviour
 
     private void FixedUpdate() {
         if (fingerExtended) {
-            if (transform.forward.y > -0.5F) {
-                transform.Rotate(Vector3.right, dropRate * Time.deltaTime, Space.Self);
+            if (rigidbody.velocity.magnitude < 0.0001F) {
+                rigidbody.velocity = steerDir * 4.0F;
+            } else {
+                rigidbody.velocity = Vector3.Lerp(rigidbody.velocity, steerDir * 4.0F, lerpRate);
             }
-            transform.Rotate(-steerDir.y * 0.5F, steerDir.x, 0.0F, Space.Self);
-            rigidbody.velocity = steerDir;
+            transform.rotation = Quaternion.LookRotation(rigidbody.velocity.normalized);
         } else {
             rigidbody.velocity = Vector3.zero;
         }
@@ -40,6 +43,10 @@ public class RocketScript : MonoBehaviour
             coll.gameObject.GetComponent<Deformable>().AddDeformation(transform.position, 1.5F, 3.0F);
             Destroy(gameObject, 0.1F);
             Instantiate(destroyedRocketPrefab, transform.position, transform.rotation, GameObject.Find("Scene").transform);
+            Object[] connectedPlayers = GameObject.FindObjectsOfType(typeof(ConnectedPlayerManager));
+            foreach (Object o in connectedPlayers) {
+                ((ConnectedPlayerManager) o).EndTurn();
+            }
         }
     }
 }

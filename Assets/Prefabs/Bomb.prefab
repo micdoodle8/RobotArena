@@ -18,6 +18,7 @@ GameObject:
   - component: {fileID: 7643766596207098323}
   - component: {fileID: 1850665130323691553}
   - component: {fileID: 4462711015362759154}
+  - component: {fileID: 505924509393209199}
   m_Layer: 0
   m_Name: Bomb
   m_TagString: Untagged
@@ -259,3 +260,30 @@ MonoBehaviour:
   m_SnapThreshold: 5
   m_InterpolateRotation: 1
   m_InterpolateMovement: 1
+--- !u!114 &505924509393209199
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1003415036088326438}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8e2527e4d2552214690678bf7c70d26e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isLerpingPos: 0
+  isLerpingRot: 0
+  lastRealRot: {x: 0, y: 0, z: 0, w: 0}
+  realRot: {x: 0, y: 0, z: 0, w: 0}
+  lastRealPos: {x: 0, y: 0, z: 0}
+  realPos: {x: 0, y: 0, z: 0}
+  lerpStartTime: 0
+  timeToLerp: 0
+  shouldSendMovement: 0
+  speed: 0
+  networkSendRate: 5
+  timeBetweenMovementStart: 0
+  timeBetweenMovementEnd: 0
+  moveThreshold: 0.001
+  rotThreshold: 0.001

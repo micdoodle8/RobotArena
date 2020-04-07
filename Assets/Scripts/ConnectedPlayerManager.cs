@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
+using UnityEngine.UI;
 using Leap.Unity;
 using Leap;
 
@@ -45,6 +46,7 @@ public class ConnectedPlayerManager : NetworkBehaviour
     private GameObject actingPlayer = null;
     private ActingHandler actingHandler;
     private bool indexFingerExtended = false;
+    public bool isMyTurn = false;
 
     // Start is called before the first frame update
     void Start()
@@ -160,11 +162,7 @@ public class ConnectedPlayerManager : NetworkBehaviour
                 actingPlayer.GetComponent<VRPlayerController>().SetPlayerControlled();
                 GameObject.Find("FadeScreen").GetComponent<Fader>().FadeBackIn(1.0F, FadeCallback, 0);
 
-                GameObject.Find("PalmPivot").GetComponent<FacingCamera>().Disable(false);
-                PalmGuiEnableDisable[] palmGuis = Resources.FindObjectsOfTypeAll<PalmGuiEnableDisable>();
-                foreach (PalmGuiEnableDisable gui in palmGuis) {
-                    gui.gameObject.SetActive(gui.gameObject.name.Equals("PalmGuiAct"));
-                }
+                EnablePalmGui(1);
                 break;
             case 3:
                 actingPlayer.GetComponent<VRPlayerController>().SetPlayerNotControlled();
@@ -227,10 +225,10 @@ public class ConnectedPlayerManager : NetworkBehaviour
                 GameObject.Find("FadeScreen").GetComponent<Fader>().FadeToBlack(1.0F, FadeCallback, 1);
             } else if (mode == PlayerMode.OBSERVING) {
                 camera.transform.localScale = new Vector3(25.0F, 25.0F, 25.0F);
-                GameObject.Find("PalmPivot").GetComponent<FacingCamera>().Disable(false);
-                PalmGuiEnableDisable[] palmGuis = Resources.FindObjectsOfTypeAll<PalmGuiEnableDisable>();
-                foreach (PalmGuiEnableDisable gui in palmGuis) {
-                    gui.gameObject.SetActive(gui.gameObject.name.Equals("PalmGui"));
+                if (isMyTurn) {
+                    EnablePalmGui(0);
+                    GameObject.Find("HintText").GetComponent<Text>().text = "Your Turn!";
+                    GameObject.Find("HintText").GetComponent<HintTextFader>().StartFade(1.5F);
                 }
             } else if (mode == PlayerMode.ACTING) {
                 GameObject.Find("FadeScreen").GetComponent<Fader>().FadeToBlack(1.0F, FadeCallback, 2);
@@ -366,7 +364,9 @@ public class ConnectedPlayerManager : NetworkBehaviour
     }
 
     public void StartPass() {
-        FinishTurn();
+        if (hasAuthority) {
+            EndTurn();
+        }
     }
 
     public void OnPlayerActChose(GameObject robot) {
@@ -403,7 +403,7 @@ public class ConnectedPlayerManager : NetworkBehaviour
             closestPlayers[i] = null;
         }
         Destroy(spawnedCylinder);
-        FinishTurn();
+        EndTurn();
     }
 
     public void DoAction(int actionNum) {
@@ -467,7 +467,57 @@ public class ConnectedPlayerManager : NetworkBehaviour
         return new[] { closestPlayerLeft, closestPlayerRight };
     }
 
-    public void FinishTurn() {
+    public void EndTurn() {
+        Debug.Log("Ending turn " + Time.time);
+        if (hasAuthority) {
+            GameObject.Find("HintText").GetComponent<Text>().enabled = false;
+            isMyTurn = false;
+            CmdFinishTurn();
+        }
+    }
 
+    [Command]
+    private void CmdFinishTurn() {
+        TurnManager turnManager = NetworkManager.singleton.gameObject.GetComponent<TurnManager>();
+        turnManager.NextTurn();
+    }
+
+    public void StartTurn() {
+        Debug.Log("2");
+        if (isServer) {
+            Debug.Log("3");
+            RpcTurnStarting();
+        }
+    }
+
+    [ClientRpc]
+    private void RpcTurnStarting() {
+        if (hasAuthority) {
+            Debug.Log("4");
+            isMyTurn = true;
+            if (currentMode == PlayerMode.OBSERVING) {
+                EnablePalmGui(0);
+                GameObject.Find("HintText").GetComponent<Text>().text = "Your Turn!";
+                GameObject.Find("HintText").GetComponent<HintTextFader>().StartFade(1.5F);
+            }
+        }
+    }
+
+    private void EnablePalmGui(int type) {
+        FacingCamera[] facingCameras = Resources.FindObjectsOfTypeAll<FacingCamera>();
+        facingCameras[0].Disable(false);
+        PalmGuiEnableDisable[] palmGuis = Resources.FindObjectsOfTypeAll<PalmGuiEnableDisable>();
+        switch (type) {
+            case 0:
+                foreach (PalmGuiEnableDisable gui in palmGuis) {
+                    gui.gameObject.SetActive(gui.gameObject.name.Equals("PalmGui"));
+                }
+                break;
+            case 1:
+                foreach (PalmGuiEnableDisable gui in palmGuis) {
+                    gui.gameObject.SetActive(gui.gameObject.name.Equals("PalmGuiAct"));
+                }
+                break;
+        }
     }
 }

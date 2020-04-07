@@ -22,12 +22,14 @@ public class VRPlayerController : NetworkBehaviour
     public GameObject withHands;
     public GameObject withoutHands;
     public bool controlled = false;
+    private Rigidbody rb;
 
     // Start is called before the first frame update
     void Start()
     {
         scene = GameObject.Find("Scene");
         hipsTransform = hipsTransformWithHands;
+        rb = GetComponent<Rigidbody>();
     }
 
     public void SetPlayerControlled() {
@@ -91,6 +93,13 @@ public class VRPlayerController : NetworkBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
+        if (!rb.isKinematic && rb.velocity.sqrMagnitude > 100.0F) {
+            // More expensive collision only if the player is going very fast
+            rb.collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
+        } else {
+            rb.collisionDetectionMode = CollisionDetectionMode.Discrete;
+        }
+
         if (!controlled) {
             RaycastHit hit;
             Ray ray = new Ray(hipsTransform.position, Vector3.down);
@@ -103,20 +112,25 @@ public class VRPlayerController : NetworkBehaviour
             if (Physics.Raycast(ray, out hit, (legLength - 0.2F) * scene.transform.localScale.y)) {
                 Vector3 diff = hipsTransform.position - hit.point;
                 float springForce = (4.0F / diff.magnitude);
-                if (yVel > 0.0F) {
+                if (rb.velocity.y > 0.0F) {
                     springForce /= 3.0F;
                 }
                 yVel += springForce * Time.deltaTime;
+                rb.velocity = rb.velocity + new Vector3(0.0F, springForce * Time.deltaTime, 0.0F);
+                rb.useGravity = false;
+                rb.isKinematic = false;
             } else if (!onGround) {
-                yVel -= 0.981F * Time.deltaTime;
+                rb.useGravity = true;
+                rb.isKinematic = false;
             } else {
-                yVel = 0.0F;
+                rb.velocity = Vector3.zero;
+                rb.useGravity = false;
+                rb.isKinematic = true;
             }
             Transform targetTransform = transform;
             if (vrTargetHead != null) { 
                 targetTransform = vrTargetHead;
             }
-            targetTransform.position += new Vector3(0.0F, yVel * scene.transform.localScale.y, 0.0F);
         }
     }
 }

@@ -39,9 +39,11 @@ ScriptsOnlyBuild:
     - Leap.Unity.XRHeightOffset
     - MainMenuHandler
     - MyNetworkManager
+    - NetworkMove
     - PalmGuiEnableDisable
     - RocketScript
     - Team
+    - TurnManager
     - VRFootIK
     - VRPlayerController
     - VRRig
@@ -56,10 +58,8 @@ ScriptsOnlyBuild:
     UnityEditor.Graphs.dll:
     - UnityEditor.Graphs.AnimationBlendTree.Graph
     - UnityEditor.Graphs.AnimationBlendTree.GraphGUI
-    - UnityEditor.Graphs.AnimationStateMachine.AnyStateNode
     - UnityEditor.Graphs.AnimationStateMachine.Graph
     - UnityEditor.Graphs.AnimationStateMachine.GraphGUI
-    - UnityEditor.Graphs.AnimationStateMachine.StateNode
     - UnityEditor.Graphs.AnimatorControllerTool
     UnityEditor.TestRunner.dll:
     - UnityEditor.TestTools.TestRunner.Api.CallbacksHolder
@@ -113,49 +113,49 @@ ScriptsOnlyBuild:
     - Class: 109
       Script: {instanceID: 0}
     - Class: 114
-      Script: {instanceID: 11256}
+      Script: {instanceID: 11258}
     - Class: 114
-      Script: {instanceID: 11296}
+      Script: {instanceID: 11298}
     - Class: 114
-      Script: {instanceID: 11508}
+      Script: {instanceID: 11510}
     - Class: 114
-      Script: {instanceID: 11740}
+      Script: {instanceID: 11742}
     - Class: 114
-      Script: {instanceID: 12048}
+      Script: {instanceID: 12050}
     - Class: 114
-      Script: {instanceID: 12186}
+      Script: {instanceID: 12188}
     - Class: 114
-      Script: {instanceID: 12636}
+      Script: {instanceID: 12638}
     - Class: 114
-      Script: {instanceID: 12762}
+      Script: {instanceID: 12764}
     - Class: 114
-      Script: {instanceID: 13212}
+      Script: {instanceID: 13214}
     - Class: 114
-      Script: {instanceID: 13348}
+      Script: {instanceID: 13350}
     - Class: 114
-      Script: {instanceID: 13376}
+      Script: {instanceID: 13378}
     - Class: 114
-      Script: {instanceID: 13654}
+      Script: {instanceID: 13656}
     - Class: 114
-      Script: {instanceID: 13908}
+      Script: {instanceID: 13910}
     - Class: 114
-      Script: {instanceID: 13992}
+      Script: {instanceID: 13994}
     - Class: 114
-      Script: {instanceID: 14116}
+      Script: {instanceID: 14118}
     - Class: 114
-      Script: {instanceID: 14124}
+      Script: {instanceID: 14126}
     - Class: 114
-      Script: {instanceID: 14806}
+      Script: {instanceID: 14812}
     - Class: 114
-      Script: {instanceID: 15010}
+      Script: {instanceID: 15016}
     - Class: 114
-      Script: {instanceID: 15040}
+      Script: {instanceID: 15048}
     - Class: 114
-      Script: {instanceID: 15068}
+      Script: {instanceID: 15076}
     - Class: 114
-      Script: {instanceID: 15234}
+      Script: {instanceID: 15242}
     - Class: 114
-      Script: {instanceID: 15624}
+      Script: {instanceID: 15632}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -222,111 +222,117 @@ ScriptsOnlyBuild:
     - Class: 108
       Script: {instanceID: 0}
     - Class: 114
-      Script: {instanceID: 11256}
-    - Class: 114
-      Script: {instanceID: 11294}
+      Script: {instanceID: 11258}
     - Class: 114
       Script: {instanceID: 11296}
     - Class: 114
-      Script: {instanceID: 11342}
+      Script: {instanceID: 11298}
     - Class: 114
-      Script: {instanceID: 11400}
+      Script: {instanceID: 11344}
     - Class: 114
-      Script: {instanceID: 11448}
+      Script: {instanceID: 11402}
     - Class: 114
-      Script: {instanceID: 11508}
+      Script: {instanceID: 11450}
     - Class: 114
-      Script: {instanceID: 11534}
+      Script: {instanceID: 11510}
     - Class: 114
-      Script: {instanceID: 11600}
+      Script: {instanceID: 11536}
     - Class: 114
-      Script: {instanceID: 11714}
+      Script: {instanceID: 11602}
     - Class: 114
-      Script: {instanceID: 11740}
+      Script: {instanceID: 11716}
     - Class: 114
-      Script: {instanceID: 11758}
+      Script: {instanceID: 11742}
     - Class: 114
-      Script: {instanceID: 11896}
+      Script: {instanceID: 11760}
     - Class: 114
-      Script: {instanceID: 11938}
+      Script: {instanceID: 11898}
     - Class: 114
-      Script: {instanceID: 12048}
+      Script: {instanceID: 11940}
     - Class: 114
-      Script: {instanceID: 12184}
+      Script: {instanceID: 12050}
     - Class: 114
       Script: {instanceID: 12186}
     - Class: 114
-      Script: {instanceID: 12224}
+      Script: {instanceID: 12188}
     - Class: 114
-      Script: {instanceID: 12244}
+      Script: {instanceID: 12226}
     - Class: 114
-      Script: {instanceID: 12300}
+      Script: {instanceID: 12246}
     - Class: 114
-      Script: {instanceID: 12554}
+      Script: {instanceID: 12302}
     - Class: 114
-      Script: {instanceID: 12636}
+      Script: {instanceID: 12556}
     - Class: 114
-      Script: {instanceID: 12684}
+      Script: {instanceID: 12638}
     - Class: 114
-      Script: {instanceID: 13046}
+      Script: {instanceID: 12686}
     - Class: 114
-      Script: {instanceID: 13082}
+      Script: {instanceID: 12764}
     - Class: 114
-      Script: {instanceID: 13212}
+      Script: {instanceID: 13048}
     - Class: 114
-      Script: {instanceID: 13232}
+      Script: {instanceID: 13084}
     - Class: 114
-      Script: {instanceID: 13348}
+      Script: {instanceID: 13214}
     - Class: 114
-      Script: {instanceID: 13376}
+      Script: {instanceID: 13234}
     - Class: 114
-      Script: {instanceID: 13418}
+      Script: {instanceID: 13350}
     - Class: 114
-      Script: {instanceID: 13654}
+      Script: {instanceID: 13378}
     - Class: 114
-      Script: {instanceID: 13800}
+      Script: {instanceID: 13420}
     - Class: 114
-      Script: {instanceID: 13908}
+      Script: {instanceID: 13656}
     - Class: 114
-      Script: {instanceID: 13992}
+      Script: {instanceID: 13802}
     - Class: 114
-      Script: {instanceID: 14116}
+      Script: {instanceID: 13910}
     - Class: 114
-      Script: {instanceID: 14124}
+      Script: {instanceID: 13994}
     - Class: 114
-      Script: {instanceID: 14276}
+      Script: {instanceID: 14118}
     - Class: 114
-      Script: {instanceID: 14426}
+      Script: {instanceID: 14126}
     - Class: 114
-      Script: {instanceID: 14562}
+      Script: {instanceID: 14226}
     - Class: 114
-      Script: {instanceID: 14710}
+      Script: {instanceID: 14280}
     - Class: 114
-      Script: {instanceID: 14714}
+      Script: {instanceID: 14430}
     - Class: 114
-      Script: {instanceID: 14806}
+      Script: {instanceID: 14492}
     - Class: 114
-      Script: {instanceID: 15010}
+      Script: {instanceID: 14568}
     - Class: 114
-      Script: {instanceID: 15038}
+      Script: {instanceID: 14716}
     - Class: 114
-      Script: {instanceID: 15040}
+      Script: {instanceID: 14720}
     - Class: 114
-      Script: {instanceID: 15078}
+      Script: {instanceID: 14812}
     - Class: 114
-      Script: {instanceID: 15212}
+      Script: {instanceID: 15016}
     - Class: 114
-      Script: {instanceID: 15234}
+      Script: {instanceID: 15046}
     - Class: 114
-      Script: {instanceID: 15278}
+      Script: {instanceID: 15048}
     - Class: 114
-      Script: {instanceID: 15492}
+      Script: {instanceID: 15086}
     - Class: 114
-      Script: {instanceID: 20594}
+      Script: {instanceID: 15220}
     - Class: 114
-      Script: {instanceID: 113570}
+      Script: {instanceID: 15242}
     - Class: 114
-      Script: {instanceID: 136936}
+      Script: {instanceID: 15286}
+    - Class: 114
+      Script: {instanceID: 15500}
+    - Class: 114
+      Script: {instanceID: 15632}
+    - Class: 114
+      Script: {instanceID: 47156}
+    - Class: 114
+      Script: {instanceID: 100404}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -488,7 +494,7 @@ ScriptsOnlyBuild:
     className: IgnoreColliderForInteraction
   - hash:
       serializedVersion: 2
-      Hash: 159580126724664c3f7769b1df4412cb
+      Hash: c456f3bb11add2d6faeeac25dab12284
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: RocketScript
@@ -1412,7 +1418,7 @@ ScriptsOnlyBuild:
     className: VRTK_SpringLever
   - hash:
       serializedVersion: 2
-      Hash: 7251681ea7aa1a5e81b46f2e0519fae8
+      Hash: 582754c14a714a15f1196eb732a93f6f
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: ConnectedPlayerManager
@@ -2576,6 +2582,12 @@ ScriptsOnlyBuild:
     className: Remote_Beam
   - hash:
       serializedVersion: 2
+      Hash: 603ad7fae143a5e65258b1e9db388bc9
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: ButtonColourUpdater
+  - hash:
+      serializedVersion: 2
       Hash: e1300922cc039f41ab46a47f4cb05898
     assemblyName: Unity.TextMeshPro.dll
     namespaceName: TMPro
@@ -2802,6 +2814,12 @@ ScriptsOnlyBuild:
     assemblyName: Assembly-CSharp.dll
     namespaceName: Leap.Unity.Interaction
     className: InteractionSlider
+  - hash:
+      serializedVersion: 2
+      Hash: 2650c3ec5df3c62c73333a3a865ae28e
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: GameManager
   - hash:
       serializedVersion: 2
       Hash: 1aa3c1056d70edf15fdd22dc9270d47e
@@ -3144,6 +3162,12 @@ ScriptsOnlyBuild:
     assemblyName: Assembly-CSharp.dll
     namespaceName: UnityEngine.EventSystems
     className: OVRInputModule
+  - hash:
+      serializedVersion: 2
+      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: NetworkMessageHandler
   - hash:
       serializedVersion: 2
       Hash: 11206112ec687db2172d3c94b2bdc0f2
@@ -3650,16 +3674,16 @@ ScriptsOnlyBuild:
     className: PlayableTrack
   - hash:
       serializedVersion: 2
-      Hash: 603ad7fae143a5e65258b1e9db388bc9
+      Hash: 45f79ea47cb3f677d431f18fe7370b9b
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
-    className: ButtonColourUpdater
+    className: NetworkMove
   - hash:
       serializedVersion: 2
-      Hash: 2650c3ec5df3c62c73333a3a865ae28e
+      Hash: 305172ca3d3127aecae9da3b57c03549
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
-    className: GameManager
+    className: TurnManager
   platform: 5
   scenePathNames:
   - Assets/Scenes/MainMenu.unity

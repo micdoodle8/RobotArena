@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 
-public class Bomb : NetworkBehaviour
+public class Bomb : NetworkMessageHandler
 {
     private float countdown = 0.0F;
     public float timeToExplode = 1.0F;
     private GameObject lastHit;
     public GameObject destroyedBombPrefab;
+
 
     // Start is called before the first frame update
     void Start()
@@ -17,22 +18,23 @@ public class Bomb : NetworkBehaviour
         GetComponent<Rigidbody>().useGravity = false;
     }
 
-    // Update is called once per frame
     void Update() {
         if (countdown > 0.0F) {
             countdown -= Time.deltaTime;
-            if (countdown <= 0.0F && lastHit != null) {
+            if (countdown <= 0.0F && lastHit != null && lastHit.GetComponent<Deformable>() != null) {
                 CmdExplode(lastHit);
+                Object[] connectedPlayers = GameObject.FindObjectsOfType(typeof(ConnectedPlayerManager));
+                foreach (Object o in connectedPlayers) {
+                    ((ConnectedPlayerManager) o).EndTurn();
+                }
             }
         }
     }
 
     [Command]
     private void CmdExplode(GameObject ground) {
-        if (ground.GetComponent<Deformable>() != null) {
-            ground.GetComponent<Deformable>().AddDeformation(transform.position, 3.0F, 3.0F);
-            Destroy(gameObject, 0.1F);
-        }
+        ground.GetComponent<Deformable>().AddDeformation(transform.position, 3.0F, 3.0F);
+        Destroy(gameObject, 0.1F);
     }
 
     private void OnDestroy() {

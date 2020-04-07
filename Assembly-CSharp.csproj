@@ -49,6 +49,7 @@
      <Compile Include="Assets\FacingCamera.cs" />
      <Compile Include="Assets\GameManager.cs" />
      <Compile Include="Assets\HandSwitcher.cs" />
+     <Compile Include="Assets\HintTextFader.cs" />
      <Compile Include="Assets\LeapMotion\Core\Examples\Example Assets\InertiaPostProcessProvider.cs" />
      <Compile Include="Assets\LeapMotion\Core\Examples\Example Assets\ProjectionPostProcessProvider.cs" />
      <Compile Include="Assets\LeapMotion\Core\Plugins\LeapCSharp\Arm.cs" />
@@ -458,7 +459,10 @@
      <Compile Include="Assets\Scripts\HookSwing.cs" />
      <Compile Include="Assets\Scripts\MainMenuHandler.cs" />
      <Compile Include="Assets\Scripts\MyNetworkManager.cs" />
+     <Compile Include="Assets\Scripts\NetworkMessageHandler.cs" />
+     <Compile Include="Assets\Scripts\NetworkMove.cs" />
      <Compile Include="Assets\Scripts\Team.cs" />
+     <Compile Include="Assets\Scripts\TurnManager.cs" />
      <Compile Include="Assets\Scripts\VRFootIK.cs" />
      <Compile Include="Assets\Scripts\VRPlayerController.cs" />
      <Compile Include="Assets\Scripts\VRRig.cs" />

@@ -891,6 +891,7 @@ namespace Leap.Unity.Interaction {
         if (collider is MeshCollider) {
           // Native, faster ClosestPoint, but no support for off-center colliders; use to
           // support MeshColliders.
+          Debug.LogError(collider.attachedRigidbody);
           testDistance = (Physics.ClosestPoint(worldPosition,
                                                collider,
                                                collider.attachedRigidbody.position,
