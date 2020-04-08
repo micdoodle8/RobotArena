@@ -4769,7 +4769,6 @@ GameObject:
   - component: {fileID: 2109243877}
   - component: {fileID: 2109243875}
   - component: {fileID: 8651823404021475551}
-  - component: {fileID: -7752754443409423104}
   - component: {fileID: 3519467315953063571}
   m_Layer: 0
   m_Name: Rocket
@@ -4920,28 +4919,6 @@ MonoBehaviour:
     i15: 0
   m_ServerOnly: 0
   m_LocalPlayerAuthority: 1
---- !u!114 &-7752754443409423104
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5252342173498063220}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 13d6c522af31447398568cc65334232b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_TransformSyncMode: 3
-  m_SendInterval: 0.04761905
-  m_SyncRotationAxis: 7
-  m_RotationSyncCompression: 0
-  m_SyncSpin: 1
-  m_MovementTheshold: 0.0001
-  m_VelocityThreshold: 0.00001
-  m_SnapThreshold: 5
-  m_InterpolateRotation: 1
-  m_InterpolateMovement: 1
 --- !u!114 &3519467315953063571
 MonoBehaviour:
   m_ObjectHideFlags: 0

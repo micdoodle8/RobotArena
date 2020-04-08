@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         lastFocused = Application.isFocused;
+        Application.runInBackground = true;
     }
 
     // Update is called once per frame

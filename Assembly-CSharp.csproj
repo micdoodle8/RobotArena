@@ -49,7 +49,9 @@
      <Compile Include="Assets\FacingCamera.cs" />
      <Compile Include="Assets\GameManager.cs" />
      <Compile Include="Assets\HandSwitcher.cs" />
+     <Compile Include="Assets\Health.cs" />
      <Compile Include="Assets\HintTextFader.cs" />
+     <Compile Include="Assets\LaserScript.cs" />
      <Compile Include="Assets\LeapMotion\Core\Examples\Example Assets\InertiaPostProcessProvider.cs" />
      <Compile Include="Assets\LeapMotion\Core\Examples\Example Assets\ProjectionPostProcessProvider.cs" />
      <Compile Include="Assets\LeapMotion\Core\Plugins\LeapCSharp\Arm.cs" />

@@ -3,7 +3,12 @@ guid: e76d5325f8120b64fa228d99d6e8dd40
 ModelImporter:
   serializedVersion: 19300
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Robot.001
+    second: {fileID: 2100000, guid: e8179000205df344bbce68e7723aed94, type: 2}
   materials:
     materialImportMode: 1
     materialName: 0
@@ -15,8 +20,7 @@ ModelImporter:
     resampleCurves: 1
     optimizeGameObjects: 0
     motionNodeName: 
-    rigImportErrors: "Invalid Avatar Rig Configuration. Missing or invalid transform:\n\tRequired
-      human bone 'LeftHand' not found\n"
+    rigImportErrors: 
     rigImportWarnings: 
     animationImportErrors: 
     animationImportWarnings: 

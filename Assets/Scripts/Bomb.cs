@@ -9,11 +9,12 @@ public class Bomb : NetworkMessageHandler
     public float timeToExplode = 1.0F;
     private GameObject lastHit;
     public GameObject destroyedBombPrefab;
+    public float radius = 3.25F;
+    public float damage = 100.0F;
 
 
     // Start is called before the first frame update
-    void Start()
-    {
+    void Start() {
         GetComponent<Rigidbody>().isKinematic = true;
         GetComponent<Rigidbody>().useGravity = false;
     }
@@ -25,7 +26,7 @@ public class Bomb : NetworkMessageHandler
                 CmdExplode(lastHit);
                 Object[] connectedPlayers = GameObject.FindObjectsOfType(typeof(ConnectedPlayerManager));
                 foreach (Object o in connectedPlayers) {
-                    ((ConnectedPlayerManager) o).EndTurn();
+                    ((ConnectedPlayerManager) o).EndTurn(true, true);
                 }
             }
         }
@@ -33,7 +34,15 @@ public class Bomb : NetworkMessageHandler
 
     [Command]
     private void CmdExplode(GameObject ground) {
-        ground.GetComponent<Deformable>().AddDeformation(transform.position, 3.0F, 3.0F);
+        Health[] healthObjs = GameObject.FindObjectsOfType<Health>();
+        foreach (Health health in healthObjs) {
+            Vector3 delta = health.gameObject.transform.position - transform.position;
+            if (delta.magnitude < radius) {
+                float depthMult = ((radius - delta.magnitude) / radius);
+                health.DoDamage(damage * depthMult);
+            }
+        }
+        ground.GetComponent<Deformable>().AddDeformation(transform.position, radius - 0.25F, 3.0F);
         Destroy(gameObject, 0.1F);
     }
 

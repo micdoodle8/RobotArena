@@ -94,6 +94,9 @@ MonoBehaviour:
     type: 3}
   moveCylinderPrefab: {fileID: 1978150484648198113, guid: 7799b927ddaaeb448ab60a90f1ec331f,
     type: 3}
+  laserPrefab: {fileID: 2507903250696907121, guid: da08d777af1e796498367343ec5f0949,
+    type: 3}
+  isMyTurn: 0
 --- !u!114 &-2863730283703986117
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -1,8 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 
-public class RocketScript : MonoBehaviour
+public class RocketScript : NetworkBehaviour
 {
     private Rigidbody rigidbody;
     public float dropRate = 2.5F;
@@ -11,6 +12,8 @@ public class RocketScript : MonoBehaviour
     private bool fingerExtended;
     [Range(0.0F, 1.0F)]
     public float lerpRate = 0.1F;
+    public float radius = 1.5F;
+    public float damage = 50.0F;
 
     void Start() {
         rigidbody = GetComponent<Rigidbody>();
@@ -39,14 +42,30 @@ public class RocketScript : MonoBehaviour
     }
 
     private void OnCollisionEnter(Collision coll) {
-        if (coll.gameObject.GetComponent<Deformable>() != null) {
-            coll.gameObject.GetComponent<Deformable>().AddDeformation(transform.position, 1.5F, 3.0F);
-            Destroy(gameObject, 0.1F);
-            Instantiate(destroyedRocketPrefab, transform.position, transform.rotation, GameObject.Find("Scene").transform);
+        if (hasAuthority) {
+            CmdExplode(coll.gameObject);
             Object[] connectedPlayers = GameObject.FindObjectsOfType(typeof(ConnectedPlayerManager));
             foreach (Object o in connectedPlayers) {
-                ((ConnectedPlayerManager) o).EndTurn();
+                ((ConnectedPlayerManager) o).EndTurn(true, false);
             }
         }
+    }
+
+    private void OnDestroy() {
+        Instantiate(destroyedRocketPrefab, transform.position, transform.rotation, GameObject.Find("Scene").transform);
+    }
+
+    [Command]
+    private void CmdExplode(GameObject ground) {
+        Health[] healthObjs = GameObject.FindObjectsOfType<Health>();
+        foreach (Health health in healthObjs) {
+            Vector3 delta = health.gameObject.transform.position - transform.position;
+            if (delta.magnitude < radius) {
+                float depthMult = ((radius - delta.magnitude) / radius);
+                health.DoDamage(damage * depthMult);
+            }
+        }
+        ground.GetComponent<Deformable>().AddDeformation(transform.position, radius - 0.25F, 2.0F);
+        Destroy(gameObject, 0.1F);
     }
 }

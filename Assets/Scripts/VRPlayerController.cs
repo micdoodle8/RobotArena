@@ -72,10 +72,10 @@ public class VRPlayerController : NetworkBehaviour
     }
 
     public void SetPlayerNotControlled() {
-        Debug.Log("Setting not controlled");
         VRRig rig = GetComponentInChildren<VRRig>();
         if (rig != null) {
             rig.enabled = false;
+            rig.ForceOpaque();
         }
         hipsTransform = hipsTransformWithHands;
         withHands.SetActive(true);

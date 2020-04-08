@@ -45,8 +45,5 @@ public class FacingCamera : MonoBehaviour
 
     public void Disable(bool state) {
         isForcedOff = state;
-        if (!state) {
-            lastFacing = isFacingCam();
-        }
     }
 }

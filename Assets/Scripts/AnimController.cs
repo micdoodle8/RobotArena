@@ -16,7 +16,6 @@ public class AnimController : MonoBehaviour
     {
         animator = GetComponent<Animator>();
         animator.keepAnimatorControllerStateOnDisable = true;
-            Debug.Log(gameObject.transform.parent.gameObject.tag);
         if (!gameObject.transform.parent.gameObject.tag.Equals("Player")) {
             SetHanging();
         }

@@ -14,7 +14,6 @@ public class TurnManager : MonoBehaviour
     void Update() {
         if (playersTurn < 0 && playersConnected.Count > 0) {
             playersTurn = 0;
-            Debug.Log("1");
             playersConnected[0].StartTurn();
         }
     }

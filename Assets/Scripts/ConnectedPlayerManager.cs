@@ -38,6 +38,8 @@ public class ConnectedPlayerManager : NetworkBehaviour
     public GameObject moveCylinderPrefab;
     private GameObject spawnedCylinder;
     private GameObject spawnedRocket;
+    public GameObject laserPrefab;
+    private GameObject spawnedLaser;
     private bool lastSpawnedRocketActive = false;
     private List<GameObject> robots = new List<GameObject>();
     [SyncVar]
@@ -47,6 +49,8 @@ public class ConnectedPlayerManager : NetworkBehaviour
     private ActingHandler actingHandler;
     private bool indexFingerExtended = false;
     public bool isMyTurn = false;
+    private bool handsOpened = false;
+    private bool firingLaser = false;
 
     // Start is called before the first frame update
     void Start()
@@ -177,7 +181,19 @@ public class ConnectedPlayerManager : NetworkBehaviour
                 // GameObject.FindObjectOfType<HandSwitcher>().SwitchHands();
                 MoveToObserverPosition();
                 ChangeMode(PlayerMode.OBSERVING);
+                if (actingPlayer != null) {
+                    actingPlayer.GetComponent<VRPlayerController>().SetPlayerNotControlled();
+                }
+                actingPlayer = null;
                 break;
+        }
+    }
+
+    public void OnRobotDeath(GameObject robot) {
+        if (hasAuthority) {
+            if (robot == actingPlayer) {
+                EndTurn(true, true);
+            }
         }
     }
 
@@ -215,10 +231,12 @@ public class ConnectedPlayerManager : NetworkBehaviour
                     VRPlayerController controller = obj.GetComponent<VRPlayerController>();
                     if (controller != null) {
                         if (controller.teamContainer == theTeam) { // On same team
-                            controller.transform.Find("PlayerButton").GetChild(0).gameObject.SetActive(false);
+                            controller.transform.Find("PlayerButton").gameObject.SetActive(false);
                         }
                     }
                 }
+            } else if (currentMode == PlayerMode.ACTING) {
+                firingLaser = false;
             }
 
             if (mode == PlayerMode.PLACE_ROBOT) {
@@ -238,7 +256,7 @@ public class ConnectedPlayerManager : NetworkBehaviour
                     VRPlayerController controller = obj.GetComponent<VRPlayerController>();
                     if (controller != null) {
                         if (controller.teamContainer == theTeam) { // On same team
-                            controller.transform.Find("PlayerButton").GetChild(0).gameObject.SetActive(true);
+                            controller.transform.Find("PlayerButton").gameObject.SetActive(true);
                         }
                     }
                 }
@@ -292,13 +310,27 @@ public class ConnectedPlayerManager : NetworkBehaviour
 
     [Command]
     void CmdSpawnRocket() {
-        GameObject rocket = Instantiate(rocketPrefab, actingPlayer.transform.position + new Vector3(0.0F, 2.0F, 0.0F), theTeam.transform.rotation);
+        GameObject rocket = Instantiate(rocketPrefab, actingPlayer.transform.position + new Vector3(0.0F, 3.0F, 0.0F) + actingPlayer.transform.forward, theTeam.transform.rotation);
         rocket.transform.Rotate(new Vector3(-45.0F, 0.0F, 0.0F), Space.Self);
         // rocket.GetComponent<Rigidbody>().isKinematic = true;
         // rocket.GetComponent<Rigidbody>().useGravity = false;
         NetworkServer.SpawnWithClientAuthority(rocket, connectionToClient);
         spawnedRocket = rocket;
         RpcOnRocketSpawn(spawnedRocket);
+    }
+
+    [Command]
+    void CmdSpawnLaser() {
+        GameObject laser = Instantiate(laserPrefab, actingPlayer.transform.position + new Vector3(0.0F, 2.0F, 0.0F), theTeam.transform.rotation);
+        NetworkServer.SpawnWithClientAuthority(laser, connectionToClient);
+        spawnedLaser = laser;
+    }
+
+    [Command]
+    void CmdDestroyLaser() {
+        if (spawnedLaser != null) {
+            Destroy(spawnedLaser);
+        }
     }
 
     [ClientRpc]
@@ -365,7 +397,7 @@ public class ConnectedPlayerManager : NetworkBehaviour
 
     public void StartPass() {
         if (hasAuthority) {
-            EndTurn();
+            EndTurn(false, false);
         }
     }
 
@@ -403,33 +435,20 @@ public class ConnectedPlayerManager : NetworkBehaviour
             closestPlayers[i] = null;
         }
         Destroy(spawnedCylinder);
-        EndTurn();
+        EndTurn(false, false);
     }
 
     public void DoAction(int actionNum) {
-        if (hasAuthority) {
-            Debug.Log("Doing Action " + actionNum);
+        if (hasAuthority && isMyTurn) {
             switch (actionNum) {
                 case 1:
-                    Debug.LogError("sending cmd");
                     CmdSpawnBomb(Camera.main.transform.forward);
                     break;
                 case 2:
                     GameObject.Find("FadeScreen").GetComponent<Fader>().FadeToBlack(1.0F, FadeCallback, 3);
                     break;
                 case 3:
-                    break;
-                case 4:
-                    break;
-                case 5:
-                    break;
-                case 6:
-                    break;
-                case 7:
-                    break;
-                case 8:
-                    break;
-                case 9:
+                    firingLaser = true;
                     break;
             }
         }
@@ -437,6 +456,17 @@ public class ConnectedPlayerManager : NetworkBehaviour
 
     public void FingerExtended(bool state) {
         indexFingerExtended = state;
+    }
+
+    public void HandsOpened(bool state) {
+        handsOpened = state;
+        if (firingLaser) {
+            if (state) {
+                CmdSpawnLaser();
+            } else {
+                CmdDestroyLaser();
+            }
+        }
     }
 
     private GameObject[] getClosestPlayers() {
@@ -467,25 +497,33 @@ public class ConnectedPlayerManager : NetworkBehaviour
         return new[] { closestPlayerLeft, closestPlayerRight };
     }
 
-    public void EndTurn() {
-        Debug.Log("Ending turn " + Time.time);
+    public void EndTurn(bool fadeAndMove, bool switchHands) {
         if (hasAuthority) {
+            if (fadeAndMove) {
+                GameObject.Find("FadeScreen").GetComponent<Fader>().FadeToBlack(1.0F, FadeCallback, 4);
+            } else {
+                actingPlayer = null;
+            }
             GameObject.Find("HintText").GetComponent<Text>().enabled = false;
+            GameObject.Find("PalmPivot").GetComponent<FacingCamera>().Disable(true);
+            if (switchHands) {
+                GameObject.FindObjectOfType<HandSwitcher>().SwitchHands();
+            }
             isMyTurn = false;
+            firingLaser = false;
             CmdFinishTurn();
         }
     }
 
     [Command]
     private void CmdFinishTurn() {
+        Debug.Log("Finishing turn");
         TurnManager turnManager = NetworkManager.singleton.gameObject.GetComponent<TurnManager>();
         turnManager.NextTurn();
     }
 
     public void StartTurn() {
-        Debug.Log("2");
         if (isServer) {
-            Debug.Log("3");
             RpcTurnStarting();
         }
     }
@@ -493,7 +531,6 @@ public class ConnectedPlayerManager : NetworkBehaviour
     [ClientRpc]
     private void RpcTurnStarting() {
         if (hasAuthority) {
-            Debug.Log("4");
             isMyTurn = true;
             if (currentMode == PlayerMode.OBSERVING) {
                 EnablePalmGui(0);

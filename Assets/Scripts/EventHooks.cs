@@ -97,4 +97,18 @@ public class EventHooks : MonoBehaviour
             ((ConnectedPlayerManager) o).FingerExtended(false);
         }
     }
+
+    public void OnBothHandsOpened() {
+        Object[] connectedPlayers = GameObject.FindObjectsOfType(typeof(ConnectedPlayerManager));
+        foreach (Object o in connectedPlayers) {
+            ((ConnectedPlayerManager) o).HandsOpened(true);
+        }
+    }
+
+    public void OnBothHandsClosed() {
+        Object[] connectedPlayers = GameObject.FindObjectsOfType(typeof(ConnectedPlayerManager));
+        foreach (Object o in connectedPlayers) {
+            ((ConnectedPlayerManager) o).HandsOpened(false);
+        }
+    }
 }
