@@ -81,7 +81,7 @@ public class EventHooks : MonoBehaviour
     public void OnBombGraspEnd() {
         gameObject.GetComponent<Rigidbody>().isKinematic = false;
         gameObject.GetComponent<Rigidbody>().useGravity = true;
-        gameObject.GetComponent<Rigidbody>().velocity *= 5.0F;
+        gameObject.GetComponent<Rigidbody>().velocity *= 7.5F;
     }
 
     public void FingerExtended(int finger) {

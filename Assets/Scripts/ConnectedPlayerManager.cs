@@ -32,8 +32,7 @@ public class ConnectedPlayerManager : NetworkBehaviour
     public GameObject robotPrefab;
     public GameObject hookPrefab;
     public GameObject rocketPrefab;
-    private GameObject[] hooks = new GameObject[2];
-    private GameObject[] closestPlayers = new GameObject[2];
+    private GameObject spawnedHook;
     private GameObject grabbedPlayer = null;
     public GameObject moveCylinderPrefab;
     private GameObject spawnedCylinder;
@@ -51,6 +50,7 @@ public class ConnectedPlayerManager : NetworkBehaviour
     public bool isMyTurn = false;
     private bool handsOpened = false;
     private bool firingLaser = false;
+    private bool gameOver = false;
 
     // Start is called before the first frame update
     void Start()
@@ -81,49 +81,54 @@ public class ConnectedPlayerManager : NetworkBehaviour
     void Update()
     {
         if (hasAuthority) {
-            if (Input.GetKeyDown(KeyCode.K)) {
-                CmdSpawnRobot();
-            }
-            if (Input.GetKeyDown(KeyCode.B)) {
-                if (isClient) {
-                    CmdSpawnBomb(Camera.main.transform.forward);
-                }
-            }
             if (currentMode == PlayerMode.CHOOSING_MOVE) {
-                closestPlayers = getClosestPlayers();
-                float offsetY = 5.0F;
-                int numToUpdate = 2;
-                if (closestPlayers[0] == closestPlayers[1] && closestPlayers[0] != null) {
-                    numToUpdate = 1;
-                    if (hooks[1] != null) {
-                        Destroy(hooks[1]);
-                        hooks[1] = null;
-                    }
+                // closestPlayers = getClosestPlayers();
+                // float offsetY = 5.0F;
+                // int numToUpdate = 2;
+                // if (closestPlayers[0] == closestPlayers[1] && closestPlayers[0] != null) {
+                //     numToUpdate = 1;
+                //     if (hooks[1] != null) {
+                //         if (hooks[0] != null) {
+                //             Debug.Log("1Destroying hook 1");
+                //             Destroy(hooks[1]);
+                //         } else {
+                //             hooks[0] = hooks[1];
+                //         }
+                //         hooks[1] = null;
+                //     }
+                // }
+                // for (int i = 0; i < numToUpdate; ++i) {
+                //     if (closestPlayers[i] != null) {
+                //         if (hooks[i] == null) {
+                //             hooks[i] = Instantiate(hookPrefab, closestPlayers[i].transform.position + new Vector3(0.0F, offsetY, 0.0F), Quaternion.identity);
+                //             Debug.Log("Spawning hook " + i + " " + hooks[i]);
+                //         } else {
+                //             hooks[i].transform.position = closestPlayers[i].transform.position + new Vector3(0.0F, offsetY, 0.0F);
+                //         }
+                //     } else {
+                //         if (hooks[i] != null) {
+                //             Debug.Log("2Destroying hook " + i);
+                //             Destroy(hooks[i]);
+                //             hooks[i] = null;
+                //         }
+                //     }
+                // }
+                if (spawnedHook == null) {
+                    GameObject closestPlayer = getClosestPlayer();
+                    spawnedHook = Instantiate(hookPrefab, closestPlayer.transform.position + new Vector3(0.0F, 5.0F, 0.0F), Quaternion.identity);
                 }
-                for (int i = 0; i < numToUpdate; ++i) {
-                    if (closestPlayers[i] != null) {
-                        if (hooks[i] == null) {
-                            hooks[i] = Instantiate(hookPrefab, closestPlayers[i].transform.position + new Vector3(0.0F, offsetY, 0.0F), Quaternion.identity);
-                        } else {
-                            hooks[i].transform.position = closestPlayers[i].transform.position + new Vector3(0.0F, offsetY, 0.0F);
-                        }
-                    } else {
-                        if (hooks[i] != null) {
-                            Destroy(hooks[i]);
-                            hooks[i] = null;
-                        }
-                    }
-                }
+
             } else if (currentMode == PlayerMode.MOVING) {
                 if (grabbedPlayer != null) {
-                    GameObject hook = hooks[0] != null ? hooks[0] : hooks[1];
-                    Vector3 diff = hook.transform.position - spawnedCylinder.transform.position;
+                    // Debug.Log("3");
+                    // GameObject hook = hooks[0] != null ? hooks[0] : hooks[1];
+                    Vector3 diff = spawnedHook.transform.position - spawnedCylinder.transform.position;
                     diff.y = 0.0F;
                     Vector3 target;
                     if (diff.magnitude >= 3.5F) {
                         target = spawnedCylinder.transform.position + diff.normalized * 3.5F;
                     } else {
-                        target = hook.transform.position;
+                        target = spawnedHook.transform.position;
                     }
                     target.y = grabbedPlayer.transform.position.y;
                     grabbedPlayer.transform.position = target;
@@ -138,12 +143,11 @@ public class ConnectedPlayerManager : NetworkBehaviour
                             if (rh != null && rh.Handedness == Chirality.Right) {
                                 Vector3 fingerDirection = rh.GetLeapHand().Fingers[1].Bone(Bone.BoneType.TYPE_DISTAL).Direction.ToVector3();
                                 spawnedRocket.GetComponent<RocketScript>().Steer(fingerDirection, indexFingerExtended);
-                                // Debug.Log(Camera.main.transform.InverseTransformDirection(fingerDirection));
                             }
                         }
                     }
                 } else if (spawnedRocket == null && lastSpawnedRocketActive) {
-                    GameObject.Find("FadeScreen").GetComponent<Fader>().FadeToBlack(1.0F, FadeCallback, 4);
+                    GameObject.Find("FadeScreen").GetComponent<Fader>().FadeToBlack(1.0F, FadeCallback, 5);
                 }
             }
         }
@@ -178,7 +182,9 @@ public class ConnectedPlayerManager : NetworkBehaviour
                 camera.transform.rotation = theTeam.transform.rotation;
                 break;
             case 4:
-                // GameObject.FindObjectOfType<HandSwitcher>().SwitchHands();
+                GameObject.FindObjectOfType<HandSwitcher>().SwitchHands();
+                goto case 5; // Dreaded goto, only used to prevent code duplication
+            case 5:
                 MoveToObserverPosition();
                 ChangeMode(PlayerMode.OBSERVING);
                 if (actingPlayer != null) {
@@ -194,6 +200,29 @@ public class ConnectedPlayerManager : NetworkBehaviour
             if (robot == actingPlayer) {
                 EndTurn(true, true);
             }
+            CmdCheckWinLoss();
+        }
+    }
+
+    [Command]
+    public void CmdCheckWinLoss() {
+        int robotCount = 0;
+        GameObject[] objects = GameObject.FindGameObjectsWithTag("Player");
+        foreach (GameObject obj in objects) {
+            VRPlayerController controller = obj.GetComponent<VRPlayerController>();
+            if (controller != null) {
+                if (obj.GetComponent<Health>().GetHealth() > 0) {
+                    if (controller.teamContainer == theTeam) { // On this team
+                        robotCount++;
+                    }
+                } else {
+                    Destroy(obj);
+                }
+            }
+        }
+        if (robotCount == 0) {
+            TurnManager turnManager = NetworkManager.singleton.gameObject.GetComponent<TurnManager>();
+            turnManager.PlayerLost(this);
         }
     }
 
@@ -220,11 +249,12 @@ public class ConnectedPlayerManager : NetworkBehaviour
             if (currentMode == PlayerMode.OBSERVING) {
                 GameObject.Find("PalmPivot").GetComponent<FacingCamera>().Disable(true);
             } else if (currentMode == PlayerMode.MOVING) {
-                for (int i = 0; i < 2; ++i) {
-                    if (hooks[i] != null) {
-                        Destroy(hooks[i]);
-                    }
-                }
+                // for (int i = 0; i < 2; ++i) {
+                //     if (hooks[i] != null) {
+                //         Debug.Log("3Destroying hook " + i);
+                //         Destroy(hooks[i]);
+                //     }
+                // }
             } else if (currentMode == PlayerMode.CHOOSING_ACT) {
                 GameObject[] objects = GameObject.FindGameObjectsWithTag("Player");
                 foreach (GameObject obj in objects) {
@@ -243,10 +273,10 @@ public class ConnectedPlayerManager : NetworkBehaviour
                 GameObject.Find("FadeScreen").GetComponent<Fader>().FadeToBlack(1.0F, FadeCallback, 1);
             } else if (mode == PlayerMode.OBSERVING) {
                 camera.transform.localScale = new Vector3(25.0F, 25.0F, 25.0F);
-                if (isMyTurn) {
+                if (isMyTurn && !gameOver) {
                     EnablePalmGui(0);
-                    GameObject.Find("HintText").GetComponent<Text>().text = "Your Turn!";
-                    GameObject.Find("HintText").GetComponent<HintTextFader>().StartFade(1.5F);
+                    // GameObject.Find("HintText").GetComponent<Text>().text = "Your Turn!";
+                    ShowText(0);
                 }
             } else if (mode == PlayerMode.ACTING) {
                 GameObject.Find("FadeScreen").GetComponent<Fader>().FadeToBlack(1.0F, FadeCallback, 2);
@@ -267,7 +297,6 @@ public class ConnectedPlayerManager : NetworkBehaviour
 
     [Command]
     void CmdSpawnRobot() {
-        Debug.Log("ConnectedPlayerManager::SpawnRobot -- Spawning robot ");
         if (hookedPlayer != null) {
             GameObject robot = Instantiate(robotPrefab, hookedPlayer.transform.position - new Vector3(0.0F, 4.83F, 0.0F) * scene.transform.localScale.y, theTeam.transform.rotation, scene.transform);
             robots.Add(robot);
@@ -303,9 +332,11 @@ public class ConnectedPlayerManager : NetworkBehaviour
 
     [Command]
     void CmdSpawnBomb(Vector3 forward) {
-        GameObject bomb = Instantiate(bombPrefab, actingPlayer.transform.position + new Vector3(0.0F, 2.0F, 0.0F) + forward / 2.0F, Quaternion.identity, scene.transform);
-        // bomb.GetComponent<Rigidbody>().velocity = (actingPlayer.transform.forward + Vector3.up) * 25.0F;
-        NetworkServer.SpawnWithClientAuthority(bomb, connectionToClient);
+        if (GameObject.FindObjectsOfType<Bomb>().Length == 0) {
+            GameObject bomb = Instantiate(bombPrefab, actingPlayer.transform.position + new Vector3(0.0F, 2.0F, 0.0F) + new Vector3(forward.x, 0.0F, forward.z) / 2.0F, Quaternion.identity, scene.transform);
+            // bomb.GetComponent<Rigidbody>().velocity = (actingPlayer.transform.forward + Vector3.up) * 25.0F;
+            NetworkServer.SpawnWithClientAuthority(bomb, connectionToClient);
+        }
     }
 
     [Command]
@@ -324,6 +355,8 @@ public class ConnectedPlayerManager : NetworkBehaviour
         GameObject laser = Instantiate(laserPrefab, actingPlayer.transform.position + new Vector3(0.0F, 2.0F, 0.0F), theTeam.transform.rotation);
         NetworkServer.SpawnWithClientAuthority(laser, connectionToClient);
         spawnedLaser = laser;
+        laser.GetComponent<LaserScript>().firingPlayer = actingPlayer;
+        RpcOnLaserSpawn(spawnedLaser, actingPlayer);
     }
 
     [Command]
@@ -340,9 +373,16 @@ public class ConnectedPlayerManager : NetworkBehaviour
         }
     }
 
+    [ClientRpc]
+    private void RpcOnLaserSpawn(GameObject laser, GameObject player) {
+        if (hasAuthority) {
+            laser.GetComponent<LaserScript>().firingPlayer = player;
+            spawnedLaser = laser;
+        }
+    }
+
     [Command]
     void CmdSpawnTeam() {
-        Debug.Log("ConnectedPlayerManager::CmdSpawnTeam -- Received spawn team cmd");
         GameObject[] spawnPoints = GameObject.FindGameObjectsWithTag("Spawn");
         if (spawnPoints.Length > 0) {
             Transform spawnPoint = spawnPoints[0].transform;
@@ -377,7 +417,6 @@ public class ConnectedPlayerManager : NetworkBehaviour
             int yPos = 150;
             int space = 24;
             if (GUI.Button(new Rect(xPos, yPos, 200, 20), "Create Team")) {
-                Debug.Log("ConnectedPlayerManager::OnGUI -- Creating team " + hasAuthority);
                 CmdSpawnTeam();
             }
         }
@@ -404,7 +443,6 @@ public class ConnectedPlayerManager : NetworkBehaviour
     public void OnPlayerActChose(GameObject robot) {
         if (hasAuthority) {
             ChangeMode(PlayerMode.ACTING);
-            Debug.Log(robot);
             actingPlayer = robot;
             if (!isServer) {
                 CmdSetActingPlayer(actingPlayer);
@@ -413,29 +451,22 @@ public class ConnectedPlayerManager : NetworkBehaviour
     }
 
     public void StartMoveRobot(GameObject theHook) {
-        Debug.Log(theHook);
-        ChangeMode(PlayerMode.MOVING);
-        for (int i = 0; i < 2; ++i) {
-            if (hooks[i] != theHook && hooks[i] != null) {
-                Debug.Log("Destr " +hooks[i]);
-                Destroy(hooks[i]);
-            } else if (hooks[i] == theHook) {
-                Debug.Log("Keep 2 " +hooks[i] + closestPlayers[i] + " " + closestPlayers[0] + " " + closestPlayers[1]);
-                grabbedPlayer = closestPlayers[i];
-            }
+        if (hasAuthority) {
+            ChangeMode(PlayerMode.MOVING);
+            grabbedPlayer = getClosestPlayer();
+            spawnedCylinder = Instantiate(moveCylinderPrefab, grabbedPlayer.transform.position, Quaternion.identity);
         }
-        spawnedCylinder = Instantiate(moveCylinderPrefab, grabbedPlayer.transform.position, Quaternion.identity);
     }
 
     public void FinishMoveRobot(GameObject theHook) {
-        ChangeMode(PlayerMode.OBSERVING);
-        grabbedPlayer = null;
-        for (int i = 0; i < 2; ++i) {
-            hooks[i] = null;
-            closestPlayers[i] = null;
+        if (hasAuthority) {
+            grabbedPlayer = null;
+            Destroy(spawnedHook);
+            spawnedHook = null;
+            Destroy(spawnedCylinder);
+            EndTurn(false, false);
+            ChangeMode(PlayerMode.OBSERVING);
         }
-        Destroy(spawnedCylinder);
-        EndTurn(false, false);
     }
 
     public void DoAction(int actionNum) {
@@ -469,24 +500,41 @@ public class ConnectedPlayerManager : NetworkBehaviour
         }
     }
 
-    private GameObject[] getClosestPlayers() {
-        GameObject closestPlayerLeft = null;
+    private GameObject getClosestPlayer() {
+        // GameObject closestPlayerLeft = null;
+        // GameObject closestPlayerRight = null;
+        // float distLeft = 100.0F;
+        // float distRight = 100.0F;
+        // GameObject[] objects = GameObject.FindGameObjectsWithTag("Player");
+        // GameObject palmObjLeft = GameObject.Find("ForwardTransformPalmLeft");
+        // GameObject palmObjRight = GameObject.Find("ForwardTransformPalmRight");
+        // foreach (GameObject obj in objects) {
+        //     VRPlayerController controller = obj.GetComponent<VRPlayerController>();
+        //     if (controller != null) {
+        //         if (controller.teamContainer == theTeam) { // On same team
+        //             Vector3 diff = palmObjLeft.transform.position - obj.transform.position;
+        //             if (diff.magnitude < distLeft) {
+        //                 closestPlayerLeft = obj;
+        //                 distLeft = diff.magnitude;
+        //             }
+        //             diff = palmObjRight.transform.position - obj.transform.position;
+        //             if (diff.magnitude < distRight) {
+        //                 closestPlayerRight = obj;
+        //                 distRight = diff.magnitude;
+        //             }
+        //         }
+        //     }
+        // }
+        // return new[] { closestPlayerLeft, closestPlayerRight };
         GameObject closestPlayerRight = null;
-        float distLeft = 100.0F;
         float distRight = 100.0F;
         GameObject[] objects = GameObject.FindGameObjectsWithTag("Player");
-        GameObject palmObjLeft = GameObject.Find("ForwardTransformPalmLeft");
         GameObject palmObjRight = GameObject.Find("ForwardTransformPalmRight");
         foreach (GameObject obj in objects) {
             VRPlayerController controller = obj.GetComponent<VRPlayerController>();
             if (controller != null) {
                 if (controller.teamContainer == theTeam) { // On same team
-                    Vector3 diff = palmObjLeft.transform.position - obj.transform.position;
-                    if (diff.magnitude < distLeft) {
-                        closestPlayerLeft = obj;
-                        distLeft = diff.magnitude;
-                    }
-                    diff = palmObjRight.transform.position - obj.transform.position;
+                    Vector3 diff = palmObjRight.transform.position - obj.transform.position;
                     if (diff.magnitude < distRight) {
                         closestPlayerRight = obj;
                         distRight = diff.magnitude;
@@ -494,21 +542,18 @@ public class ConnectedPlayerManager : NetworkBehaviour
                 }
             }
         }
-        return new[] { closestPlayerLeft, closestPlayerRight };
+        return closestPlayerRight;
     }
 
     public void EndTurn(bool fadeAndMove, bool switchHands) {
-        if (hasAuthority) {
+        if (hasAuthority && isMyTurn) {
             if (fadeAndMove) {
-                GameObject.Find("FadeScreen").GetComponent<Fader>().FadeToBlack(1.0F, FadeCallback, 4);
+                GameObject.Find("FadeScreen").GetComponent<Fader>().FadeToBlack(1.0F, FadeCallback, switchHands ? 4 : 5);
             } else {
                 actingPlayer = null;
             }
-            GameObject.Find("HintText").GetComponent<Text>().enabled = false;
+            // GameObject.Find("HintText").GetComponent<Text>().enabled = false;
             GameObject.Find("PalmPivot").GetComponent<FacingCamera>().Disable(true);
-            if (switchHands) {
-                GameObject.FindObjectOfType<HandSwitcher>().SwitchHands();
-            }
             isMyTurn = false;
             firingLaser = false;
             CmdFinishTurn();
@@ -517,7 +562,6 @@ public class ConnectedPlayerManager : NetworkBehaviour
 
     [Command]
     private void CmdFinishTurn() {
-        Debug.Log("Finishing turn");
         TurnManager turnManager = NetworkManager.singleton.gameObject.GetComponent<TurnManager>();
         turnManager.NextTurn();
     }
@@ -532,10 +576,10 @@ public class ConnectedPlayerManager : NetworkBehaviour
     private void RpcTurnStarting() {
         if (hasAuthority) {
             isMyTurn = true;
-            if (currentMode == PlayerMode.OBSERVING) {
+            if (currentMode == PlayerMode.OBSERVING && !gameOver) {
                 EnablePalmGui(0);
-                GameObject.Find("HintText").GetComponent<Text>().text = "Your Turn!";
-                GameObject.Find("HintText").GetComponent<HintTextFader>().StartFade(1.5F);
+                // GameObject.Find("HintText").GetComponent<Text>().text = "Your Turn!";
+                ShowText(0);
             }
         }
     }
@@ -556,5 +600,38 @@ public class ConnectedPlayerManager : NetworkBehaviour
                 }
                 break;
         }
+    }
+
+    private void ShowText(int index) {
+        switch (index) {
+            case 0:
+                GameObject.Find("YourTurnText").GetComponent<ObjectFader>().StartFade(1.5F);
+                GameObject.Find("YouLostText").GetComponent<ObjectFader>().ForceDisable();
+                GameObject.Find("YouWonText").GetComponent<ObjectFader>().ForceDisable();
+                break;
+            case 1:
+                GameObject.Find("YouLostText").GetComponent<ObjectFader>().StartFade(1.5F);
+                GameObject.Find("YourTurnText").GetComponent<ObjectFader>().ForceDisable();
+                GameObject.Find("YouWonText").GetComponent<ObjectFader>().ForceDisable();
+                break;
+            case 2:
+                GameObject.Find("YouWonText").GetComponent<ObjectFader>().StartFade(1.5F);
+                GameObject.Find("YourTurnText").GetComponent<ObjectFader>().ForceDisable();
+                GameObject.Find("YouLostText").GetComponent<ObjectFader>().ForceDisable();
+                break;
+        }
+    }
+
+    public void OnGameResolved(bool won) {
+        RpcOnGameResolved(won);
+        gameOver = true;
+    }
+
+    [ClientRpc]
+    private void RpcOnGameResolved(bool won) {
+        if (hasAuthority) {
+            ShowText(won ? 2 : 1);
+        }
+        gameOver = true;
     }
 }

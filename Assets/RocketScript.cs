@@ -14,6 +14,7 @@ public class RocketScript : NetworkBehaviour
     public float lerpRate = 0.1F;
     public float radius = 1.5F;
     public float damage = 50.0F;
+    private bool hasHit = false;
 
     void Start() {
         rigidbody = GetComponent<Rigidbody>();
@@ -42,7 +43,8 @@ public class RocketScript : NetworkBehaviour
     }
 
     private void OnCollisionEnter(Collision coll) {
-        if (hasAuthority) {
+        if (hasAuthority && !hasHit) {
+            hasHit = true;
             CmdExplode(coll.gameObject);
             Object[] connectedPlayers = GameObject.FindObjectsOfType(typeof(ConnectedPlayerManager));
             foreach (Object o in connectedPlayers) {
@@ -65,7 +67,7 @@ public class RocketScript : NetworkBehaviour
                 health.DoDamage(damage * depthMult);
             }
         }
-        ground.GetComponent<Deformable>().AddDeformation(transform.position, radius - 0.25F, 2.0F);
+        ground.GetComponent<Deformable>().AddDeformation(transform.position, radius - 0.25F, 0.5F);
         Destroy(gameObject, 0.1F);
     }
 }

@@ -46,6 +46,7 @@
   </PropertyGroup>
   <ItemGroup>
      <Compile Include="Assets\ButtonColourUpdater.cs" />
+     <Compile Include="Assets\FPSCounter.cs" />
      <Compile Include="Assets\FacingCamera.cs" />
      <Compile Include="Assets\GameManager.cs" />
      <Compile Include="Assets\HandSwitcher.cs" />
@@ -398,6 +399,7 @@
      <Compile Include="Assets\LeapMotion\Modules\InteractionEngine\Testing\Scripts\Tests\CreationAndDeletionTests.cs" />
      <Compile Include="Assets\LeapMotion\Modules\InteractionEngine\Testing\Scripts\Tests\GraspingAPITests.cs" />
      <Compile Include="Assets\LeapMotion\Modules\InteractionEngine\Testing\Scripts\Tests\InteractionButtonTests.cs" />
+     <Compile Include="Assets\ObjectFader.cs" />
      <Compile Include="Assets\Oculus\VR\Scripts\Composition\OVRCameraComposition.cs" />
      <Compile Include="Assets\Oculus\VR\Scripts\Composition\OVRComposition.cs" />
      <Compile Include="Assets\Oculus\VR\Scripts\Composition\OVRCompositionUtil.cs" />

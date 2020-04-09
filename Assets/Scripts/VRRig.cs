@@ -83,4 +83,20 @@ public class VRRig : MonoBehaviour
         meshRenderer.material.color = new Color(meshRenderer.material.color.r, meshRenderer.material.color.g, meshRenderer.material.color.b, 1.0F);
         materialFade = materialFadeDir = 0.0F;
     }
+
+    public void ForceUpdate() {
+        // head.Map();
+        // leftHand.Map();
+        // rightHand.Map();
+        // meshRenderer = GetComponentInChildren<SkinnedMeshRenderer>();
+        // bool handsAttached = leftHand.handAttached && rightHand.handAttached;
+        // materialFadeDir = 0.0F;
+        // if (handsAttached) {
+        //     materialFade = 1.0F;
+        // } else  {
+        //     materialFade = 0.0F;
+        // }
+        // lastHandsAttached = handsAttached;
+        // meshRenderer.material.color = new Color(meshRenderer.material.color.r, meshRenderer.material.color.g, meshRenderer.material.color.b, materialFade);
+    }
 }

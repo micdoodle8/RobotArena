@@ -11,17 +11,23 @@ public class LaserScript : NetworkBehaviour
     private float timeToLive;
     private List<GameObject> hitEntities = new List<GameObject>();
     public float damageMultiplier = 20.0F;
+    public GameObject firingPlayer = null;
 
     void Start() {
         cylinderRenderers = GetComponentsInChildren<Renderer>();
         timeToLive = lifespan;
     }
 
+    [Command]
+    private void CmdDestroy() {
+        Destroy(gameObject);
+    }
+
     void Update() {
         timeToLive -= Time.deltaTime;
         if (hasAuthority) {
             if (timeToLive <= 0.0F) {
-                Destroy(gameObject);
+                CmdDestroy();
             } else {
                 float scale = Mathf.Sin(Mathf.PI * (timeToLive / lifespan));
                 gameObject.transform.localScale = new Vector3(scale, scale, 1.0F);
@@ -46,7 +52,7 @@ public class LaserScript : NetworkBehaviour
                     }
                 }
                 if (numActiveHands != 2) {
-                    Destroy(gameObject);
+                    CmdDestroy();
                 } else {
                     transform.position = avgPos / 2.0F;
                     Vector3 rightVec = (startPos - endPos).normalized;
@@ -57,9 +63,11 @@ public class LaserScript : NetworkBehaviour
                     }
                 }
             }
+        }
+
+        if (isServer) {
             foreach (GameObject hitObj in hitEntities) {
                 Health health = hitObj.GetComponent<Health>();
-                Debug.Log(health);
                 if (health != null) {
                     health.DoDamage(Time.deltaTime * damageMultiplier);
                 }
@@ -68,29 +76,33 @@ public class LaserScript : NetworkBehaviour
     }
 
     void OnDestroy() {
-        Object[] connectedPlayers = GameObject.FindObjectsOfType(typeof(ConnectedPlayerManager));
-        foreach (Object o in connectedPlayers) {
-            ((ConnectedPlayerManager) o).EndTurn(true, true);
+        if (hasAuthority) {
+            Object[] connectedPlayers = GameObject.FindObjectsOfType(typeof(ConnectedPlayerManager));
+            foreach (Object o in connectedPlayers) {
+                ((ConnectedPlayerManager) o).EndTurn(true, true);
+            }
         }
     }
 
     private void OnTriggerEnter(Collider other) {
-        if (hasAuthority) {
-            if (other.gameObject.transform.parent.tag.Equals("Player")) {
-                if (!hitEntities.Contains(other.gameObject.transform.parent.gameObject)) {
-                    hitEntities.Add(other.gameObject.transform.parent.gameObject);
+        // if (hasAuthority) {
+            Transform hitTransform = other.gameObject.transform.parent;
+            if (hitTransform.tag.Equals("Player") && hitTransform.gameObject != firingPlayer) {
+                if (!hitEntities.Contains(hitTransform.gameObject)) {
+                    hitEntities.Add(hitTransform.gameObject);
                 }
             }
-        }
+        // }
     }
 
     private void OnTriggerExit(Collider other) {
-        if (hasAuthority) {
-            if (other.gameObject.transform.parent.tag.Equals("Player")) {
-                if (hitEntities.Contains(other.gameObject.transform.parent.gameObject)) {
-                    hitEntities.Remove(other.gameObject.transform.parent.gameObject);
+        // if (hasAuthority) {
+            Transform hitTransform = other.gameObject.transform.parent;
+            if (hitTransform.tag.Equals("Player")) {
+                if (hitEntities.Contains(hitTransform.gameObject)) {
+                    hitEntities.Remove(hitTransform.gameObject);
                 }
             }
-        }
+        // }
     }
 }

@@ -54,7 +54,6 @@ public class Fader : MonoBehaviour
     }
 
     public void FadeToBlack(float time, FadeCompleteCallback callback, int param) {
-        Debug.Log("FadeToBlack");
         renderer.enabled = true;
         status = FadeStatus.TO_BLACK;
         progress = time;
@@ -64,7 +63,6 @@ public class Fader : MonoBehaviour
     }
     
     public void FadeBackIn(float time, FadeCompleteCallback callback, int param) {
-        Debug.Log("FadeBackIn");
         status = FadeStatus.TO_CLEAR;
         progress = time;
         totalTime = time;

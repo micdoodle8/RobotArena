@@ -36,7 +36,7 @@ public class GenerateMesh : MonoBehaviour
             for (int x = 0; x <= xSize; ++x, ++i) {
 
                 Color c = image.GetPixel((int)((x / (float)xSize) * (image.width - 6)) + 3, (int)((y /  (float)ySize) * (image.height - 6)) + 3);
-                yVal = c.r * 5.0F;
+                yVal = c.r * 10.0F;
                 if (yVal > 0.3F) {
                     yVal = 0.3F + yVal * 0.3F;
                 }

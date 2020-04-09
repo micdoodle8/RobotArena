@@ -33,8 +33,6 @@ public class VRPlayerController : NetworkBehaviour
     }
 
     public void SetPlayerControlled() {
-        Debug.Log("Setting controlled");
-
         controlled = true;
         GameObject[] otherPlayers = GameObject.FindGameObjectsWithTag("Player");
         foreach (GameObject p in otherPlayers) {
@@ -69,6 +67,7 @@ public class VRPlayerController : NetworkBehaviour
         withHands.transform.FindChild("VR Constraints").FindChild("Head Constraint").gameObject.SetActive(false);
         withoutHands.SetActive(true);
         withoutHands.transform.FindChild("VR Constraints").FindChild("Head Constraint").gameObject.SetActive(true);
+        rigComp.ForceUpdate();
     }
 
     public void SetPlayerNotControlled() {

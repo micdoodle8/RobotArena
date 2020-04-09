@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using Leap.Unity.Interaction;
 
 public class FacingCamera : MonoBehaviour
 {
@@ -13,26 +14,43 @@ public class FacingCamera : MonoBehaviour
     public UnityEvent OnBeginFacingCamera;
     public UnityEvent OnEndFacingCamera;
     public bool isForcedOff = true;
+    private InteractionController leftController;
+    private bool lastControllerTracked = false;
 
     // Start is called before the first frame update
-    void Start()
-    {
+    void Start() {
         camera = Camera.main;
         lastFacing = isFacingCam();
+        InteractionManager manager = InteractionManager.instance;
+        HashSet<InteractionController>.Enumerator e = manager.interactionControllers.GetEnumerator();
+        while (e.MoveNext()) {
+            InteractionController controller = e.Current;
+            if (controller.isLeft) {
+                leftController = controller;
+            }
+        }
     }
 
     // Update is called once per frame
-    void Update()
-    {
-        bool facing = isFacingCam();
-        if (facing != lastFacing) {
-            if (facing) {
-                OnBeginFacingCamera.Invoke();
-            } else {
+    void Update() {
+        bool tracked = leftController.isTracked;
+        if (tracked) {
+            bool facing = isFacingCam();
+            if (facing != lastFacing) {
+                if (facing) {
+                    OnBeginFacingCamera.Invoke();
+                } else {
+                    OnEndFacingCamera.Invoke();
+                }
+            }
+            lastFacing = facing;
+        } else {
+            if (lastControllerTracked) {
                 OnEndFacingCamera.Invoke();
             }
+            lastFacing = false;
         }
-        lastFacing = facing;
+        lastControllerTracked = tracked;
     }
 
     private bool isFacingCam() {

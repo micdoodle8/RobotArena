@@ -43,7 +43,6 @@ public class NetworkMove : NetworkBehaviour
     }
 
     public override void OnStartAuthority() {
-        Debug.Log(hasAuthority);
         if (hasAuthority) {
             // RegisterMessages();
             shouldSendMovement = true;

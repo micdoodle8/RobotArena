@@ -9,6 +9,7 @@ ScriptsOnlyBuild:
     - CustomNetworkManagerHUD
     - Deformable
     - EventHooks
+    - FPSCounter
     - FacingCamera
     - Fader
     - GameManager
@@ -44,6 +45,7 @@ ScriptsOnlyBuild:
     - MainMenuHandler
     - MyNetworkManager
     - NetworkMove
+    - ObjectFader
     - PalmGuiEnableDisable
     - RocketScript
     - Team
@@ -140,27 +142,27 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 13378}
     - Class: 114
-      Script: {instanceID: 13660}
+      Script: {instanceID: 13662}
     - Class: 114
-      Script: {instanceID: 13916}
+      Script: {instanceID: 13918}
     - Class: 114
-      Script: {instanceID: 14000}
+      Script: {instanceID: 14002}
     - Class: 114
-      Script: {instanceID: 14124}
+      Script: {instanceID: 14126}
     - Class: 114
-      Script: {instanceID: 14132}
+      Script: {instanceID: 14134}
     - Class: 114
-      Script: {instanceID: 14820}
+      Script: {instanceID: 14822}
     - Class: 114
-      Script: {instanceID: 15024}
+      Script: {instanceID: 15026}
     - Class: 114
-      Script: {instanceID: 15056}
+      Script: {instanceID: 15058}
     - Class: 114
-      Script: {instanceID: 15084}
+      Script: {instanceID: 15086}
     - Class: 114
-      Script: {instanceID: 15250}
+      Script: {instanceID: 15252}
     - Class: 114
-      Script: {instanceID: 15640}
+      Script: {instanceID: 15642}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -295,59 +297,63 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 13466}
     - Class: 114
-      Script: {instanceID: 13636}
+      Script: {instanceID: 13616}
     - Class: 114
-      Script: {instanceID: 13660}
+      Script: {instanceID: 13638}
     - Class: 114
-      Script: {instanceID: 13734}
+      Script: {instanceID: 13662}
     - Class: 114
-      Script: {instanceID: 13808}
+      Script: {instanceID: 13736}
     - Class: 114
-      Script: {instanceID: 13916}
+      Script: {instanceID: 13810}
     - Class: 114
-      Script: {instanceID: 14000}
+      Script: {instanceID: 13918}
     - Class: 114
-      Script: {instanceID: 14124}
+      Script: {instanceID: 14002}
     - Class: 114
-      Script: {instanceID: 14132}
+      Script: {instanceID: 14126}
     - Class: 114
-      Script: {instanceID: 14232}
+      Script: {instanceID: 14134}
     - Class: 114
-      Script: {instanceID: 14264}
+      Script: {instanceID: 14234}
     - Class: 114
-      Script: {instanceID: 14288}
+      Script: {instanceID: 14266}
     - Class: 114
-      Script: {instanceID: 14438}
+      Script: {instanceID: 14290}
     - Class: 114
-      Script: {instanceID: 14500}
+      Script: {instanceID: 14440}
     - Class: 114
-      Script: {instanceID: 14576}
+      Script: {instanceID: 14502}
     - Class: 114
-      Script: {instanceID: 14724}
+      Script: {instanceID: 14578}
     - Class: 114
-      Script: {instanceID: 14728}
+      Script: {instanceID: 14726}
     - Class: 114
-      Script: {instanceID: 14820}
+      Script: {instanceID: 14730}
     - Class: 114
-      Script: {instanceID: 15024}
+      Script: {instanceID: 14822}
     - Class: 114
-      Script: {instanceID: 15054}
+      Script: {instanceID: 15026}
     - Class: 114
       Script: {instanceID: 15056}
     - Class: 114
-      Script: {instanceID: 15094}
+      Script: {instanceID: 15058}
     - Class: 114
-      Script: {instanceID: 15228}
+      Script: {instanceID: 15096}
     - Class: 114
-      Script: {instanceID: 15250}
+      Script: {instanceID: 15230}
     - Class: 114
-      Script: {instanceID: 15294}
+      Script: {instanceID: 15252}
     - Class: 114
-      Script: {instanceID: 15482}
+      Script: {instanceID: 15296}
     - Class: 114
-      Script: {instanceID: 15508}
+      Script: {instanceID: 15484}
     - Class: 114
-      Script: {instanceID: 15640}
+      Script: {instanceID: 15510}
+    - Class: 114
+      Script: {instanceID: 15642}
+    - Class: 114
+      Script: {instanceID: 15700}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -2197,6 +2203,12 @@ ScriptsOnlyBuild:
     className: ExcludeTeleport
   - hash:
       serializedVersion: 2
+      Hash: d83a75105c606a618c3ed1dfd285eb72
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: ObjectFader
+  - hash:
+      serializedVersion: 2
       Hash: a4b88f3b08f1f148e04c6c3d7544c9ec
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
@@ -2665,7 +2677,7 @@ ScriptsOnlyBuild:
     className: Physics2DRaycaster
   - hash:
       serializedVersion: 2
-      Hash: ed8ac5b5acb4cb95d2e3c979e967ee52
+      Hash: 96267c6091bdb30a5d71a8a7ebc7134e
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: LaserScript
@@ -3665,6 +3677,12 @@ ScriptsOnlyBuild:
     assemblyName: Unity.Animation.Rigging.dll
     namespaceName: UnityEngine.Animations.Rigging
     className: BlendConstraint
+  - hash:
+      serializedVersion: 2
+      Hash: 17b9a99fc67579a80fc5fbc80962c12a
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: FPSCounter
   - hash:
       serializedVersion: 2
       Hash: 849ed1cc34faf38cd0f35aff9ecf2367

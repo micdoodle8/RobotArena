@@ -42,7 +42,7 @@ public class Bomb : NetworkMessageHandler
                 health.DoDamage(damage * depthMult);
             }
         }
-        ground.GetComponent<Deformable>().AddDeformation(transform.position, radius - 0.25F, 3.0F);
+        ground.GetComponent<Deformable>().AddDeformation(transform.position, radius - 0.25F, 1.0F);
         Destroy(gameObject, 0.1F);
     }
 

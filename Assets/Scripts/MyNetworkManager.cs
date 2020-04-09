@@ -30,13 +30,11 @@ public class MyNetworkManager : NetworkManager
 
     public override void OnServerAddPlayer(NetworkConnection conn, short playerControllerId, NetworkReader extraMessageReader) {
         base.OnServerAddPlayer(conn, playerControllerId, extraMessageReader);
-        Debug.Log("added1?");
         GetComponent<TurnManager>().UpdatePlayers();
     }
 
     public override void OnServerAddPlayer(NetworkConnection conn, short playerControllerId) {
         base.OnServerAddPlayer(conn, playerControllerId);
-        Debug.Log("added2?");
         GetComponent<TurnManager>().UpdatePlayers();
     }
 }

@@ -6,6 +6,7 @@ public class TurnManager : MonoBehaviour
 {
     public List<ConnectedPlayerManager> playersConnected;
     public int playersTurn = -1;
+    private bool gameEnded = false;
 
     void Start() {
         
@@ -19,9 +20,11 @@ public class TurnManager : MonoBehaviour
     }
 
     public void NextTurn() {
-        playersTurn++;
-        playersTurn %= playersConnected.Count;
-        playersConnected[playersTurn].StartTurn();
+        if (!gameEnded) {
+            playersTurn++;
+            playersTurn %= playersConnected.Count;
+            playersConnected[playersTurn].StartTurn();
+        }
     }
 
     public void UpdatePlayers() {
@@ -29,6 +32,15 @@ public class TurnManager : MonoBehaviour
         foreach (ConnectedPlayerManager manager in managers) {
             if (!playersConnected.Contains(manager)) {
                 playersConnected.Add(manager);
+            }
+        }
+    }
+
+    public void PlayerLost(ConnectedPlayerManager losingPlayer) {
+        if (!gameEnded) {
+            gameEnded = true;
+            foreach (ConnectedPlayerManager player in playersConnected) {
+                player.OnGameResolved(player != losingPlayer);
             }
         }
     }
