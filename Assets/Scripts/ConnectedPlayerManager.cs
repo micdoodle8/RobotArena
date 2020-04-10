@@ -422,22 +422,78 @@ public class ConnectedPlayerManager : NetworkBehaviour
         }
     }
 
-    public void StartAct() {
+    private Dictionary<int, float> buttonPressedTimes = new Dictionary<int, float>();
+    private Dictionary<int, float> lastPressedTimes = new Dictionary<int, float>();
+
+    public void TurnButtonPressed(int index) {
         if (hasAuthority) {
-            ChangeMode(PlayerMode.CHOOSING_ACT);
+            if (!buttonPressedTimes.ContainsKey(index)) {
+                buttonPressedTimes.Add(index, 0.0F);
+            } else {
+                buttonPressedTimes[index] = 0.0F;
+            }
+            if (!lastPressedTimes.ContainsKey(index)) {
+                lastPressedTimes.Add(index, Time.time);
+            } else {
+                lastPressedTimes[index] = Time.time;
+            }
         }
     }
 
-    public void StartMove() {
-        if (hasAuthority) {
-            ChangeMode(PlayerMode.CHOOSING_MOVE);
+    public void TurnButtonHeld(int index) {
+        if (hasAuthority && buttonPressedTimes.ContainsKey(index)) {
+            float diff = Time.time - lastPressedTimes[index];
+            if (diff > 2.0F) { // This should never be true, but for safety
+                diff = 0.0F;
+                lastPressedTimes[index] = 0.0F;
+                buttonPressedTimes[index] = 0.0F;
+            } else {
+                buttonPressedTimes[index] += diff;
+                if (buttonPressedTimes[index] >= 1.0F) {
+                    switch (index) {
+                        case 0:
+                            ChangeMode(PlayerMode.CHOOSING_MOVE);
+                            break;
+                        case 1:
+                            ChangeMode(PlayerMode.CHOOSING_ACT);
+                            break;
+                        case 2:
+                            EndTurn(false, false);
+                            break;
+                        case 3:
+                            if (isMyTurn) {
+                                CmdSpawnBomb(Camera.main.transform.forward);
+                                GameObject.Find("PalmPivot").GetComponent<FacingCamera>().Disable(true);
+                            }
+                            break;
+                        case 4:
+                            if (isMyTurn) {
+                                GameObject.Find("FadeScreen").GetComponent<Fader>().FadeToBlack(1.0F, FadeCallback, 3);
+                                GameObject.Find("PalmPivot").GetComponent<FacingCamera>().Disable(true);
+                            }
+                            break;
+                        case 5:
+                            if (isMyTurn) {
+                                firingLaser = true;
+                                GameObject.Find("PalmPivot").GetComponent<FacingCamera>().Disable(true);
+                            }
+                            break;
+                    }
+                    buttonPressedTimes.Clear(); // Reset this button and all others when pressed
+                }
+                lastPressedTimes[index] = Time.time;
+            }
         }
     }
 
-    public void StartPass() {
+    public void TurnButtonReleased(int index) {
         if (hasAuthority) {
-            EndTurn(false, false);
+            buttonPressedTimes[index] = 0.0F;
         }
+    }
+
+    public float ButtonPressed(int index) {
+        return buttonPressedTimes.ContainsKey(index) ? buttonPressedTimes[index] : 0.0F;
     }
 
     public void OnPlayerActChose(GameObject robot) {
@@ -470,19 +526,10 @@ public class ConnectedPlayerManager : NetworkBehaviour
     }
 
     public void DoAction(int actionNum) {
-        if (hasAuthority && isMyTurn) {
-            switch (actionNum) {
-                case 1:
-                    CmdSpawnBomb(Camera.main.transform.forward);
-                    break;
-                case 2:
-                    GameObject.Find("FadeScreen").GetComponent<Fader>().FadeToBlack(1.0F, FadeCallback, 3);
-                    break;
-                case 3:
-                    firingLaser = true;
-                    break;
-            }
-        }
+        // if (hasAuthority && isMyTurn) {
+        //     switch (actionNum) {
+        //     }
+        // }
     }
 
     public void FingerExtended(bool state) {

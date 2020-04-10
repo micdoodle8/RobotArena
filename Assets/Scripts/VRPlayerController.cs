@@ -64,9 +64,9 @@ public class VRPlayerController : NetworkBehaviour
         rigComp.rightHand.vrTarget = vrTargetRightHand;
         hipsTransform = hipsTransformWithoutHands;
         withHands.SetActive(false);
-        withHands.transform.FindChild("VR Constraints").FindChild("Head Constraint").gameObject.SetActive(false);
+        withHands.transform.Find("VR Constraints").Find("Head Constraint").gameObject.SetActive(false);
         withoutHands.SetActive(true);
-        withoutHands.transform.FindChild("VR Constraints").FindChild("Head Constraint").gameObject.SetActive(true);
+        withoutHands.transform.Find("VR Constraints").Find("Head Constraint").gameObject.SetActive(true);
         rigComp.ForceUpdate();
     }
 

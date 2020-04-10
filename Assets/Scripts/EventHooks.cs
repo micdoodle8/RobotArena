@@ -38,26 +38,47 @@ public class EventHooks : MonoBehaviour
         }
     }
 
-    public void OnMoveButtonPressed() {
+    public void OnTurnButtonPressed(int index) {
         Object[] connectedPlayers = GameObject.FindObjectsOfType(typeof(ConnectedPlayerManager));
         foreach (Object o in connectedPlayers) {
-            ((ConnectedPlayerManager) o).StartMove();
+            ((ConnectedPlayerManager) o).TurnButtonPressed(index);
         }
     }
 
-    public void OnActButtonPressed() {
+    public void OnTurnButtonHeld(int index) {
         Object[] connectedPlayers = GameObject.FindObjectsOfType(typeof(ConnectedPlayerManager));
         foreach (Object o in connectedPlayers) {
-            ((ConnectedPlayerManager) o).StartAct();
+            ((ConnectedPlayerManager) o).TurnButtonHeld(index);
         }
     }
 
-    public void OnPassButtonPressed() {
+    public void OnTurnButtonReleased(int index) {
         Object[] connectedPlayers = GameObject.FindObjectsOfType(typeof(ConnectedPlayerManager));
         foreach (Object o in connectedPlayers) {
-            ((ConnectedPlayerManager) o).StartPass();
+            ((ConnectedPlayerManager) o).TurnButtonReleased(index);
         }
     }
+
+    // public void OnMoveButtonPressed() {
+    //     Object[] connectedPlayers = GameObject.FindObjectsOfType(typeof(ConnectedPlayerManager));
+    //     foreach (Object o in connectedPlayers) {
+    //         ((ConnectedPlayerManager) o).StartMove();
+    //     }
+    // }
+
+    // public void OnActButtonPressed() {
+    //     Object[] connectedPlayers = GameObject.FindObjectsOfType(typeof(ConnectedPlayerManager));
+    //     foreach (Object o in connectedPlayers) {
+    //         ((ConnectedPlayerManager) o).StartAct();
+    //     }
+    // }
+
+    // public void OnPassButtonPressed() {
+    //     Object[] connectedPlayers = GameObject.FindObjectsOfType(typeof(ConnectedPlayerManager));
+    //     foreach (Object o in connectedPlayers) {
+    //         ((ConnectedPlayerManager) o).StartPass();
+    //     }
+    // }
 
     public void OnActButtonPressed(int button) {
         Object[] connectedPlayers = GameObject.FindObjectsOfType(typeof(ConnectedPlayerManager));

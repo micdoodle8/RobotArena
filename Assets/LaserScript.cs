@@ -85,24 +85,20 @@ public class LaserScript : NetworkBehaviour
     }
 
     private void OnTriggerEnter(Collider other) {
-        // if (hasAuthority) {
-            Transform hitTransform = other.gameObject.transform.parent;
-            if (hitTransform.tag.Equals("Player") && hitTransform.gameObject != firingPlayer) {
-                if (!hitEntities.Contains(hitTransform.gameObject)) {
-                    hitEntities.Add(hitTransform.gameObject);
-                }
+        Transform hitTransform = other.gameObject.transform.parent;
+        if (hitTransform.tag.Equals("Player") && hitTransform.gameObject != firingPlayer) {
+            if (!hitEntities.Contains(hitTransform.gameObject)) {
+                hitEntities.Add(hitTransform.gameObject);
             }
-        // }
+        }
     }
 
     private void OnTriggerExit(Collider other) {
-        // if (hasAuthority) {
-            Transform hitTransform = other.gameObject.transform.parent;
-            if (hitTransform.tag.Equals("Player")) {
-                if (hitEntities.Contains(hitTransform.gameObject)) {
-                    hitEntities.Remove(hitTransform.gameObject);
-                }
+        Transform hitTransform = other.gameObject.transform.parent;
+        if (hitTransform.tag.Equals("Player")) {
+            if (hitEntities.Contains(hitTransform.gameObject)) {
+                hitEntities.Remove(hitTransform.gameObject);
             }
-        // }
+        }
     }
 }

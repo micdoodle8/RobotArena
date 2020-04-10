@@ -9,12 +9,12 @@ public class ButtonColourUpdater : MonoBehaviour
     private InteractionBehaviour theButton;
     private Renderer renderer;
     public Color defaultColor = Color.Lerp(Color.black, Color.white, 0.1F);
-    public Color suspendedColor = Color.red;
     public Color hoverColor = Color.Lerp(Color.black, Color.white, 0.7F);
     public Color primaryHoverColor = Color.Lerp(Color.black, Color.white, 0.8F);
     public bool usePrimaryHover = true;
     public bool useHover = false;
     public Color pressedColor = Color.white;
+    public int index = -1;
 
     void Start() {
         theButton = GetComponent<InteractionBehaviour>();
@@ -33,12 +33,17 @@ public class ButtonColourUpdater : MonoBehaviour
             }
         }
 
-        if (theButton.isSuspended) {
-            targetColor = suspendedColor;
+        float pressedTime = 0.0F;
+        Object[] connectedPlayers = GameObject.FindObjectsOfType(typeof(ConnectedPlayerManager));
+        foreach (Object o in connectedPlayers) {
+            pressedTime = ((ConnectedPlayerManager) o).ButtonPressed(index);
+            if (pressedTime > 0.0F) {
+                break;
+            }
         }
 
-        if (theButton is InteractionButton && (theButton as InteractionButton).isPressed) {
-            targetColor = pressedColor;
+        if (pressedTime > 0.0F) {
+            targetColor = pressedColor * pressedTime;
         }
 
         renderer.material.color = Color.Lerp(renderer.material.color, targetColor, 30F * Time.deltaTime);
