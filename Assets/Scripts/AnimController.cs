@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿#pragma warning disable 0618
 using UnityEngine;
 
 public class AnimController : MonoBehaviour
@@ -9,23 +8,17 @@ public class AnimController : MonoBehaviour
     public float speedThres = 0.1F;
     private Animator animator;
     private Vector3 prevPos;
-    //private VRRig vrRig;
 
     // Start is called before the first frame update
-    void Start()
-    {
+    void Start() {
         animator = GetComponent<Animator>();
         animator.keepAnimatorControllerStateOnDisable = true;
         if (!gameObject.transform.parent.gameObject.tag.Equals("Player")) {
             SetHanging();
         }
-        //vrRig = GetComponent<VRRig>();
-        //prevPos = vrRig.head.vrTarget.position;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
+    void Update() {
         Vector3 headSetSpeed = (transform.position - prevPos) / Time.deltaTime;
         headSetSpeed.y = 0.0F;
         Vector3 headSetLocalSpeed = transform.InverseTransformDirection(headSetSpeed);

@@ -157,6 +157,12 @@ namespace Leap.Unity.Interaction {
         }
         else {
           #if UNITY_EDITOR
+          if (collision.gameObject.GetComponent<InteractionBehaviour>() != null) {
+            Debug.LogError(collision.gameObject.name + " " + collision.gameObject.GetComponent<InteractionBehaviour>().enabled);
+          }
+          else {
+            Debug.LogError(collision.gameObject.name);
+          }
           hitNonInteractionObject = true;
           #endif
         }

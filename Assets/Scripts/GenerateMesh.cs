@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿#pragma warning disable 0618
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -8,10 +9,11 @@ public class GenerateMesh : MonoBehaviour
     public int xSize = 16;
     public int ySize = 16;
     public float scale = 0.1F;
-    // public int gridSize = 16;
+    public int edgeTrim = 3; // Ignore these pixels on the edge of the image
+    public float heightScale = 10.0F;
 
     private MeshFilter filter;
-    private MeshCollider collider;
+    private MeshCollider groundCollider;
     private Mesh mesh;
 
     public Texture2D image;
@@ -19,7 +21,7 @@ public class GenerateMesh : MonoBehaviour
     void Awake()
     {
         filter = gameObject.AddComponent<MeshFilter>();
-        collider = gameObject.AddComponent<MeshCollider>();
+        groundCollider = gameObject.AddComponent<MeshCollider>();
         Generate();
     }
 
@@ -35,11 +37,12 @@ public class GenerateMesh : MonoBehaviour
         for (int i = 0, y = 0; y <= ySize; ++y) {
             for (int x = 0; x <= xSize; ++x, ++i) {
 
-                Color c = image.GetPixel((int)((x / (float)xSize) * (image.width - 6)) + 3, (int)((y /  (float)ySize) * (image.height - 6)) + 3);
-                yVal = c.r * 10.0F;
-                if (yVal > 0.3F) {
-                    yVal = 0.3F + yVal * 0.3F;
-                }
+                Color c = image.GetPixel((int)((x / (float)xSize) * (image.width - edgeTrim * 2)) + edgeTrim, 
+                                            (int)((y /  (float)ySize) * (image.height - edgeTrim * 2)) + edgeTrim);
+                yVal = c.r * 3.0F;
+                // if (yVal > 0.3F) {
+                //     yVal = 0.3F + yVal * 0.3F;
+                // }
                 verts.Add(new Vector3(x * scale + xSize * scale * -0.5F, yVal, y * scale + ySize * scale * -0.5F));
                 norms.Add(new Vector3(0, 1, 0));
             }
@@ -63,8 +66,8 @@ public class GenerateMesh : MonoBehaviour
         mesh.SetNormals(norms);
         mesh.SetTriangles(tris, 0);
         mesh.RecalculateNormals();
-        collider.sharedMesh = null;
-        collider.sharedMesh = mesh;
+        groundCollider.sharedMesh = null;
+        groundCollider.sharedMesh = mesh;
 
         Deformable deformable = GetComponent<Deformable>();
         if (deformable != null) {
@@ -77,8 +80,8 @@ public class GenerateMesh : MonoBehaviour
     public void UpdateMesh(Vector3[] verts) {
         mesh.SetVertices(verts);
         mesh.RecalculateNormals();
-        collider.sharedMesh = null;
-        collider.sharedMesh = mesh;
+        groundCollider.sharedMesh = null;
+        groundCollider.sharedMesh = mesh;
     }
 
     public Vector3[] GetVerts() {

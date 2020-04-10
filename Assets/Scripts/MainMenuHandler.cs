@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿#pragma warning disable 0618
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -19,10 +20,10 @@ public class MainMenuHandler : MonoBehaviour
     }
 
     public void OnCreateGamePressed() {
-        GameObject.Find("FadeScreen").GetComponent<Fader>().FadeToBlack(1.0F, FadeCallback, 0);
+        GameObject.Find("FadeScreen").GetComponent<VRFader>().FadeToBlack(1.0F, FadeCallback, 0);
     }
 
     public void OnJoinGamePressed() {
-        GameObject.Find("FadeScreen").GetComponent<Fader>().FadeToBlack(1.0F, FadeCallback, 1);
+        GameObject.Find("FadeScreen").GetComponent<VRFader>().FadeToBlack(1.0F, FadeCallback, 1);
     }
 }

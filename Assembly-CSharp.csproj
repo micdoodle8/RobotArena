@@ -45,15 +45,6 @@
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
   <ItemGroup>
-     <Compile Include="Assets\ButtonColourUpdater.cs" />
-     <Compile Include="Assets\FPSCounter.cs" />
-     <Compile Include="Assets\FacingCamera.cs" />
-     <Compile Include="Assets\ForceButtonContact.cs" />
-     <Compile Include="Assets\GameManager.cs" />
-     <Compile Include="Assets\HandSwitcher.cs" />
-     <Compile Include="Assets\Health.cs" />
-     <Compile Include="Assets\HintTextFader.cs" />
-     <Compile Include="Assets\LaserScript.cs" />
      <Compile Include="Assets\LeapMotion\Core\Examples\Example Assets\InertiaPostProcessProvider.cs" />
      <Compile Include="Assets\LeapMotion\Core\Examples\Example Assets\ProjectionPostProcessProvider.cs" />
      <Compile Include="Assets\LeapMotion\Core\Plugins\LeapCSharp\Arm.cs" />
@@ -400,7 +391,6 @@
      <Compile Include="Assets\LeapMotion\Modules\InteractionEngine\Testing\Scripts\Tests\CreationAndDeletionTests.cs" />
      <Compile Include="Assets\LeapMotion\Modules\InteractionEngine\Testing\Scripts\Tests\GraspingAPITests.cs" />
      <Compile Include="Assets\LeapMotion\Modules\InteractionEngine\Testing\Scripts\Tests\InteractionButtonTests.cs" />
-     <Compile Include="Assets\ObjectFader.cs" />
      <Compile Include="Assets\Oculus\VR\Scripts\Composition\OVRCameraComposition.cs" />
      <Compile Include="Assets\Oculus\VR\Scripts\Composition\OVRComposition.cs" />
      <Compile Include="Assets\Oculus\VR\Scripts\Composition\OVRCompositionUtil.cs" />
@@ -449,27 +439,34 @@
      <Compile Include="Assets\Oculus\VR\Scripts\Util\OVRScreenFade.cs" />
      <Compile Include="Assets\Oculus\VR\Scripts\Util\OVRTrackedRemote.cs" />
      <Compile Include="Assets\Oculus\VR\Scripts\Util\OVRWaitCursor.cs" />
-     <Compile Include="Assets\PalmGuiEnableDisable.cs" />
-     <Compile Include="Assets\RocketScript.cs" />
-     <Compile Include="Assets\Scripts\ActingHandler.cs" />
      <Compile Include="Assets\Scripts\AnimController.cs" />
-     <Compile Include="Assets\Scripts\Bomb.cs" />
+     <Compile Include="Assets\Scripts\ButtonColourUpdater.cs" />
      <Compile Include="Assets\Scripts\ConnectedPlayerManager.cs" />
-     <Compile Include="Assets\Scripts\CustomNetworkManagerHUD.cs" />
+     <Compile Include="Assets\Scripts\ControllableRobot.cs" />
      <Compile Include="Assets\Scripts\Deformable.cs" />
      <Compile Include="Assets\Scripts\EventHooks.cs" />
-     <Compile Include="Assets\Scripts\Fader.cs" />
+     <Compile Include="Assets\Scripts\FacingCamera.cs" />
+     <Compile Include="Assets\Scripts\ForceButtonContact.cs" />
+     <Compile Include="Assets\Scripts\GameManager.cs" />
      <Compile Include="Assets\Scripts\GenerateMesh.cs" />
+     <Compile Include="Assets\Scripts\HandSwitcher.cs" />
+     <Compile Include="Assets\Scripts\Health.cs" />
      <Compile Include="Assets\Scripts\HideOnStart.cs" />
+     <Compile Include="Assets\Scripts\HintTextFader.cs" />
      <Compile Include="Assets\Scripts\HookSwing.cs" />
+     <Compile Include="Assets\Scripts\ItemBomb.cs" />
+     <Compile Include="Assets\Scripts\ItemLaser.cs" />
+     <Compile Include="Assets\Scripts\ItemRocket.cs" />
      <Compile Include="Assets\Scripts\MainMenuHandler.cs" />
      <Compile Include="Assets\Scripts\MyNetworkManager.cs" />
      <Compile Include="Assets\Scripts\NetworkMessageHandler.cs" />
      <Compile Include="Assets\Scripts\NetworkMove.cs" />
+     <Compile Include="Assets\Scripts\ObjectFader.cs" />
+     <Compile Include="Assets\Scripts\PalmGuiEnableDisable.cs" />
      <Compile Include="Assets\Scripts\Team.cs" />
      <Compile Include="Assets\Scripts\TurnManager.cs" />
+     <Compile Include="Assets\Scripts\VRFader.cs" />
      <Compile Include="Assets\Scripts\VRFootIK.cs" />
-     <Compile Include="Assets\Scripts\VRPlayerController.cs" />
      <Compile Include="Assets\Scripts\VRRig.cs" />
      <Compile Include="Assets\VRTK\Examples\ExampleResources\SceneResources\[001 - Interactions] ControllerEvents\Scripts\VRTKExample_ControllerEventsDelegateListeners.cs" />
      <Compile Include="Assets\VRTK\Examples\ExampleResources\SceneResources\[002 - Pointers] StraightPointer\Scripts\VRTKExample_PointerObjectHighlighterActivator.cs" />
