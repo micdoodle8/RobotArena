@@ -52,6 +52,7 @@ public class ConnectedPlayerManager : NetworkBehaviour
     private bool firingLaser = false;
     private bool gameOver = false;
     private bool isMyTurn = false;
+    private bool resultWin = false;
 
     // Start is called before the first frame update
     void Start()
@@ -244,6 +245,8 @@ public class ConnectedPlayerManager : NetworkBehaviour
                     EnablePalmGui(0);
                     // GameObject.Find("HintText").GetComponent<Text>().text = "Your Turn!";
                     ShowText(0);
+                } else if (gameOver) {
+                    ShowText(resultWin ? 2 : 1);
                 }
             } else if (mode == PlayerMode.ACTING) {
                 GameObject.Find("FadeScreen").GetComponent<VRFader>().FadeToBlack(1.0F, FadeCallback, 2);
@@ -418,7 +421,7 @@ public class ConnectedPlayerManager : NetworkBehaviour
                             break;
                         case 3:
                             if (isMyTurn) {
-                                Vector3 pos = Camera.main.transform.position + Camera.main.transform.forward.normalized / 2.0F;
+                                Vector3 pos = Camera.main.transform.position + Camera.main.transform.forward.normalized / 1.25F;
                                 CmdSpawnBomb(pos);
                                 GameObject.Find("PalmPivot").GetComponent<FacingCamera>().Disable(true);
                             }
@@ -609,7 +612,7 @@ public class ConnectedPlayerManager : NetworkBehaviour
     private void ShowText(int index) {
         switch (index) {
             case 0:
-                GameObject.Find("YourTurnText").GetComponent<ObjectFader>().StartFade(1.5F);
+                GameObject.Find("YourTurnText").GetComponent<ObjectFader>().StartFade(3.0F);
                 GameObject.Find("YouLostText").GetComponent<ObjectFader>().ForceDisable();
                 GameObject.Find("YouWonText").GetComponent<ObjectFader>().ForceDisable();
                 break;
@@ -634,7 +637,10 @@ public class ConnectedPlayerManager : NetworkBehaviour
     [ClientRpc]
     private void RpcOnGameResolved(bool won) {
         if (hasAuthority) {
-            ShowText(won ? 2 : 1);
+            resultWin = won;
+            if (currentMode == PlayerMode.OBSERVING) {
+                ShowText(won ? 2 : 1);
+            }
         }
         gameOver = true;
     }

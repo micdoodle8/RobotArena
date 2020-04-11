@@ -68,7 +68,6 @@ public class ControllableRobot : NetworkBehaviour
         withHands.transform.Find("VR Constraints").Find("Head Constraint").gameObject.SetActive(false);
         withoutHands.SetActive(true);
         withoutHands.transform.Find("VR Constraints").Find("Head Constraint").gameObject.SetActive(true);
-        rigComp.ForceUpdate();
     }
 
     public void SetPlayerNotControlled() {

@@ -28,10 +28,9 @@ public class ItemLaser : NetworkBehaviour
         timeToLive -= Time.deltaTime;
         if (hasAuthority) {
             if (timeToLive <= 0.0F) {
-                // CmdDestroy();
+                CmdDestroy();
             } else {
-                // float scale = Mathf.Sin(Mathf.PI * (timeToLive / lifespan));
-                float scale = 1.0F;
+                float scale = Mathf.Sin(Mathf.PI * (timeToLive / lifespan));
                 gameObject.transform.localScale = new Vector3(scale, scale, 1.0F);
                 int numActiveHands = 0;
                 Vector3 avgPos = Vector3.zero;
@@ -54,7 +53,7 @@ public class ItemLaser : NetworkBehaviour
                     }
                 }
                 if (numActiveHands != 2) {
-                    // CmdDestroy();
+                    CmdDestroy();
                 } else {
                     transform.position = avgPos / 2.0F;
                     Vector3 rightVec = (rightHand - leftHand).normalized;
@@ -67,7 +66,7 @@ public class ItemLaser : NetworkBehaviour
                     GameObject closestPlayer = null;
                     float lowestDist = float.MaxValue;
                     foreach (GameObject player in players) {
-                        if (player == firingPlayer) {
+                        if (player.GetComponent<ControllableRobot>().teamContainer == firingPlayer.GetComponent<ControllableRobot>().teamContainer) {
                             continue;
                         }
                         Vector3 pos = player.transform.position;
@@ -98,7 +97,7 @@ public class ItemLaser : NetworkBehaviour
             foreach (GameObject hitObj in hitEntities) {
                 Health health = hitObj.GetComponent<Health>();
                 if (health != null) {
-                    // health.DoDamage(Time.deltaTime * damageMultiplier);
+                    health.DoDamage(Time.deltaTime * damageMultiplier);
                 }
             }
         }

@@ -17,15 +17,8 @@ public class VRFootIK : MonoBehaviour
     public float leftFootRotWeight = 1.0F;
 
     // Start is called before the first frame update
-    void Start()
-    {
+    void Start() {
         animator = GetComponent<Animator>();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 
     private void DoIKFoot(AvatarIKGoal foot, float posWeight, float rotWeight) {

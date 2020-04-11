@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 
-public class ItemBomb : NetworkMessageHandler
+public class ItemBomb : NetworkBehaviour
 {
     private float countdown = 0.0F;
     public float timeToExplode = 1.0F;

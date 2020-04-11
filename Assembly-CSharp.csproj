@@ -451,15 +451,14 @@
      <Compile Include="Assets\Scripts\GenerateMesh.cs" />
      <Compile Include="Assets\Scripts\HandSwitcher.cs" />
      <Compile Include="Assets\Scripts\Health.cs" />
-     <Compile Include="Assets\Scripts\HideOnStart.cs" />
      <Compile Include="Assets\Scripts\HintTextFader.cs" />
+     <Compile Include="Assets\Scripts\HoldPosition.cs" />
      <Compile Include="Assets\Scripts\HookSwing.cs" />
      <Compile Include="Assets\Scripts\ItemBomb.cs" />
      <Compile Include="Assets\Scripts\ItemLaser.cs" />
      <Compile Include="Assets\Scripts\ItemRocket.cs" />
      <Compile Include="Assets\Scripts\MainMenuHandler.cs" />
      <Compile Include="Assets\Scripts\MyNetworkManager.cs" />
-     <Compile Include="Assets\Scripts\NetworkMessageHandler.cs" />
      <Compile Include="Assets\Scripts\NetworkMove.cs" />
      <Compile Include="Assets\Scripts\ObjectFader.cs" />
      <Compile Include="Assets\Scripts\PalmGuiEnableDisable.cs" />

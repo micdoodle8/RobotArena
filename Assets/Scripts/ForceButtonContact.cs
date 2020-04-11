@@ -14,22 +14,22 @@ public class ForceButtonContact : MonoBehaviour
         
     }
 
-    private void DisableChildren(Transform transform, bool state) {
+    private void ModifyChildrenRecursive(Transform transform, bool state) {
         InteractionBehaviour behaviour = transform.gameObject.GetComponent<InteractionBehaviour>();
         if (behaviour != null) {
             behaviour.enabled = state;
         } else {
             for (int i = 0; i < transform.childCount; ++i) {
-                DisableChildren(transform.GetChild(i), state);
+                ModifyChildrenRecursive(transform.GetChild(i), state);
             }
         }
     }
 
     public void OnAnimForwardFinished() {
-        DisableChildren(transform, true);
+        ModifyChildrenRecursive(transform, true);
     }
 
     public void OnAnimBackwardStart() {
-        DisableChildren(transform, false);
+        ModifyChildrenRecursive(transform, false);
     }
 }

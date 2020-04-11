@@ -18,8 +18,7 @@ public class GenerateMesh : MonoBehaviour
 
     public Texture2D image;
 
-    void Awake()
-    {
+    void Awake() {
         filter = gameObject.AddComponent<MeshFilter>();
         groundCollider = gameObject.AddComponent<MeshCollider>();
         Generate();
@@ -34,31 +33,30 @@ public class GenerateMesh : MonoBehaviour
         List<Vector3> norms = new List<Vector3>();
 
         float yVal;
+        Color c;
+        // Set positions and normals:
         for (int i = 0, y = 0; y <= ySize; ++y) {
             for (int x = 0; x <= xSize; ++x, ++i) {
-
-                Color c = image.GetPixel((int)((x / (float)xSize) * (image.width - edgeTrim * 2)) + edgeTrim, 
+                c = image.GetPixel((int)((x / (float)xSize) * (image.width - edgeTrim * 2)) + edgeTrim, 
                                             (int)((y /  (float)ySize) * (image.height - edgeTrim * 2)) + edgeTrim);
                 yVal = c.r * 3.0F;
-                // if (yVal > 0.3F) {
-                //     yVal = 0.3F + yVal * 0.3F;
-                // }
                 verts.Add(new Vector3(x * scale + xSize * scale * -0.5F, yVal, y * scale + ySize * scale * -0.5F));
                 norms.Add(new Vector3(0, 1, 0));
             }
         }
 
-        // transform.position = new Vector3(xSize * scale * -0.5F * transform.parent.localScale.x, 0.0F, ySize * scale * -0.5F * transform.parent.localScale.z);
-
+        // Set indices to render:
         int[] tris = new int[xSize * ySize * 6];
-        for (int ti = 0, vi = 0, y = 0; y < ySize; ++y, ++vi) {
-            for (int x = 0; x < xSize; ++x, ti += 6, vi++) {
-                tris[ti] = vi;
-                tris[ti + 3] = vi + 1;
-                tris[ti + 2] = vi + 1;
-                tris[ti + 4] = vi + xSize + 1;
-                tris[ti + 1] = vi + xSize + 1;
-                tris[ti + 5] = vi + xSize + 2;
+        for (int index = 0, vi = 0, y = 0; y < ySize; ++y, ++vi) {
+            for (int x = 0; x < xSize; ++x, index += 6, vi++) {
+                // First triangle:
+                tris[index] = vi;
+                tris[index + 1] = vi + xSize + 1;
+                tris[index + 2] = vi + 1;
+                // Second triangle:
+                tris[index + 3] = vi + 1;
+                tris[index + 4] = vi + xSize + 1;
+                tris[index + 5] = vi + xSize + 2;
             }
         }
         
